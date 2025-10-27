@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Unit
+public class Player : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotateInterpolate;
@@ -11,12 +11,50 @@ public class Player : Unit
     private Vector3 GetNormalizedDirection()
     {
         Vector3 inputDirection = Vector3.zero;
-        inputDirection.x = Input.GetAxisRaw("Horizontal");
-        inputDirection.z = Input.GetAxisRaw("Vertical");
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            inputDirection.z += 1;
+        }
 
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            inputDirection.z -= 1;
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            inputDirection.x += 1;
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            inputDirection.x -= 1;
+        }
         return inputDirection.normalized;
     }
 
+    private void ActiveSkill()
+    {
+        if (Input.GetKey(KeyCode.Q))
+        {
+            Debug.Log("Q입력");
+        }
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            Debug.Log("W입력");
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            Debug.Log("E입력");
+        }
+
+        if (Input.GetKey(KeyCode.R))
+        {
+            Debug.Log("R입력");
+        }
+    }
     private void SetPosition()
     {
         Vector3 direction = GetNormalizedDirection();
@@ -45,5 +83,6 @@ public class Player : Unit
     private void Update()
     {
         SetPosition();
+        ActiveSkill();
     }
 }
