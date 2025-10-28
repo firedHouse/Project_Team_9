@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.AI; //Nav 사용
 
+[RequireComponent(typeof(NavMeshAgent))] //NavMesh 강제
 public class Enemy : Unit
 {
     private Transform _playerTransform;
@@ -10,7 +11,7 @@ public class Enemy : Unit
     protected override void Awake()
     {
         base.Awake();
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent = GetComponent<NavMeshAgent>(); 
         navMeshAgent.speed = moveSpeed;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -21,25 +22,20 @@ public class Enemy : Unit
     }
 
     //거리 계산 후, 감지 거리 내 들어올 시 추적 및 이동 
-    private void Update() 
+    private void Update()
     {
         if (_playerTransform != null)
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, _playerTransform.position);
-            if (distanceToPlayer <= targetRange)//필드명 미정
-            {
-                ChasePlayer();
-            }
+            navMeshAgent.SetDestination(_playerTransform.position);
         }
     }
 
-    // 목표 방향 계산 및 추적하는 메서드. 
-    // 방향, 이동, 회전 
-    private void ChasePlayer()
+    private void OnCollisionEnter(Collision collision)
     {
-        Vector3 direction = (_playerTransform.position - transform.position).normalized;
-        transform.position += direction * moveSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.identity;
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("플레이어와 충돌하여 데미지");
+        }
     }
 
     protected override void Die()
