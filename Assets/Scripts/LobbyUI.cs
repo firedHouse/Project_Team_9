@@ -6,7 +6,7 @@ public class LobbyUI : MonoBehaviour
 {
     [SerializeField] private GameObject powerUpUI;
     [SerializeField] private GameObject OptionUI;
-
+    [SerializeField] private GameObject ChoiceUI;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,7 @@ public class LobbyUI : MonoBehaviour
 
     public void OnClinkStart()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("HansolTestScene");
+        ChoiceUI.SetActive(true);
         Debug.Log("Start Button Clicked");
     }
     public void OnClinkPowerUp()
@@ -38,6 +38,7 @@ public class LobbyUI : MonoBehaviour
     {
         UnityEditor.EditorApplication.isPlaying = false;
         Debug.Log("Quit Button Clicked");
+        // Application.Quit(); -> 제작이 끝나면 이걸로 변경
     }
 
 }

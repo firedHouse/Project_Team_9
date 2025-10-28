@@ -19,7 +19,7 @@ public class Enemy : Unit
             _playerTransform = playerObj.transform;
         }
     }
-
+    /*
     //거리 계산 후, 감지 거리 내 들어올 시 추적 및 이동 
     private void Update() 
     {
@@ -48,5 +48,5 @@ public class Enemy : Unit
         // 이펙트 적으로 구현하기 쉬운 방향으로 설계
         Debug.Log($"{gameObject}유닛 사망");
     }
-
+    */
 }
