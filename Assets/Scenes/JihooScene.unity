@@ -226,6 +226,10 @@ GameObject:
   - component: {fileID: 728361918}
   - component: {fileID: 728361917}
   - component: {fileID: 728361916}
+  - component: {fileID: 728361921}
+  - component: {fileID: 728361920}
+  - component: {fileID: 728361923}
+  - component: {fileID: 728361922}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -321,6 +325,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &728361920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728361915}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47fd63705954fa3488fdfd3c06f2c121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skill: {fileID: 0}
+--- !u!114 &728361921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728361915}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e30b19b7556fc4247a16d476a7665978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillProperty: 0
+  _skillLevel: 1
+  _skillDamage: 1
+  _skillRange: 3
+  _skillCooldown: 10
+--- !u!114 &728361922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728361915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e6716aa942a8cd4bbf4a707b1cd6cf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weapon: {fileID: 0}
+--- !u!114 &728361923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728361915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e66a6f1b82bde034eb6b90a3c7f8a4e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _job: 0
+  _weaponLevel: 1
+  _weaponDamage: 3
+  _weaponRange: 1
+  _weaponCooldown: 5
 --- !u!1 &902985266
 GameObject:
   m_ObjectHideFlags: 0
