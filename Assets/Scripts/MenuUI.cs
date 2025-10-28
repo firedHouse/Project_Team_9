@@ -13,11 +13,17 @@ public class MenuUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+     if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 1;
+            gameObject.SetActive(false);
+        }
     }
 
     public void OnClinkExit()
     {
+        Time.timeScale = 1;
         gameObject.SetActive(false);
         Debug.Log("Exit Button Clicked");
     }
