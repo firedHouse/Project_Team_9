@@ -11,14 +11,14 @@ public class GameManager : Singleton<GameManager>
     //씬 이름(실제 씬과 이름 통일 필요, 순서대로 로비, 인게임, 결과)
     public enum SceneName
     {
-        LobbyScene, InGameScene, ResultScene,
+        LobbyScene, PlayScene, ResultScene,
         End
     }
 
     //게임 상태 열거형 
     public enum GameState
     {
-        Lobby, CharacterSelect, InGame, Pause, Result,
+        Lobby, CharacterSelect, Play, Pause, Result,
         End
     }
 
@@ -29,7 +29,7 @@ public class GameManager : Singleton<GameManager>
     {
         { GameState.Lobby, SceneName.LobbyScene },
         { GameState.CharacterSelect, SceneName.LobbyScene },
-        { GameState.InGame, SceneName.InGameScene },
+        { GameState.Play, SceneName.PlayScene },
         { GameState.Result, SceneName.ResultScene },
     };
 
@@ -55,7 +55,7 @@ public class GameManager : Singleton<GameManager>
         {
             //인게임에서만 가능한 퍼즈 상태
             case GameState.Pause:
-                if (previousState == GameState.InGame)
+                if (previousState == GameState.Play)
                 {
                     Time.timeScale = 0f;
 
@@ -68,7 +68,7 @@ public class GameManager : Singleton<GameManager>
                 break;
 
             //인게임 케이스
-            case GameState.InGame:
+            case GameState.Play:
                 //퍼즈였으면 타임스케일 원복.
                 if (previousState == GameState.Pause)
                 {

@@ -403,6 +403,7 @@ MonoBehaviour:
   maxHp: 100
   damage: 10
   moveSpeed: 5
+  attackDamage: 10
 --- !u!195 &597425981
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI; //Nav 사용
 
-[RequireComponent(typeof(NavMeshAgent))] //NavMesh 강제
+//NavMesh 강제
+[RequireComponent(typeof(NavMeshAgent))] 
 public class Enemy : Unit
 {
+    // 어택 세팅 필요
+    [SerializeField] private float attackDamage = 10f; 
+
     private Transform _playerTransform;
     private NavMeshAgent navMeshAgent;
     protected override void Awake()
@@ -26,6 +31,7 @@ public class Enemy : Unit
     {
         if (_playerTransform != null)
         {
+            
             navMeshAgent.SetDestination(_playerTransform.position);
         }
     }
@@ -34,7 +40,12 @@ public class Enemy : Unit
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            //여현구: 어떤 컴포넌트를 플레이어 오브젝트에 담을 지에 따라 GetComponent가 달라짐. Player, Unit, Job 등등
+            Unit playerUnit = collision.gameObject.GetComponent<Unit>(); 
+            playerUnit.TakeDamage(attackDamage);
+
             Debug.Log("플레이어와 충돌하여 데미지");
+
         }
     }
 
