@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI; //Nav 사용
 
@@ -36,7 +35,7 @@ public class Enemy : Unit
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
@@ -52,7 +51,8 @@ public class Enemy : Unit
     protected override void Die()
     {
         // 사망 로직 구현
-        // 이펙트 적으로 구현하기 쉬운 방향으로 설계
+        // 이펙트 적으로 구현하기 쉬운 방향으로 설계해야 함.
+        Destroy(gameObject);
         Debug.Log($"{gameObject}유닛 사망");
     }
 
