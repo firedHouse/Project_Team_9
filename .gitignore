@@ -73,3 +73,13 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+#AssetStore
+/[Aa]ssets/MapAssets/**
+!/[Aa]ssets/MapAssets/**/*.meta
+/[Aa]ssets/MonsterAssets/**
+!/[Aa]ssets/MonsterAssets/**/*.meta
+/[Aa]ssets/EffectAssets/**
+!/[Aa]ssets/EffectAssets/**/*.meta
+/[Aa]ssets/PlayerAssets/**
+!/[Aa]ssets/PlayerAssets/**/*.meta
