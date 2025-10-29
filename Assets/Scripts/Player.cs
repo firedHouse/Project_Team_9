@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour //유닛 상속예정
+public class Player : Unit
 {
     [SerializeField] private float _moveSpeed;  //상속예정
     [SerializeField] private float _rotateInterpolate;
