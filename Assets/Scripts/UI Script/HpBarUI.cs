@@ -5,14 +5,23 @@ using UnityEngine.UI;
 
 public class HpBarUI : MonoBehaviour
 {
-    [SerializeField] public Player player;
-    [SerializeField] public Slider hpBar;
-    [SerializeField] public float maxHp;
-    [SerializeField] public float currentHp;
+    [SerializeField] private Slider hpBar;
+    [SerializeField] private Text hpText;
+    [SerializeField] private float maxHp;
+    [SerializeField] private float curruntHp;
+        
 
     void Update()
     {
-            // transform.position = player.transform.position;
-            // hpBar.value = currentHp / maxHp;
+        hpBar.value = curruntHp / maxHp;
+        if (curruntHp > maxHp)
+        {
+            curruntHp = maxHp;
+        }
+        if (curruntHp < 0)
+        {
+            curruntHp = 0;
+        }
+        hpText.text = curruntHp + " / " + maxHp;
     }
 }
