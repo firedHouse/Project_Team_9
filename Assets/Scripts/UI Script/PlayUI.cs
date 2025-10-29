@@ -7,8 +7,8 @@ public class PlayUI : MonoBehaviour
 {
     [SerializeField] private GameObject menuUI;
     [SerializeField] private Slider expBar;
-    [SerializeField] private Slider HpBar;
-    // [SerializeField] private GameObject Player;
+    [SerializeField] private Slider hpBar;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class PlayUI : MonoBehaviour
         }
 
         // expBar.value = Player.Instance.Exp / Player.Instance.MaxExp;
-        // HpBar.value = Player.Instance.Hp / Player.Instance.MaxHp;
+
     }
 
     public void OnMenu()
@@ -34,4 +34,12 @@ public class PlayUI : MonoBehaviour
         menuUI.SetActive(true);
         Debug.Log("Menu Button Clicked");
     }
+
+    public void LevelUp()
+    {
+        
+        
+    }
+
+
 }
