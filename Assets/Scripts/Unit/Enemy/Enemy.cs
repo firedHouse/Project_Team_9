@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.AI; //Nav 사용
 
+//NavMesh 강제
+[RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : Unit
 {
+    // 어택 세팅 필요
+    [SerializeField] private float attackDamage = 10f;
+
     private Transform _playerTransform;
     private NavMeshAgent navMeshAgent;
     protected override void Awake()
@@ -19,34 +24,36 @@ public class Enemy : Unit
             _playerTransform = playerObj.transform;
         }
     }
-    /*
+
     //거리 계산 후, 감지 거리 내 들어올 시 추적 및 이동 
-    private void Update() 
+    private void Update()
     {
         if (_playerTransform != null)
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, _playerTransform.position);
-            if (distanceToPlayer <= targetRange)//필드명 미정
-            {
-                ChasePlayer();
-            }
+
+            navMeshAgent.SetDestination(_playerTransform.position);
         }
     }
 
-    // 목표 방향 계산 및 추적하는 메서드. 
-    // 방향, 이동, 회전 
-    private void ChasePlayer()
+    private void OnCollisionStay(Collision collision)
     {
-        Vector3 direction = (_playerTransform.position - transform.position).normalized;
-        transform.position += direction * moveSpeed * Time.deltaTime;
-        transform.rotation = Quaternion.identity;
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            //여현구: 어떤 컴포넌트를 플레이어 오브젝트에 담을 지에 따라 GetComponent가 달라짐. Player, Unit, Job 등등
+            Unit playerUnit = collision.gameObject.GetComponent<Unit>();
+            playerUnit.TakeDamage(attackDamage);
+
+            Debug.Log("플레이어와 충돌하여 데미지");
+
+        }
     }
 
     protected override void Die()
     {
         // 사망 로직 구현
-        // 이펙트 적으로 구현하기 쉬운 방향으로 설계
+        // 이펙트 적으로 구현하기 쉬운 방향으로 설계해야 함.
+        Destroy(gameObject);
         Debug.Log($"{gameObject}유닛 사망");
     }
-    */
+
 }
