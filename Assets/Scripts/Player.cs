@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour //유닛 상속예정
 {
     [SerializeField] private float _moveSpeed;  //상속예정
     [SerializeField] private float _rotateInterpolate;
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("A공격");
+            animator.SetTrigger("Attack");
         }
 
         //if (Input.GetKey(KeyCode.Space) != dash)
