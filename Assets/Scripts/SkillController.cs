@@ -21,7 +21,7 @@ public class SkillController : MonoBehaviour
 
     private void Update()
     {
-        // SkillUpgrade(); // 테스트 코드
+        // SkillUpgrade(); // 테스트 코드 
     }
 
     // 속성 강화
