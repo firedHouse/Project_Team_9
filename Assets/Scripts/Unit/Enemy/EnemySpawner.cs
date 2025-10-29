@@ -17,7 +17,6 @@ public class EnemySpawner : MonoBehaviour
     //스폰 주기만 있는데 뭔가 더 있는 게 좋을 듯
     [Header("Spawn Settings")]
     [SerializeField] private float _spawnInterval = 2.0f;
-    [SerializeField] private int _maxTotalEnemies = 50;
 
     private Transform _playerTransform;
 
