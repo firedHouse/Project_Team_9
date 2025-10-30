@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &71726952099900918
+--- !u!1 &1742940752236311712
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5892344888397886867}
-  - component: {fileID: 655728570039370401}
+  - component: {fileID: 3056330837824554815}
+  - component: {fileID: 3019814659434956039}
   m_Layer: 0
   m_Name: Flame
   m_TagString: Untagged
@@ -17,34 +17,34 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &5892344888397886867
+--- !u!4 &3056330837824554815
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 71726952099900918}
+  m_GameObject: {fileID: 1742940752236311712}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.32, z: 0.248}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 175693666255881207}
+  m_Father: {fileID: 5066388617814711845}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!122 &655728570039370401
+--- !u!122 &3019814659434956039
 Halo:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 71726952099900918}
+  m_GameObject: {fileID: 1742940752236311712}
   m_Enabled: 1
   m_Color:
     serializedVersion: 2
     rgba: 4278224383
   m_Size: -0.02
---- !u!1 &1671522485454854820
+--- !u!1 &2806900510461914705
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,10 +52,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 175693666255881207}
-  - component: {fileID: 7117881287575008727}
-  - component: {fileID: 2323446551026769368}
-  - component: {fileID: 2616412006080308680}
+  - component: {fileID: 5066388617814711845}
+  - component: {fileID: 7275180789560466376}
+  - component: {fileID: 6008321011415738591}
+  - component: {fileID: 884724960876206065}
   m_Layer: 0
   m_Name: Candlestick_Wall (5)
   m_TagString: Untagged
@@ -63,38 +63,38 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &175693666255881207
+--- !u!4 &5066388617814711845
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671522485454854820}
+  m_GameObject: {fileID: 2806900510461914705}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 27.390003, y: 95.88313, z: -40.639343}
+  m_LocalPosition: {x: 27.390003, y: 4.4, z: -40.639343}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8527729452579453543}
-  - {fileID: 5892344888397886867}
+  - {fileID: 3957414205739162483}
+  - {fileID: 3056330837824554815}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!33 &7117881287575008727
+--- !u!33 &7275180789560466376
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671522485454854820}
+  m_GameObject: {fileID: 2806900510461914705}
   m_Mesh: {fileID: -1066429553901080227, guid: c04865966f8d8ae409e19627bacc4ee4, type: 3}
---- !u!23 &2323446551026769368
+--- !u!23 &6008321011415738591
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671522485454854820}
+  m_GameObject: {fileID: 2806900510461914705}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -131,13 +131,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2616412006080308680
+--- !u!64 &884724960876206065
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671522485454854820}
+  m_GameObject: {fileID: 2806900510461914705}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -153,7 +153,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1066429553901080227, guid: c04865966f8d8ae409e19627bacc4ee4, type: 3}
---- !u!1 &2649125409256357019
+--- !u!1 &5012484493881954793
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,9 +161,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8527729452579453543}
-  - component: {fileID: 7022725286700189857}
-  - component: {fileID: 443459847797366656}
+  - component: {fileID: 3957414205739162483}
+  - component: {fileID: 35878670294424842}
+  - component: {fileID: 1086105799556545706}
   m_Layer: 10
   m_Name: CandleLight
   m_TagString: Untagged
@@ -171,28 +171,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &8527729452579453543
+--- !u!4 &3957414205739162483
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2649125409256357019}
+  m_GameObject: {fileID: 5012484493881954793}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.34, z: 0.248}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 175693666255881207}
+  m_Father: {fileID: 5066388617814711845}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!108 &7022725286700189857
+--- !u!108 &35878670294424842
 Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2649125409256357019}
+  m_GameObject: {fileID: 5012484493881954793}
   m_Enabled: 1
   serializedVersion: 10
   m_Type: 2
@@ -248,13 +248,13 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!122 &443459847797366656
+--- !u!122 &1086105799556545706
 Halo:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2649125409256357019}
+  m_GameObject: {fileID: 5012484493881954793}
   m_Enabled: 1
   m_Color:
     serializedVersion: 2

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6902391097581767583
+--- !u!1 &486670182723505491
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7396592638981484758}
-  - component: {fileID: 8378820130381300576}
-  - component: {fileID: 5613474431986584619}
-  - component: {fileID: 7649301613933598573}
+  - component: {fileID: 4702449631225798154}
+  - component: {fileID: 7124425170361625391}
+  - component: {fileID: 5078097634103755055}
+  - component: {fileID: 3824548631991704553}
   m_Layer: 0
   m_Name: Portcullis_Metal (6)
   m_TagString: Untagged
@@ -19,36 +19,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &7396592638981484758
+--- !u!4 &4702449631225798154
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6902391097581767583}
+  m_GameObject: {fileID: 486670182723505491}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 47.4, y: 90.65433, z: 16.3293}
+  m_LocalPosition: {x: 47.4, y: -0, z: 16.3293}
   m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!33 &8378820130381300576
+--- !u!33 &7124425170361625391
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6902391097581767583}
+  m_GameObject: {fileID: 486670182723505491}
   m_Mesh: {fileID: 5476594047164684567, guid: dcf471cf5bc58a74db5ba5a1bc163997, type: 3}
---- !u!23 &5613474431986584619
+--- !u!23 &5078097634103755055
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6902391097581767583}
+  m_GameObject: {fileID: 486670182723505491}
   m_Enabled: 1
   m_CastShadows: 2
   m_ReceiveShadows: 1
@@ -84,13 +84,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7649301613933598573
+--- !u!64 &3824548631991704553
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6902391097581767583}
+  m_GameObject: {fileID: 486670182723505491}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
