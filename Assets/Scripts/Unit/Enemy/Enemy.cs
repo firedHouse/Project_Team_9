@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI; //Nav 사용
 
-//NavMesh 강제
-[RequireComponent(typeof(NavMeshAgent))]
+
 public class Enemy : Unit
 {
+    //반납할 때 사용할 키 = 프리펩의 이름
+    [Header("Pool Key")]
+    [SerializeField] private string _prefabKey = "EnemyPrefabName"; 
+
     // 어택 세팅 필요
     [SerializeField] private float attackDamage = 10f;
 
@@ -16,7 +19,10 @@ public class Enemy : Unit
     {
         base.Awake();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.speed = moveSpeed;
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.enabled = false;
+        }
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -24,13 +30,26 @@ public class Enemy : Unit
             _playerTransform = playerObj.transform;
         }
     }
+    //풀에서 가져올 때 호출하는 초기화 로직
+    public void OnSpawned()
+    {
+        if (navMeshAgent == null)
+        {
+            navMeshAgent = gameObject.AddComponent<NavMeshAgent>();
+        }
+        // NavMeshAgent 활성화 및 이동 시작
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.enabled = true;
+            navMeshAgent.speed = moveSpeed;
+        }
+    }
 
     //거리 계산 후, 감지 거리 내 들어올 시 추적 및 이동 
     private void Update()
     {
-        if (_playerTransform != null)
+        if (_playerTransform != null & navMeshAgent.enabled)
         {
-
             navMeshAgent.SetDestination(_playerTransform.position);
         }
     }
@@ -50,10 +69,15 @@ public class Enemy : Unit
 
     protected override void Die()
     {
-        // 사망 로직 구현
-        // 이펙트 적으로 구현하기 쉬운 방향으로 설계해야 함.
-        Destroy(gameObject);
         Debug.Log($"{gameObject}유닛 사망");
+
+        //NavMeshAgent 기능 정지
+        if (navMeshAgent.enabled)
+        {
+            navMeshAgent.isStopped = true;
+            navMeshAgent.enabled = false;
+        }
+        ObjectPoolManager.Instance.ReturnObject(gameObject, _prefabKey);
     }
 
 }

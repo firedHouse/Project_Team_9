@@ -14,7 +14,7 @@ using UnityEngine;
 public class PoolData
 {
     public GameObject prefab;
-    public int initialSize = 20;
+    public int initialSize;
 }
 
 public class ObjectPoolManager : Singleton<ObjectPoolManager>
@@ -27,6 +27,10 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
     protected override void Awake()
     {
         base.Awake();
+
+    }
+    private void Start()
+    {
         InitializePools();
     }
 

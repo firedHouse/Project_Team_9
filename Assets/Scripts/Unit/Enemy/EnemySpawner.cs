@@ -84,6 +84,11 @@ public class EnemySpawner : MonoBehaviour
         {
             newEnemy.transform.position = spawnPosition;
             newEnemy.SetActive(true);
+            Enemy enemyOnSpanwed = newEnemy.GetComponent<Enemy>();
+            if (enemyOnSpanwed != null)
+            {
+                enemyOnSpanwed.OnSpawned();
+            }
         }
     }
 
