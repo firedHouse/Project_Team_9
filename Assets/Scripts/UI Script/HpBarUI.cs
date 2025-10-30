@@ -11,13 +11,21 @@ public class HpBarUI : MonoBehaviour
     private float maxHp;
     private float curruntHp;
         
+    void Start()
+    {
+        if (player == null)
+        {
+            Debug.LogError("참조된 Player가 존재하지 않습니다.");
+        }
+    }
 
     void Update()
     {
-        // player.maxHp = maxHp;
-        // player.currentHp = curruntHp;
+        maxHp = player.maxHp;
+        curruntHp = player.currentHp;
 
         hpBar.value = curruntHp / maxHp;
+
         if (curruntHp > maxHp)
         {
             curruntHp = maxHp;

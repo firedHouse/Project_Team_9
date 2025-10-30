@@ -29,7 +29,7 @@ public class MenuUI : MonoBehaviour
     }
     public void OnClinkBacktoLobby()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("LobbyScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("TestLobbyScene");
         Debug.Log("Back to Lobby Button Clicked");
     }
 }
