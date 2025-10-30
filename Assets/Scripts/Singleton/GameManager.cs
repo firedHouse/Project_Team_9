@@ -37,6 +37,12 @@ public class GameManager : Singleton<GameManager>
     private GameState _currentState = GameState.Lobby;
     public GameState currentState => _currentState;
 
+    //플레이씬 테스트용 코드 나중에 스타트 채로 날려야 합니다!
+    private void Start()
+    {
+        ChangeState(GameState.Play);
+    }
+
     public void ChangeState(GameState state)
     {
         if (_currentState == state)
