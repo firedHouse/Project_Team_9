@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager>
     //씬 이름(실제 씬과 이름 통일 필요, 순서대로 로비, 인게임, 결과)
     public enum SceneName
     {
-        LobbyScene, PlayScene, ResultScene,
+        LobbyScene, PlayScene,
         End
     }
 
@@ -30,7 +30,7 @@ public class GameManager : Singleton<GameManager>
         { GameState.Lobby, SceneName.LobbyScene },
         { GameState.CharacterSelect, SceneName.LobbyScene },
         { GameState.Play, SceneName.PlayScene },
-        { GameState.Result, SceneName.ResultScene },
+        { GameState.Result, SceneName.PlayScene },
     };
 
     //초기 상태는 로비, 읽기전용 프로퍼티화

@@ -1054,6 +1054,7 @@ GameObject:
   - component: {fileID: 1234309885100345805}
   - component: {fileID: 5167009473015143522}
   - component: {fileID: -7345863862052953858}
+  - component: {fileID: 8010917368192722200}
   m_Layer: 0
   m_Name: TurtleShellPBR
   m_TagString: Untagged
@@ -1114,8 +1115,31 @@ MonoBehaviour:
   maxHp: 5
   damage: 0
   moveSpeed: 5
+  currentHp: 0
   _prefabKey: EnemyPrefabName
-  attackDamage: 10
+  _attackDamage: 5
+  _attackCooldown: 1
+--- !u!65 &8010917368192722200
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9031917395455814418}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.48, y: 1.2, z: 1.52}
+  m_Center: {x: 0, y: 0.22, z: -0.01}
 --- !u!1 &9078127594546186573
 GameObject:
   m_ObjectHideFlags: 0

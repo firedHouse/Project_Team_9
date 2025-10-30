@@ -2,13 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : Unit
 {
-    
+    private bool isDead = false;
     private float _rotateInterpolate = 10;
 
     [SerializeField] private Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+
+    }
 
     private Vector3 GetNormalizedDirection()
     {
@@ -85,28 +92,45 @@ public class Player : Unit
         transform.position += moveSpeed * Time.deltaTime * direction;
     }
 
-
-
-
-    //private void MovePlayer()
-    //{
-    //
-    //}
-
-
-    //public override void Die()
-    //{
-    //    Debug.Log($"게임종료");
-    //}
-    private void Start()
+    public override void TakeDamage(float damage)
     {
-        animator = GetComponent<Animator>();
+        if (isDead)
+        {
+            return;
+        }
 
+        currentHp -= damage;
+        Debug.Log($"플레이어가 {damage} 데미지를 받았습니다. 남은 체력: {currentHp}");
+
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            Die();
+        }
     }
+
+
+    protected override void Die()
+    {
+        Debug.Log($"You died");
+
+        StartCoroutine(GameOverSequence(5f));
+    }
+
+    private IEnumerator GameOverSequence(float delay)
+    {
+        Debug.Log("씬전환됨");
+        enabled = false;
+        yield return new WaitForSeconds(delay);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ChangeState(GameManager.GameState.Result);
+        }
+    }
+
     private void Update()
     {
         SetPosition();
         ActiveSkill();
-
     }
 }

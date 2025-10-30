@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 1530993078303790283}
   - component: {fileID: 7245006014610115006}
   - component: {fileID: -3080365290423355709}
+  - component: {fileID: 8987666627248126977}
   m_Layer: 0
   m_Name: SlimePBR
   m_TagString: Untagged
@@ -229,8 +230,31 @@ MonoBehaviour:
   maxHp: 5
   damage: 0
   moveSpeed: 5
+  currentHp: 0
   _prefabKey: EnemyPrefabName
-  attackDamage: 10
+  _attackDamage: 5
+  _attackCooldown: 1
+--- !u!65 &8987666627248126977
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846380656912974705}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.44, z: 0}
 --- !u!1 &4919132778707179068
 GameObject:
   m_ObjectHideFlags: 0
