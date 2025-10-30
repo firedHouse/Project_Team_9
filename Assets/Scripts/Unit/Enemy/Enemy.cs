@@ -45,6 +45,7 @@ public class Enemy : Unit
         {
             navMeshAgent.enabled = true;
             navMeshAgent.speed = moveSpeed;
+            
         }
     }
 
