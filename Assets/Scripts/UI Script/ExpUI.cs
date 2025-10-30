@@ -5,34 +5,46 @@ using UnityEngine.UI;
 
 public class ExpUI : MonoBehaviour
 {
-    
-    [SerializeField] private Slider ExpBar;
-    [SerializeField] private Text LevelText;
-    private float maxExp;
-    private float currentExp;
-    private int level = 1;
+    [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private Slider expBar;
+    [SerializeField] private Text levelText;
+    float _maxExp;
+    float _currentExp;
+    float _currentLevel;
+    float _maxLevel;
 
-    void Update()
+    private void Start()
     {
-        ExpBar.value = currentExp / maxExp;
-        LevelUp();
-        LevelText.text = "Level : " + level;
-        if(level >= 10)
+        if (playerStats == null)
         {
-            level = 10;
-            LevelText.text = "Level : MAX";
-            currentExp = 0;
-            ExpBar.value = 1;
+            playerStats = GetComponent<PlayerStats>();
+            if (playerStats == null)
+            {
+                Debug.LogError("참조된 PlayerStats가 존재하지 않습니다.");
+                return;
+            }
         }
 
+        playerStats.OnExpChanged += UpdateExpUI;
+        playerStats.OnLevelChanged += UpdateLevelUI;
+
     }
-    public void LevelUp()
+
+    private void UpdateExpUI(float currentExp, float maxExp)
     {
-        if (currentExp >= maxExp)
+        _currentExp = currentExp;
+        _maxExp = maxExp;
+        expBar.value = currentExp / maxExp;
+    }
+
+    private void UpdateLevelUI(int currentLevel, int maxLevel)
+    {
+        _currentLevel = currentLevel;
+        _maxLevel = maxLevel;
+        levelText.text = $"Lv. {_currentLevel}";
+        if (_currentLevel >= _maxLevel)
         {
-            currentExp = currentExp - maxExp;
-            maxExp *= 1.2f;
-            level++;
+            levelText.text = $"Level. Max";
         }
     }
 }

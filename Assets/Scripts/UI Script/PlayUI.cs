@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class PlayUI : MonoBehaviour
 {
     [SerializeField] private GameObject menuUI;
-    [SerializeField] private Slider expBar;
-    [SerializeField] private Slider hpBar;
 
 
     // Start is called before the first frame update
