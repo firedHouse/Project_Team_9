@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8615504389092077273
+--- !u!1 &8164552567985516256
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,46 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6795100866149856802}
-  - component: {fileID: 3420442583443188089}
-  - component: {fileID: 9104836651120732158}
+  - component: {fileID: 3334299423599411325}
+  - component: {fileID: 7901883048938447679}
+  - component: {fileID: 6670006479369916746}
   m_Layer: 0
-  m_Name: SM_DEMOCrystal1_Red (3)
+  m_Name: SM_DEMOCrystal1_Red (5) 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6795100866149856802
+--- !u!4 &3334299423599411325
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8615504389092077273}
+  m_GameObject: {fileID: 8164552567985516256}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.840002, y: 90.64555, z: -53.380703}
+  m_LocalRotation: {x: -0, y: 0.86411303, z: -0, w: 0.50329775}
+  m_LocalPosition: {x: 21.190699, y: 91.12, z: -41.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3420442583443188089
+  m_LocalEulerAnglesHint: {x: 0, y: 119.563, z: 0}
+--- !u!33 &7901883048938447679
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8615504389092077273}
+  m_GameObject: {fileID: 8164552567985516256}
   m_Mesh: {fileID: 6458178275567996871, guid: d6385219ae45ec34e94149d4b176f2c8, type: 3}
---- !u!23 &9104836651120732158
+--- !u!23 &6670006479369916746
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8615504389092077273}
+  m_GameObject: {fileID: 8164552567985516256}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
