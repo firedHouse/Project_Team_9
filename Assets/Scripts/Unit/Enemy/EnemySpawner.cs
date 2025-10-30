@@ -5,8 +5,9 @@ using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("Enemy Prefabs")]
-    [SerializeField] private GameObject[] _enemyPrefabs;
+    //스트링 배열로 변경하고 헤더를 좀 더 직관적으로 바꿨습니다
+    [Header("Spawn Targets Name")]
+    [SerializeField] private string[] _enemyPrefabNames;
 
     //일단 맵 전체를 바운더리로 설정하여 스포너 하나만 사용해볼 예정
     [Header("Spawner Boundary")]
@@ -61,7 +62,7 @@ public class EnemySpawner : MonoBehaviour
     //에너미 스폰 메서드
     private void SpawnEnemy()
     {
-        if (_playerTransform == null || _enemyPrefabs.Length == 0)
+        if (_playerTransform == null || _enemyPrefabNames.Length == 0)
         {
             return;
         }
@@ -75,12 +76,20 @@ public class EnemySpawner : MonoBehaviour
         }
 
 
-        //유니티 랜덤을 통해 랜덤 함수 생성, 처음 써보는 거라 확인 필요함!
-        GameObject randomEnemyPrefab = _enemyPrefabs[UnityEngine.Random.Range(0, _enemyPrefabs.Length)];
-        GameObject newEnemy = Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity); //오브젝트 풀링 만들면 변경해야함
+        //오브젝트 풀링 도입 완료, 프리펩 이름으로 랜덤 돌려서 하나 생성, null 반환 안전장치 추가
+        string randomEnemyPrefab = _enemyPrefabNames[UnityEngine.Random.Range(0, _enemyPrefabNames.Length)];
+        GameObject newEnemy = ObjectPoolManager.Instance.GetObject(randomEnemyPrefab);
 
-        newEnemy.transform.position = spawnPosition;
-        newEnemy.SetActive(true);
+        if (newEnemy != null)
+        {
+            newEnemy.transform.position = spawnPosition;
+            newEnemy.SetActive(true);
+            Enemy enemyOnSpanwed = newEnemy.GetComponent<Enemy>();
+            if (enemyOnSpanwed != null)
+            {
+                enemyOnSpanwed.OnSpawned();
+            }
+        }
     }
 
     //주변 오브젝트 체크용으로 네비매쉬 사용
