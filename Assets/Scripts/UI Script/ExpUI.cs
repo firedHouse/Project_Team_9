@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class ExpUI : MonoBehaviour
 {
+    
     [SerializeField] private Slider ExpBar;
     [SerializeField] private Text LevelText;
-    [SerializeField] private float maxExp;
-    [SerializeField] private float currentExp;
+    private float maxExp;
+    private float currentExp;
     private int level = 1;
 
     void Update()
