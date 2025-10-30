@@ -126,6 +126,7 @@ public class Player : Unit
         {
             GameManager.Instance.ChangeState(GameManager.GameState.Result);
         }
+        //Destroy(gameObject) <= 계속 씬 전환 일어날 시 사용
     }
 
     private void Update()
