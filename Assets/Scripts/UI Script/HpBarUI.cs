@@ -7,12 +7,16 @@ public class HpBarUI : MonoBehaviour
 {
     [SerializeField] private Slider hpBar;
     [SerializeField] private Text hpText;
-    [SerializeField] private float maxHp;
-    [SerializeField] private float curruntHp;
+    [SerializeField] private Player player;
+    private float maxHp;
+    private float curruntHp;
         
 
     void Update()
     {
+        // player.maxHp = maxHp;
+        // player.currentHp = curruntHp;
+
         hpBar.value = curruntHp / maxHp;
         if (curruntHp > maxHp)
         {
