@@ -11,6 +11,7 @@ public class Enemy : Unit
     [SerializeField] private string _prefabKey = "EnemyPrefabName";
 
     [SerializeField] private float _attackCooldown = 1.0f;
+    [SerializeField] private float _gainExp = 500f;
     private float _lastAttackTime = 0f;
 
 
@@ -82,6 +83,7 @@ public class Enemy : Unit
 
     protected override void Die()
     {
+        
         Debug.Log($"{gameObject}À¯´Ö »ç¸Á");
 
         //NavMeshAgent ±â´É Á¤Áö
