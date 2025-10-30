@@ -5,21 +5,25 @@ using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour
 {
+    //플레이어 감지 사거리
+    [Header("Detection Settings")]
+    [SerializeField] private float _detectionRange = 50f;
+    private bool _isSpawningActive = false;
+
+
     //스트링 배열로 변경하고 헤더를 좀 더 직관적으로 바꿨습니다
     [Header("Spawn Targets Name")]
     [SerializeField] private string[] _enemyPrefabNames;
 
-    //일단 맵 전체를 바운더리로 설정하여 스포너 하나만 사용해볼 예정
-    [Header("Spawner Boundary")]
-    [SerializeField] private Vector2 _mapMinXZ = new Vector2(-50f, -50f);
-    [SerializeField] private Vector2 _mapMaxXZ = new Vector2(50f, 50f);
-    [SerializeField] private float _navMeshSearchRange = 10f; // NavMesh 검색 반경
 
-    //스폰 주기만 있는데 뭔가 더 있는 게 좋을 듯
+    //순서대로 스폰범위, 랜덤포지션값에서 반경 m만큼 설치 가능 위치 검색, 스폰 주기
     [Header("Spawn Settings")]
+    [SerializeField] private float _spawnRadius = 50f;
+    [SerializeField] private float _navMeshSearchRange = 5f; // NavMesh 검색 반경
     [SerializeField] private float _spawnInterval = 2.0f;
 
     private Transform _playerTransform;
+    private bool _isGamePlaying = false;
 
     private void Start()
     {
@@ -33,6 +37,48 @@ public class EnemySpawner : MonoBehaviour
         //게임 상태 변경 구독!
         GameManager.Instance.OnStateChanged += OnGameStateChanged;
     }
+
+    //라운드마다 스포너가 작동하도록 유저와의 거리를 탐지해 스폰하도록 수정
+    private void Update()
+    {
+        if (!_isGamePlaying || _playerTransform == null)
+        {
+            // 게임이 Play 상태가 아닐 때 스폰이 켜져 있으면 스폰 끝내기
+            if (_isSpawningActive)
+            {
+                CancelInvoke(nameof(SpawnEnemy));
+                _isSpawningActive = false;
+            }
+            return;
+        }
+
+        float distanceToPlayer = Vector3.Distance(transform.position, _playerTransform.position);
+
+        // 3. 감지 범위 안에 들어왔는지 체크
+        if (distanceToPlayer <= _detectionRange)
+        {
+            // 범위 안에 있고, 아직 스폰이 활성화되지 않았다면 시작
+            if (!_isSpawningActive)
+            {
+                InvokeRepeating(nameof(SpawnEnemy), 0f, _spawnInterval);
+                _isSpawningActive = true;
+                Debug.Log($"[{gameObject.name}] Player detected within range ({_detectionRange}m). Starting spawn!");
+            }
+        }
+        else
+        {
+            // 범위 밖에 있고, 스폰이 활성화되어 있다면 중지
+            if (_isSpawningActive)
+            {
+                CancelInvoke(nameof(SpawnEnemy));
+                _isSpawningActive = false;
+                Debug.Log($"[{gameObject.name}] Player left detection range. Stopping spawn.");
+            }
+        }
+
+
+
+    }
     private void OnDestroy()
     {
         if (GameManager.Instance != null)
@@ -43,20 +89,16 @@ public class EnemySpawner : MonoBehaviour
         CancelInvoke(nameof(SpawnEnemy));
     }
 
-    //Play 여부에 따라 스폰 메서드 On, off 판단하는 메서드
+    //Play 여부 판단 메서드
     private void OnGameStateChanged(GameManager.GameState newState)
     {
         if (newState == GameManager.GameState.Play)
         {
-            //Play 상태가 되면 스폰 메서드를 _spawnInterval마다 호출
-            InvokeRepeating(nameof(SpawnEnemy), 0f, _spawnInterval);
-            Debug.Log("스폰 메서드 호출할거임");
+            _isGamePlaying = true;
         }
         else
         {
-            //Play 아니면 반복 호출 끄기
-            CancelInvoke(nameof(SpawnEnemy));
-            Debug.Log("Enemy Spawner: InvokeRepeating 중지.");
+            _isGamePlaying = false;
         }
     }
     //에너미 스폰 메서드
@@ -95,21 +137,18 @@ public class EnemySpawner : MonoBehaviour
     //주변 오브젝트 체크용으로 네비매쉬 사용
     private Vector3 GetSpawnPosition()
     {
-        Vector3 finalPosition = Vector3.zero;
         NavMeshHit hit;
 
-        //조건 체크항목인데 시간 되면 do while로 리팩토링 할 듯
         for (int i = 0; i < 15; i++)
         {
-            //경계 내 무작위 위치값 받아오고
-            float randomX = UnityEngine.Random.Range(_mapMinXZ.x, _mapMaxXZ.x);
-            float randomZ = UnityEngine.Random.Range(_mapMinXZ.y, _mapMaxXZ.y);
-            Vector3 randomPosition = new Vector3(randomX, 0f, randomZ);
+            //반지름이 radius인 구에서 무작위 점을 지정하기
+            Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * _spawnRadius;
+            randomDirection += transform.position;
 
-            if (NavMesh.SamplePosition(randomPosition, out hit, _navMeshSearchRange, NavMesh.AllAreas))
+            //네비매쉬 Bake 된 곳 찾아서 리턴
+            if (NavMesh.SamplePosition(randomDirection, out hit, _navMeshSearchRange, NavMesh.AllAreas))
             {
-                finalPosition = hit.position;
-                return finalPosition;
+                return hit.position;
             }
         }
         return Vector3.zero;

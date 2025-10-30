@@ -1056,7 +1056,7 @@ GameObject:
   - component: {fileID: -7345863862052953858}
   - component: {fileID: 8010917368192722200}
   m_Layer: 0
-  m_Name: TurtleShellPBR
+  m_Name: TurtleShell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1090,7 +1090,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 599b2dc9e6c44a8ebc02ddea1f18d215, type: 3}
   m_Controller: {fileID: 9100000, guid: 1f68948a5bb74f2fa9e9087a872750e9, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -1112,12 +1112,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5f4654b5a785a448871a0b22ba0fa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 5
-  damage: 0
-  moveSpeed: 5
+  maxHp: 30
+  damage: 5
+  moveSpeed: 3
   currentHp: 0
   _prefabKey: EnemyPrefabName
-  _attackDamage: 5
   _attackCooldown: 1
 --- !u!65 &8010917368192722200
 BoxCollider:
