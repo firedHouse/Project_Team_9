@@ -10,8 +10,6 @@ public class Enemy : Unit
     [Header("Pool Key")]
     [SerializeField] private string _prefabKey = "EnemyPrefabName";
 
-    // 어택 세팅 필요
-    [SerializeField] private float _attackDamage = 5f;
     [SerializeField] private float _attackCooldown = 1.0f;
     private float _lastAttackTime = 0f;
 
@@ -75,7 +73,7 @@ public class Enemy : Unit
             if (Time.time >= _lastAttackTime + _attackCooldown)
             {
                 Unit playerUnit = collision.gameObject.GetComponent<Unit>();
-                playerUnit.TakeDamage(_attackDamage);
+                playerUnit.TakeDamage(damage);
                 Debug.Log("플레이어와 충돌하여 데미지");
                 _lastAttackTime = Time.time;
             }
