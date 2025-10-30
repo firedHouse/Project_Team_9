@@ -6,15 +6,11 @@ public class Weapon : MonoBehaviour
 {
     public enum Job { Warrior, Archer, Rogue, End};
     [SerializeField] private Job _job;
-    [SerializeField] private int _weaponLevel = 1;
+    [SerializeField] private PlayerStats playerStats;
+
     [SerializeField] private float _weaponDamage = 3f;
     [SerializeField] private float _weaponRange = 1f;
     [SerializeField] private float _weaponCooldown = 5f;
-
-    public int WeaponLevel
-    {
-        get => _weaponLevel;
-    }
 
     public float WeaponDamage
     {
@@ -32,17 +28,56 @@ public class Weapon : MonoBehaviour
         set => _weaponCooldown = value;
     }
 
+    private void Awake()
+    {
+        Init();
+    }
+
     private void Init()
     {
+        playerStats = GetComponent<PlayerStats>();
+        playerStats.OnLevelChanged += WeaponUpgrade;
+    }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            WeaponAttack();
+        }
     }
 
     // 수동 공격
-    public void WeaponAttack(float damage)
+    public void WeaponAttack()
     {
         Debug.Log($"무기 공격 : damage - {_weaponDamage} range - {_weaponRange}");
     }
 
-    // 무기 스킬 해금
+    public void WeaponUpgrade(int curLvl, int maxLvl)
+    {
+        if (curLvl >= maxLvl)
+        {
+            return;
+        }
+        WeaponDamageUpgrade();
+        WeaponRangeUpgrade();
+        WeaponCooldownUpgrade();
+    }
+
+    private void WeaponDamageUpgrade()
+    {
+        Debug.Log("무기 데미지 증가");
+        _weaponDamage += 1f;
+    }
+    private void WeaponRangeUpgrade()
+    {
+        Debug.Log("무기 범위 증가");
+        _weaponRange += 0.5f;
+    }
+    private void WeaponCooldownUpgrade()
+    {
+        Debug.Log("무기 쿨타임 감소");
+        _weaponCooldown -= 0.5f;
+    }
 
 }
