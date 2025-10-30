@@ -64,8 +64,8 @@ public class Player : Unit
             Debug.Log("RÀÔ·Â");
         }
 
-        if (Input.GetKey(KeyCode.A))
-        {
+        if (Input.GetKeyDown(KeyCode.A))
+        {            
             animator.SetTrigger("Attack");
         }
 
