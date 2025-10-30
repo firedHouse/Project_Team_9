@@ -5,11 +5,11 @@ using UnityEngine;
 public abstract class Unit : MonoBehaviour
 {
     [Header("Base Stats")]
-    [SerializeField] protected float maxHp;
-    [SerializeField] protected float damage;
+    [SerializeField] public float maxHp;
+    [SerializeField] public float damage;
     [SerializeField] protected float moveSpeed;
 
-    protected float currentHp;
+    public float currentHp;
 
     // moveSpeed는 외부에서 읽기만 가능하도록 프로퍼티 부여
     public float MoveSpeed => moveSpeed; 
