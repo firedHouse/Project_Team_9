@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] private int _playerMaxLevel = 10;
+    [SerializeField] private int _playerMaxLevel = 9;
     [SerializeField] private float _playerMaxExp = 1000;
     [SerializeField] private float _exp = 200;
     [SerializeField] private float _expIncreaseAmount = 700;
@@ -23,15 +23,15 @@ public class PlayerStats : MonoBehaviour
     private void Update()
     {
         // 테스트 코드
-        if (Input.anyKeyDown)
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            GetExp(_exp, _playerMaxExp);
-            //Debug.Log($"현재 레벨 : {_playerCurrentLevel} | {_playerCurrentExp} / {_playerMaxExp}");
+            GetExp(_exp);
+            Debug.Log($"현재 레벨 : {_playerCurrentLevel} | {_playerCurrentExp} / {_playerMaxExp}");
         }
     }
 
-
-    public void GetExp(float exp, float maxExp)
+    // 추후 이동 가능
+    public void GetExp(float exp)
     {
         // 최대 레벨 도달시 리턴
         if(_playerCurrentLevel == _playerMaxLevel)
@@ -52,6 +52,7 @@ public class PlayerStats : MonoBehaviour
         OnExpChanged?.Invoke(_playerCurrentExp, _playerMaxExp);
     }
 
+    // 추후 이동 가능
     public void LevelUp()
     {
         // 현재 최대 레벨이라면 제한
