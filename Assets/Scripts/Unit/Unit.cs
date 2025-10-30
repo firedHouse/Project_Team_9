@@ -6,12 +6,12 @@ public abstract class Unit : MonoBehaviour
 {
     [Header("Base Stats")]
     [SerializeField] public float maxHp;
-    [SerializeField] protected float damage;
+    [SerializeField] public float damage;
     [SerializeField] protected float moveSpeed;
 
     public float currentHp;
 
-    // moveSpeed´Â ¿ÜºÎ¿¡¼­ ÀĞ±â¸¸ °¡´ÉÇÏµµ·Ï ÇÁ·ÎÆÛÆ¼ ºÎ¿©
+    // moveSpeedëŠ” ì™¸ë¶€ì—ì„œ ì½ê¸°ë§Œ ê°€ëŠ¥í•˜ë„ë¡ í”„ë¡œí¼í‹° ë¶€ì—¬
     public float MoveSpeed => moveSpeed; 
 
     protected virtual void Awake()
@@ -33,7 +33,7 @@ public abstract class Unit : MonoBehaviour
     protected virtual void Die()
     {
         Debug.Log($"{gameObject.name} died.");
-        //¿¡³Ê¹Ì ¿ÀºêÁ§Æ® Ç®¸µ
-        //ÇÃ·¹ÀÌ¾î Die ½Ã ¸ğ¸£°Ú´Ù?
+        //ì—ë„ˆë¯¸ ì˜¤ë¸Œì íŠ¸ í’€ë§
+        //í”Œë ˆì´ì–´ Die ì‹œ ëª¨ë¥´ê² ë‹¤?
     }
 }
