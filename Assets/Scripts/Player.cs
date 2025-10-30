@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Player : Unit
 {
-    [SerializeField] private float _moveSpeed;  //상속예정
-    [SerializeField] private float _rotateInterpolate;
+    
+    private float _rotateInterpolate = 10;
 
     [SerializeField] private Animator animator;
 
@@ -82,7 +82,7 @@ public class Player : Unit
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), _rotateInterpolate * Time.deltaTime);
 
-        transform.position += _moveSpeed * Time.deltaTime * direction;
+        transform.position += moveSpeed * Time.deltaTime * direction;
     }
 
 
