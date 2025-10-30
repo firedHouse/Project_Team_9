@@ -79,7 +79,6 @@ public class Enemy : Unit
                 Debug.Log("플레이어와 충돌하여 데미지");
                 _lastAttackTime = Time.time;
             }
-
         }
     }
 
