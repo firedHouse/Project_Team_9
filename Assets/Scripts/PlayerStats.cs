@@ -9,33 +9,31 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float _playerMaxExp = 1000;
     [SerializeField] private float _exp = 200;
     [SerializeField] private float _expIncreaseAmount = 700;
-    private int _playerCurrentLevel;
-    private float _playerCurrentExp;
+    private int _playerCurrentLevel = 1;
+    private float _playerCurrentExp = 0;
     // 플레이어 체력, 경험치, 이속(변수 이미 존재)
+
+    public event Action<float, float> OnExpChanged;
+    public event Action<int, int> OnLevelChanged;
 
     private void Awake()
     {
-        Init();
-    }
-
-    private void Init()
-    {
-        _playerCurrentLevel = 1;
-        _playerCurrentExp = 0;
     }
 
     private void Update()
     {
         // 테스트 코드
-        //if (Input.anyKeyDown)
-        //{
-        //    GetExp(_exp);
-        //    Debug.Log($"현재 레벨 : {_playerCurrentLevel} | {_playerCurrentExp} / {_playerMaxExp}");
-        //}
+        if (Input.anyKeyDown)
+        {
+            GetExp(_exp, _playerMaxExp);
+            //Debug.Log($"현재 레벨 : {_playerCurrentLevel} | {_playerCurrentExp} / {_playerMaxExp}");
+        }
     }
 
-    public void GetExp(float exp)
+
+    public void GetExp(float exp, float maxExp)
     {
+        // 최대 레벨 도달시 리턴
         if(_playerCurrentLevel == _playerMaxLevel)
         {
             return;
@@ -46,10 +44,12 @@ public class PlayerStats : MonoBehaviour
         // 들어온 경험치를 더했을 때 최대 경험치보다 클 경우 초기화 후 최대 경험치 - 현재 경험치 한 값을 더해준다
         if(_playerCurrentExp >= _playerMaxExp)
         {
+            // 넘친 경험치 임시로 저장 후 초기화된 경험치에 더하기
             float exceededExp = _playerCurrentExp - _playerMaxExp;
             LevelUp();
             _playerCurrentExp += exceededExp;
         }
+        OnExpChanged?.Invoke(_playerCurrentExp, _playerMaxExp);
     }
 
     public void LevelUp()
@@ -60,7 +60,9 @@ public class PlayerStats : MonoBehaviour
             return;
         }
         _playerCurrentLevel++;
-        _playerCurrentExp = 0;
         _playerMaxExp += _expIncreaseAmount;
+        _playerCurrentExp = 0;
+        
+        OnLevelChanged?.Invoke(_playerCurrentLevel, _playerMaxLevel);
     }
 }
