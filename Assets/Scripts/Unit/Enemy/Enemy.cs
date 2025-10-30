@@ -8,13 +8,19 @@ public class Enemy : Unit
 {
     //반납할 때 사용할 키 = 프리펩의 이름
     [Header("Pool Key")]
-    [SerializeField] private string _prefabKey = "EnemyPrefabName"; 
+    [SerializeField] private string _prefabKey = "EnemyPrefabName";
 
     // 어택 세팅 필요
-    [SerializeField] private float attackDamage = 10f;
+    [SerializeField] private float _attackDamage = 5f;
+    [SerializeField] private float _attackCooldown = 1.0f;
+    private float _lastAttackTime = 0f;
 
+
+    private float _lastUpdateTime = 0f;
+    private float _DestinationInterval = 3f;
     private Transform _playerTransform;
     private NavMeshAgent navMeshAgent;
+
     protected override void Awake()
     {
         base.Awake();
@@ -42,6 +48,7 @@ public class Enemy : Unit
         {
             navMeshAgent.enabled = true;
             navMeshAgent.speed = moveSpeed;
+            currentHp = maxHp;
         }
     }
 
@@ -50,20 +57,28 @@ public class Enemy : Unit
     {
         if (_playerTransform != null & navMeshAgent.enabled)
         {
-            navMeshAgent.SetDestination(_playerTransform.position);
+            //경로 갱신 인터벌 추가
+            if (Time.time - _lastUpdateTime >= _DestinationInterval)
+            {
+                navMeshAgent.SetDestination(_playerTransform.position);
+                _lastUpdateTime = Time.time;
+            }
+
         }
     }
 
+    //여현구: 어떤 컴포넌트를 플레이어 오브젝트에 담을 지에 따라 GetComponent가 달라짐 유닛으로 통일
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            //여현구: 어떤 컴포넌트를 플레이어 오브젝트에 담을 지에 따라 GetComponent가 달라짐. Player, Unit, Job 등등
-            Unit playerUnit = collision.gameObject.GetComponent<Unit>();
-            playerUnit.TakeDamage(attackDamage);
-
-            Debug.Log("플레이어와 충돌하여 데미지");
-
+            if (Time.time >= _lastAttackTime + _attackCooldown)
+            {
+                Unit playerUnit = collision.gameObject.GetComponent<Unit>();
+                playerUnit.TakeDamage(_attackDamage);
+                Debug.Log("플레이어와 충돌하여 데미지");
+                _lastAttackTime = Time.time;
+            }
         }
     }
 

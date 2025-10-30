@@ -15,8 +15,8 @@ public class PlayerExpController : MonoBehaviour
     void Start()
     {
         playerStats = GetComponent<PlayerStats>();
-        playerStats.OnExpChanged += UpdateExpBarTest;
-        playerStats.OnLevelChanged += UpdateLvlTest;
+        // playerStats.OnExpChanged += UpdateExpBarTest;
+        // playerStats.OnLevelChanged += UpdateLvlTest;
     }
 
     // Update is called once per frame
