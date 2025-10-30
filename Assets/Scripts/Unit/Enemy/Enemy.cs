@@ -13,8 +13,11 @@ public class Enemy : Unit
     // 어택 세팅 필요
     [SerializeField] private float attackDamage = 10f;
 
+    private float _lastUpdateTime = 0f;
+    private float _DestinationInterval = 3f;
     private Transform _playerTransform;
     private NavMeshAgent navMeshAgent;
+
     protected override void Awake()
     {
         base.Awake();
@@ -50,7 +53,13 @@ public class Enemy : Unit
     {
         if (_playerTransform != null & navMeshAgent.enabled)
         {
-            navMeshAgent.SetDestination(_playerTransform.position);
+            //경로 갱신 인터벌 추가
+            if (Time.time - _lastUpdateTime >= _DestinationInterval)
+            {
+                navMeshAgent.SetDestination(_playerTransform.position);
+                _lastUpdateTime = Time.time;
+            }
+
         }
     }
 
