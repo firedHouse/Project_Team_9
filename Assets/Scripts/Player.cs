@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Unit
 {
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _rotateInterpolate;
+    
+    private float _rotateInterpolate = 10;
+
+    [SerializeField] private Animator animator;
 
     private Vector3 GetNormalizedDirection()
     {
@@ -54,10 +56,25 @@ public class Player : MonoBehaviour
         {
             Debug.Log("R입력");
         }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            animator.SetTrigger("Attack");
+        }
+
+        //if (Input.GetKey(KeyCode.Space) != dash)
+        //{
+        //    아직 구현못함
+        //}
     }
     private void SetPosition()
     {
+
+
         Vector3 direction = GetNormalizedDirection();
+
+        animator.SetBool("Run", direction != Vector3.zero);
+
         if (direction == Vector3.zero)
         {
             return;
@@ -65,10 +82,12 @@ public class Player : MonoBehaviour
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), _rotateInterpolate * Time.deltaTime);
 
-        transform.position += _moveSpeed * Time.deltaTime * direction;
+        transform.position += moveSpeed * Time.deltaTime * direction;
     }
-    
-    
+
+
+
+
     //private void MovePlayer()
     //{
     //
@@ -79,10 +98,15 @@ public class Player : MonoBehaviour
     //{
     //    Debug.Log($"게임종료");
     //}
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
 
+    }
     private void Update()
     {
         SetPosition();
         ActiveSkill();
+
     }
 }
