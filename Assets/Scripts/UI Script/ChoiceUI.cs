@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChoiceUI : MonoBehaviour
 {
+    public Text JobText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +22,10 @@ public class ChoiceUI : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+    private void LateUpdate()
+    {
+        ChoiceJob();
+    }
 
     public void OnClickChoiceExit()
     {  
@@ -29,4 +37,26 @@ public class ChoiceUI : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("HansolTestScene");
         Debug.Log("Game Start Button Clicked");
     }
+
+    public void ChoiceJob()
+    {
+        if(JobText.text == "Knight")
+        {
+            Debug.Log("Knight Choice");
+            // PlayerPrefs.SetString("Job", "Knight");
+        }
+        else if (JobText.text == "Ranger")
+        {
+            Debug.Log("Ranger Choice");
+            // PlayerPrefs.SetString("Job", "Ranger");
+        }
+        else if (JobText.text == "Mage")
+        {
+            Debug.Log("Mage Choice");
+            // PlayerPrefs.SetString("Job", "Mage");
+        }
+    }
+
+
 }
+
