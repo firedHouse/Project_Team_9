@@ -5,26 +5,46 @@ using UnityEngine;
 public class Sword : MonoBehaviour
 {
     private Collider swordCollider;
-    private Player player;
+    private Player _player;
+    private float _soundCooldown = 1.5f;
+    private bool _isQReady = true;
+    private bool _isWReady = true;
+
     private void Awake()
     {
         swordCollider = GetComponent<Collider>();
         swordCollider.enabled = false;
-
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        _player = playerObj.GetComponent<Player>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Q))
+        if (_isQReady && Input.GetKeyUp(KeyCode.Q))
         {
-            SoundManager.Instance.PlaySFX("knightQ");
             StartCoroutine(ActivateCollider());
+            StartCoroutine(CooldownQ());
+            _isQReady = false;
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (_isWReady && Input.GetKeyDown(KeyCode.W))
         {
-            SoundManager.Instance.PlaySFX("Whirlwind");
             StartCoroutine(ActivateCollider());
+            StartCoroutine(CooldownW());
+            _isWReady = false;
         }
+
+    }
+    private IEnumerator CooldownQ()
+    {
+        SoundManager.Instance.PlaySFX("knightQ");
+        yield return new WaitForSeconds(_soundCooldown);
+        _isQReady = true;
+    }
+    private IEnumerator CooldownW()
+    {
+        SoundManager.Instance.PlaySFX("Whirlwind");
+        yield return new WaitForSeconds(_soundCooldown);
+        _isWReady = true;
 
     }
 
@@ -38,11 +58,14 @@ public class Sword : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider enemy)
     {
-        if (other.CompareTag("Enemy"))
-        {            
-            Debug.Log("적에게 대미지입힘");
+        if (enemy.CompareTag("Enemy"))
+        {
+            Enemy enemyUnit = enemy.gameObject.GetComponent<Enemy>();
+
+            enemyUnit.TakeDamage(_player.damage);
+            Debug.Log($"적에게 {_player.damage}만큼의 데미지 입힘. 현재 적 체력: {enemyUnit.currentHp}");
         }
     }
 }

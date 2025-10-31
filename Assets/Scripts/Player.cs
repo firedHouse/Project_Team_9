@@ -87,7 +87,7 @@ public class Player : Unit
     IEnumerator Attack()
     {
         animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(1.5f);        
+        yield return new WaitForSeconds(1.5f);
         isDelay = false;
     }
     IEnumerator ActiveSkillW()

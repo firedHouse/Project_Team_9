@@ -11,7 +11,6 @@ public class PlayerArcherArrow : MonoBehaviour
     public void Spawn()
     {
         GameObject arrow = Instantiate(_arrow, transform.position, transform.rotation);
-        SoundManager.Instance.PlaySFX("3arrows");
         StartCoroutine(MoveAndDestroy(arrow));  //코루틴 시작
         StartCoroutine(timer());
     }
@@ -19,6 +18,7 @@ public class PlayerArcherArrow : MonoBehaviour
     private IEnumerator timer()
     {
         isDelay = true;
+        SoundManager.Instance.PlaySFX("arrowShot");
         yield return new WaitForSeconds(1.5f);
         isDelay = false;
     }

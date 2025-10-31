@@ -18,6 +18,7 @@ public class PlayerArcherArrowSkill : MonoBehaviour
     private IEnumerator timer()
     {
         isDelay = true;
+        SoundManager.Instance.PlaySFX("3arrows");
         yield return new WaitForSeconds(1.5f);
         isDelay = false;
     }

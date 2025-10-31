@@ -119,7 +119,6 @@ public class SoundManager : Singleton<SoundManager>
     //인자값 clip이름, PlayOneShot = 재생중인 SFX에 영향주지 않고 재생
     public void PlaySFX(string clipName)
     {
-        Debug.Log("사운드 출력");
         if (_sfxDictionary.TryGetValue(clipName, out SFXClip sfxData))
         {
             float finalVolume = _sfxVolume;
