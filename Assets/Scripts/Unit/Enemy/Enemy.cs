@@ -19,6 +19,7 @@ public class Enemy : Unit
     private float _DestinationInterval = 3f;
     private Transform _playerTransform;
     private NavMeshAgent navMeshAgent;
+ 
 
     protected override void Awake()
     {
@@ -34,6 +35,7 @@ public class Enemy : Unit
         {
             _playerTransform = playerObj.transform;
         }
+
     }
     //풀에서 가져올 때 호출하는 초기화 로직
     public void OnSpawned()
@@ -49,6 +51,7 @@ public class Enemy : Unit
             navMeshAgent.speed = moveSpeed;
             currentHp = maxHp;
         }
+
     }
 
     //거리 계산 후, 감지 거리 내 들어올 시 추적 및 이동 
@@ -62,7 +65,7 @@ public class Enemy : Unit
                 navMeshAgent.SetDestination(_playerTransform.position);
                 _lastUpdateTime = Time.time;
             }
-
+         
         }
     }
 
@@ -92,6 +95,7 @@ public class Enemy : Unit
             navMeshAgent.isStopped = true;
             navMeshAgent.enabled = false;
         }
+
         ObjectPoolManager.Instance.ReturnObject(gameObject, _prefabKey);
     }
 
