@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Player : Unit
 {
     private bool isDead = false;
-    private float _rotateInterpolate = 10;
+    private float rotateInterpolate = 10;
 
     [SerializeField] private Animator animator;
 
@@ -51,7 +51,7 @@ public class Player : Unit
 
         if (Input.GetKey(KeyCode.W))
         {
-            Debug.Log("W 직업스킬");
+            animator.SetTrigger("Skill W");
         }
 
         if (Input.GetKey(KeyCode.E))
@@ -73,8 +73,6 @@ public class Player : Unit
     }
     private void SetPosition()
     {
-
-
         Vector3 direction = GetNormalizedDirection();
 
         animator.SetBool("Run", direction != Vector3.zero);
@@ -84,7 +82,7 @@ public class Player : Unit
             return;
         }
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), _rotateInterpolate * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), rotateInterpolate * Time.deltaTime);
 
         transform.position += moveSpeed * Time.deltaTime * direction;
     }

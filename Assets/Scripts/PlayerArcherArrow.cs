@@ -6,10 +6,18 @@ public class PlayerArcherArrow : MonoBehaviour
 {
     [SerializeField] private GameObject _arrow;
     [SerializeField] private float _arrowSpeed;
+    [SerializeField] private GameObject _activeSkill;
     public void Spawn()
     {
         GameObject arrow = Instantiate(_arrow, transform.position, transform.rotation);
         
+        StartCoroutine(MoveAndDestroy(arrow));  //코루틴 시작
+    }
+
+    public void ActiveSkill()
+    {
+        GameObject arrow = Instantiate(_activeSkill, transform.position, transform.rotation);
+
         StartCoroutine(MoveAndDestroy(arrow));  //코루틴 시작
     }
 
@@ -33,6 +41,11 @@ public class PlayerArcherArrow : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Spawn();
+        }
+
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            ActiveSkill();
         }
     }
 }
