@@ -54,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
 
         float distanceToPlayer = Vector3.Distance(transform.position, _playerTransform.position);
 
-        // 3. 감지 범위 안에 들어왔는지 체크
+        //감지 범위 안에 들어왔는지 체크
         if (distanceToPlayer <= _detectionRange)
         {
             // 범위 안에 있고, 아직 스폰이 활성화되지 않았다면 시작
@@ -62,7 +62,6 @@ public class EnemySpawner : MonoBehaviour
             {
                 InvokeRepeating(nameof(SpawnEnemy), 0f, _spawnInterval);
                 _isSpawningActive = true;
-                Debug.Log($"[{gameObject.name}] Player detected within range ({_detectionRange}m). Starting spawn!");
             }
         }
         else
@@ -72,7 +71,6 @@ public class EnemySpawner : MonoBehaviour
             {
                 CancelInvoke(nameof(SpawnEnemy));
                 _isSpawningActive = false;
-                Debug.Log($"[{gameObject.name}] Player left detection range. Stopping spawn.");
             }
         }
 

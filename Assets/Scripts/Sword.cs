@@ -15,8 +15,14 @@ public class Sword : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.Q))
         {
+            SoundManager.Instance.PlaySFX("knightQ");
+            StartCoroutine(ActivateCollider());
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            SoundManager.Instance.PlaySFX("Whirlwind");
             StartCoroutine(ActivateCollider());
         }
 
