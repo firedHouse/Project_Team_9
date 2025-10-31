@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Player : Unit
 {
     private bool isDead = false;
-    private float rotateInterpolate = 10;
+    private float rotateInterpolate = 10;    
 
     public bool isDelay;    
 
