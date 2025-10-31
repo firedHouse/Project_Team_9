@@ -12,14 +12,16 @@ public class Sword : MonoBehaviour
         swordCollider.enabled = false;
 
     }
-
-    private void Update()
+    private void HitDamage()
     {
+        // if (딜레이중이라면? )
+        // 리턴
+
+
         if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyDown(KeyCode.W))
         {
             StartCoroutine(ActivateCollider());
         }
-
     }
 
     private IEnumerator ActivateCollider()
@@ -38,5 +40,11 @@ public class Sword : MonoBehaviour
         {            
             Debug.Log("적에게 대미지입힘");
         }
+    }
+
+    private void Update()
+    {
+        HitDamage();
+
     }
 }

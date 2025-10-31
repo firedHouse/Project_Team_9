@@ -2,20 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerArcherArrow : MonoBehaviour
+public class PlayerArcherArrowSkill : MonoBehaviour
 {
-    [SerializeField] private GameObject _arrow;
     [SerializeField] private float _arrowSpeed;
-    private bool isDelay;
-    
-    public void Spawn()
+    [SerializeField] private GameObject _activeSkill;
+    public void ActiveSkill()
     {
-        GameObject arrow = Instantiate(_arrow, transform.position, transform.rotation);
-        
+        GameObject arrow = Instantiate(_activeSkill, transform.position, transform.rotation);
+
         StartCoroutine(MoveAndDestroy(arrow));  //코루틴 시작
     }
-
-    
 
     private IEnumerator MoveAndDestroy(GameObject arrow)
     {
@@ -31,12 +27,11 @@ public class PlayerArcherArrow : MonoBehaviour
 
         Destroy(arrow); //5초가 지났다면 파괴
     }
-
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyUp(KeyCode.W))
         {
-            Spawn();
+            ActiveSkill();
         }
     }
 }

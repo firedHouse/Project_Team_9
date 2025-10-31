@@ -9,7 +9,9 @@ public class Player : Unit
     private bool isDead = false;
     private float rotateInterpolate = 10;
 
-    [SerializeField] private Animator animator;
+    public bool isDelay;    
+
+    [SerializeField] private Animator animator;       
 
     private void Start()
     {
@@ -44,18 +46,27 @@ public class Player : Unit
 
     private void ActiveSkill()
     {
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKeyUp(KeyCode.Q))
         {
-            animator.SetTrigger("Attack");
+            if (isDelay == false)
+            {
+                isDelay = true;                
+                StartCoroutine(Attack());
 
+            }
         }
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.W))
         {
-            animator.SetTrigger("Skill W");
-        }
+            if (isDelay == false)
+            {
+                isDelay = true;
+                StartCoroutine(ActiveSkillW());
 
-        if (Input.GetKey(KeyCode.E))
+            }
+        }
+        
+        if (Input.GetKeyUp(KeyCode.E))
         {
             Debug.Log("E 加己胶懦");
         }
@@ -71,6 +82,19 @@ public class Player : Unit
         //{
         //    酒流 备泅给窃
         //}
+    }
+
+    IEnumerator Attack()
+    {
+        animator.SetTrigger("Attack");
+        yield return new WaitForSeconds(1.5f);        
+        isDelay = false;
+    }
+    IEnumerator ActiveSkillW()
+    {
+        animator.SetTrigger("Skill W");
+        yield return new WaitForSeconds(1.5f);
+        isDelay = false;
     }
     private void SetPosition()
     {
