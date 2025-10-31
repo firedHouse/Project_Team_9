@@ -10,7 +10,7 @@ public class PlayerArcherArrow : MonoBehaviour
     public void Spawn()
     {
         GameObject arrow = Instantiate(_arrow, transform.position, transform.rotation);
-        
+        SoundManager.Instance.PlaySFX("3arrows");
         StartCoroutine(MoveAndDestroy(arrow));  //코루틴 시작
     }
 

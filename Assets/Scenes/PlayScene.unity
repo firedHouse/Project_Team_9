@@ -5824,6 +5824,10 @@ MonoBehaviour:
     AudioClip: {fileID: 8300000, guid: e01fa9c0a8df41a49a9c381284bdbbcd, type: 3}
   - clipName: arrowShot
     AudioClip: {fileID: 8300000, guid: e63bead400d446c4f8500412311c1187, type: 3}
+  - clipName: knightQ
+    AudioClip: {fileID: 8300000, guid: 37039c4f000f4014784018200ba1b953, type: 3}
+  - clipName: Whirlwind
+    AudioClip: {fileID: 8300000, guid: 3c4f55c815fb3f14197ae3e6d9d2e222, type: 3}
   _bgmVolume: 0.5
   _sfxVolume: 0.611
 --- !u!4 &1887669262
