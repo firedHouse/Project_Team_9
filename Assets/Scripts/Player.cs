@@ -47,6 +47,7 @@ public class Player : Unit
         if (Input.GetKey(KeyCode.Q))
         {
             animator.SetTrigger("Attack");
+
         }
 
         if (Input.GetKey(KeyCode.W))
