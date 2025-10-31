@@ -8966,6 +8966,18 @@ PrefabInstance:
       propertyPath: playerStats
       value: 
       objectReference: {fileID: 1631854185}
+    - target: {fileID: 2398735824769940685, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217654319005580808, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3235928613191750431, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3729307349835665633, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -8978,6 +8990,14 @@ PrefabInstance:
       propertyPath: skills
       value: 
       objectReference: {fileID: 1631854187}
+    - target: {fileID: 3964919441676420497, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429200839632279293, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5052341807577432365, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
       propertyPath: m_Name
       value: TestUI
@@ -8994,6 +9014,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1631854181}
+    - target: {fileID: 6942470549332647096, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8610880222329461154, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -9086,6 +9110,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1631854181}
+    - target: {fileID: 9112751694341948428, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
