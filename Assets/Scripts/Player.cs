@@ -46,28 +46,25 @@ public class Player : Unit
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            Debug.Log("Q입력");
+            animator.SetTrigger("Attack");
         }
 
         if (Input.GetKey(KeyCode.W))
         {
-            Debug.Log("W입력");
+            Debug.Log("W 직업스킬");
         }
 
         if (Input.GetKey(KeyCode.E))
         {
-            Debug.Log("E입력");
+            Debug.Log("E 속성스킬");
         }
 
-        if (Input.GetKey(KeyCode.R))
-        {
-            Debug.Log("R입력");
-        }
+        //if (Input.GetKey(KeyCode.R))
+        //{
+        //    R스킬 
+        //}
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {            
-            animator.SetTrigger("Attack");
-        }
+        
 
         //if (Input.GetKey(KeyCode.Space) != dash)
         //{

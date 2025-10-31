@@ -12,6 +12,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float _weaponRange = 1f;
     [SerializeField] private float _weaponCooldown = 5f;
 
+    //직업별 기본 무기 콜라이더
+    public CapsuleCollider weaponCollider;
+
     public float WeaponDamage
     {
         get => _weaponDamage;
