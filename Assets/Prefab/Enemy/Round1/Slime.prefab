@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 8987666627248126977}
   m_Layer: 0
   m_Name: Slime
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -233,6 +233,7 @@ MonoBehaviour:
   currentHp: 0
   _prefabKey: EnemyPrefabName
   _attackCooldown: 1
+  _gainExp: 500
 --- !u!65 &8987666627248126977
 BoxCollider:
   m_ObjectHideFlags: 0
