@@ -20,7 +20,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private AudioSource _bgmSource;
 
     private AudioSource _sfxSource;
-    
+
     [Header("SFX Clips")]
     [SerializeField] private List<SFXClip> _sfxClips = new List<SFXClip>();
 
@@ -32,7 +32,7 @@ public class SoundManager : Singleton<SoundManager>
 
 
     //인게임에서 빠르게 검색하기 위한 효과음 클립 딕셔너리 
-    private Dictionary<string, AudioClip> _sfxDictionary = new Dictionary<string, AudioClip>();
+    private Dictionary<string, SFXClip> _sfxDictionary = new Dictionary<string, SFXClip>();
 
     //인스펙터에 설정한 효과음 리스트를 더 빠르게 검색하기 위해 딕셔너리 구조로 변경하는 메서드
     private void InitializeSFXDictionary()
@@ -47,7 +47,7 @@ public class SoundManager : Singleton<SoundManager>
             //키값 중복체크, 중복 아닐 시 키값으로 이름, 실제 클립을 딕셔너리에 추가
             if (!_sfxDictionary.ContainsKey(sfx.clipName))
             {
-                _sfxDictionary.Add(sfx.clipName, sfx.AudioClip);
+                _sfxDictionary.Add(sfx.clipName, sfx);
             }
         }
     }
@@ -67,6 +67,7 @@ public class SoundManager : Singleton<SoundManager>
         _bgmSource.loop = true;
         _bgmSource.volume = _bgmVolume;
         _sfxSource.volume = _sfxVolume;
+        InitializeSFXDictionary();
     }
 
 
@@ -115,14 +116,15 @@ public class SoundManager : Singleton<SoundManager>
     }
 
     //효과음 재생 메서드
-    //인자값 clip, 볼륨, PlayOneShot = 재생중인 SFX에 영향주지 않고 재생
-    public void PlaySFX(AudioClip clip, float volumeScale = 1.0f)
+    //인자값 clip이름, PlayOneShot = 재생중인 SFX에 영향주지 않고 재생
+    public void PlaySFX(string clipName)
     {
-        if (clip == null)
+        Debug.Log("사운드 출력");
+        if (_sfxDictionary.TryGetValue(clipName, out SFXClip sfxData))
         {
-            return;
+            float finalVolume = _sfxVolume;
+            _sfxSource.PlayOneShot(sfxData.AudioClip, finalVolume);
         }
-        _sfxSource.PlayOneShot(clip, _sfxVolume * volumeScale);
     }
 
     //ESC 옵션 메뉴에 연결하기 위한 볼륨 조절 메서드
