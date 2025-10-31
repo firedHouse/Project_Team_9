@@ -6,13 +6,21 @@ public class PlayerArcherArrowSkill : MonoBehaviour
 {
     [SerializeField] private float _arrowSpeed;
     [SerializeField] private GameObject _activeSkill;
+    private bool isDelay;
     public void ActiveSkill()
     {
         GameObject arrow = Instantiate(_activeSkill, transform.position, transform.rotation);
 
         StartCoroutine(MoveAndDestroy(arrow));  //코루틴 시작
+        StartCoroutine(timer());
     }
 
+    private IEnumerator timer()
+    {
+        isDelay = true;
+        yield return new WaitForSeconds(1.5f);
+        isDelay = false;
+    }
     private IEnumerator MoveAndDestroy(GameObject arrow)
     {
         float lifetime = 5f;
@@ -29,8 +37,8 @@ public class PlayerArcherArrowSkill : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.W))
-        {
+        if (Input.GetKeyUp(KeyCode.W) && isDelay == false)
+        {           
             ActiveSkill();
         }
     }
