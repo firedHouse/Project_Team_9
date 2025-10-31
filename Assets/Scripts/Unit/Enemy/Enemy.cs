@@ -14,6 +14,7 @@ public class Enemy : Unit
     [SerializeField] private float _gainExp = 500f;
     private float _lastAttackTime = 0f;
 
+    
 
     private float _lastUpdateTime = 0f;
     private float _DestinationInterval = 3f;
@@ -51,6 +52,8 @@ public class Enemy : Unit
         }
     }
 
+   
+
     //거리 계산 후, 감지 거리 내 들어올 시 추적 및 이동 
     private void Update()
     {
@@ -78,6 +81,17 @@ public class Enemy : Unit
                 Debug.Log("플레이어와 충돌하여 데미지");
                 _lastAttackTime = Time.time;
             }
+        }
+    }
+    public override void TakeDamage(float damage)
+    {      
+        currentHp -= damage;
+        Debug.Log($"Enemy가 {damage} 데미지를 받았습니다. 남은 체력: {currentHp}");
+
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            Die();
         }
     }
 
