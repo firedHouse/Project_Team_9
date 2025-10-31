@@ -1,11 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
-// 라운드 관리 매니저
-// 역활 : 라운드 상태 관리, 시간 관리, 적 관리, 다음 방 이동 처리
 
 public class RoundManager : Singleton<RoundManager>
 {
@@ -14,20 +9,19 @@ public class RoundManager : Singleton<RoundManager>
         Ready,
         Playing,
         Cleared,
-        Failed,
         End
     }
 
     private RoundState _currentState = RoundState.Ready;
     public RoundState CurrentState => _currentState;
 
-    public event Action<RoundState> OnRoundStateChanged;
+    public event System.Action<RoundState> OnRoundStateChanged;
 
     [SerializeField] private float roundTime = 120f;
-    private float _timer = 0f;
-    public List<Enemy> enemies = new List<Enemy>();
+    private float _timer;
 
-    private bool _isTransitioning = false;
+    private List<Enemy> enemies = new List<Enemy>();
+    private bool roundEnded = false;
 
     private void Start()
     {
@@ -36,54 +30,49 @@ public class RoundManager : Singleton<RoundManager>
 
     private void Update()
     {
-        if (_currentState != RoundState.Playing)
-            return;
+        if (_currentState != RoundState.Playing) return;
 
         _timer -= Time.deltaTime;
-        enemies.RemoveAll(e => e == null);
 
-        if (_timer <= 0f && !_isTransitioning)
+        // Scene에 남아있는 모든 Enemy 자동 추적
+        enemies.Clear();
+        enemies.AddRange(FindObjectsOfType<Enemy>());
+
+        if (!roundEnded && enemies.Count == 0)
         {
-            EndRound(true);
+            roundEnded = true;
+            StartCoroutine(HandleRoundClear());
         }
-        else if (enemies.Count == 0 && !_isTransitioning)
+
+        if (_timer <= 0f && !roundEnded)
         {
-            EndRound(true);
+            roundEnded = true;
+            StartCoroutine(HandleRoundClear());
         }
     }
-    // 라운드 시작
+
     public void StartRound()
     {
         _currentState = RoundState.Playing;
         _timer = roundTime;
-        _isTransitioning = false;
+        roundEnded = false;
         OnRoundStateChanged?.Invoke(_currentState);
         Debug.Log("라운드 시작");
+
+        // 포탈 숨기기
+        if (PortalManager.Instance != null)
+            PortalManager.Instance.HidePortal();
     }
-    // 라운드 종료
-    private void EndRound(bool cleared)
+
+    private IEnumerator HandleRoundClear()
     {
-        _currentState = cleared ? RoundState.Cleared : RoundState.Failed;
+        _currentState = RoundState.Cleared;
         OnRoundStateChanged?.Invoke(_currentState);
+        Debug.Log("라운드 클리어");
 
-        if (cleared)
-        {
-            StartCoroutine(NextPortalSequence());
-        }
-        else
-        {
-            GameManager.Instance.ChangeState(GameManager.GameState.Result);
-        }
+        yield return new WaitForSeconds(5f); 
+
+        if (PortalManager.Instance != null)
+            PortalManager.Instance.ShowPortal(); 
     }
-    
-    private IEnumerator NextPortalSequence()
-    {
-        _isTransitioning = true;
-        Debug.Log("5초 뒤 다음 방으로 이동합니다...");
-        yield return new WaitForSeconds(5f);
-
-        PortalManager.Instance.MoveToNextPortal();
-    }
-
-    public float GetRemainingTime() => _timer;
 }
