@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     //플레이어 감지 사거리
     [Header("Detection Settings")]
-    [SerializeField] private float _detectionRange = 50f;
+    [SerializeField] private float _detectionRange = 5000f;
     private bool _isSpawningActive = false;
 
 
@@ -27,15 +27,17 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
+
         //플레이어 오브젝트 태그를 추적
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
             _playerTransform = playerObj.transform;
+            Debug.Log("플레이어 태그 찾았다!");
         }
-
         //게임 상태 변경 구독!
         GameManager.Instance.OnStateChanged += OnGameStateChanged;
+
     }
 
     //라운드마다 스포너가 작동하도록 유저와의 거리를 탐지해 스폰하도록 수정
@@ -48,6 +50,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 CancelInvoke(nameof(SpawnEnemy));
                 _isSpawningActive = false;
+                Debug.Log("플레이상태아님");
             }
             return;
         }
@@ -62,6 +65,8 @@ public class EnemySpawner : MonoBehaviour
             {
                 InvokeRepeating(nameof(SpawnEnemy), 0f, _spawnInterval);
                 _isSpawningActive = true;
+                Debug.Log($"{gameObject}범위 안에 들어와서 스폰 시작");
+
             }
         }
         else
@@ -71,6 +76,8 @@ public class EnemySpawner : MonoBehaviour
             {
                 CancelInvoke(nameof(SpawnEnemy));
                 _isSpawningActive = false;
+                Debug.Log("범위 밖으로 나감");
+
             }
         }
 
