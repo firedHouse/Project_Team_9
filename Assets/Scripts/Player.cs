@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Player : Unit
 {
     private bool isDead = false;
-    private float _rotateInterpolate = 10;
+    private float rotateInterpolate = 10;
 
     [SerializeField] private Animator animator;
 
@@ -46,28 +46,25 @@ public class Player : Unit
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            Debug.Log("Q입력");
+            animator.SetTrigger("Attack");
         }
 
         if (Input.GetKey(KeyCode.W))
         {
-            Debug.Log("W입력");
+            animator.SetTrigger("Skill W");
         }
 
         if (Input.GetKey(KeyCode.E))
         {
-            Debug.Log("E입력");
+            Debug.Log("E 속성스킬");
         }
 
-        if (Input.GetKey(KeyCode.R))
-        {
-            Debug.Log("R입력");
-        }
+        //if (Input.GetKey(KeyCode.R))
+        //{
+        //    R스킬 
+        //}
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {            
-            animator.SetTrigger("Attack");
-        }
+        
 
         //if (Input.GetKey(KeyCode.Space) != dash)
         //{
@@ -76,8 +73,6 @@ public class Player : Unit
     }
     private void SetPosition()
     {
-
-
         Vector3 direction = GetNormalizedDirection();
 
         animator.SetBool("Run", direction != Vector3.zero);
@@ -87,7 +82,7 @@ public class Player : Unit
             return;
         }
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), _rotateInterpolate * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), rotateInterpolate * Time.deltaTime);
 
         transform.position += moveSpeed * Time.deltaTime * direction;
     }

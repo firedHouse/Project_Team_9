@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 8909781625332224704}
   m_Layer: 0
   m_Name: Skeleton
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -257,6 +257,7 @@ MonoBehaviour:
   currentHp: 55
   _prefabKey: EnemyPrefabName
   _attackCooldown: 1
+  _gainExp: 500
 --- !u!65 &8909781625332224704
 BoxCollider:
   m_ObjectHideFlags: 0

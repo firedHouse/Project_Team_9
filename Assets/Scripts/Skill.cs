@@ -69,20 +69,24 @@ public class Skill : MonoBehaviour
     {
         // 속성 강화 로직
         // level에 따라 다른 속성 강화 메서드 호출
-        if (curLvl % 2 == 0)
+        // 3, 6, 9 제외한 레벨
+        switch (curLvl)
         {
-            SkillDamageUpgrade();
-            SkillCooldownUpgrade();
-        }
-        else
-        {
-            SkillDamageUpgrade();
-            SkillRangeUpgrade();
-        }
-
-        if (curLvl == 5)
-        {
-            Debug.Log("스킬 이펙트 변경");
+            case 3:
+                // Slash 갯수 증가
+                break;
+            case 6:
+                // 뎀 증가
+                Debug.Log("스킬 이펙트 변경");
+                break;
+            case 9:
+                // 새로운 스킬 생성
+                break;
+            default:
+                SkillDamageUpgrade();
+                SkillRangeUpgrade();
+                SkillCooldownUpgrade();
+                break;
         }
     }
 

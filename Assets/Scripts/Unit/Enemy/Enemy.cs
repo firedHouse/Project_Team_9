@@ -86,7 +86,7 @@ public class Enemy : Unit
 
     protected override void Die()
     {
-        
+        SoundManager.Instance.PlaySFX("Player_Fireball");
         Debug.Log($"{gameObject}À¯´Ö »ç¸Á");
 
         //NavMeshAgent ±â´É Á¤Áö

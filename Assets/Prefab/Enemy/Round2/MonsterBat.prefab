@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 7199285465652700392}
   m_Layer: 0
   m_Name: MonsterBat
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -274,3 +274,4 @@ MonoBehaviour:
   currentHp: 0
   _prefabKey: EnemyPrefabName
   _attackCooldown: 1
+  _gainExp: 500
