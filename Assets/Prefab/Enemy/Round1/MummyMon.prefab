@@ -628,6 +628,7 @@ MonoBehaviour:
   damage: 5
   moveSpeed: 3
   currentHp: 5
+  _rewardPrefab: {fileID: 889264829088194449, guid: b2a6b72124267f44bb3a98701160670a, type: 3}
   _prefabKey: EnemyPrefabName
   _attackCooldown: 1
   _gainExp: 500
