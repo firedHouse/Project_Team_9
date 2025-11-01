@@ -6,9 +6,8 @@ public class SkillUI : MonoBehaviour
 {
     [SerializeField] private Text coolTimeText;
     [SerializeField] private Image coolTimeImage;
-
     [SerializeField] private KeyCode skillKey;
-    [SerializeField] private Skill skills;
+    [SerializeField] private Player player;
 
     private float _cooldownTime;
     private float _currentCoolTime;
@@ -16,12 +15,10 @@ public class SkillUI : MonoBehaviour
 
     private void Awake()
     {
-        //예외처리. skills 컴포넌트가 할당되지 않았을 때 자동으로 할당
+        //예외처리. Player 컴포넌트가 할당되지 않았을 때 자동으로 할당
 
-        if (skills == null)
-            skills = GetComponent<Skill>();
-
-        _cooldownTime = skills.SkillCooldown;
+        if (player == null)
+            player = GetComponent<Player>();
 
         coolTimeImage.fillAmount = 0f;
         coolTimeText.text = "";
@@ -32,16 +29,28 @@ public class SkillUI : MonoBehaviour
         // 테스트용: skillKey를 누르면 쿨타임 시작
         if (Input.GetKeyDown(skillKey) && !_isCoolTime)
         {
-            Debug.Log("스킬 사용!");
-            StartCoolDown();
+            Debug.Log($"{skillKey}스킬 사용!");
+            SetCoolTime();
+            StartCoroutine(CoolTimeRoutine());
         }
     }
 
-    public void StartCoolDown() //쿨타임일 때 스킬 발동 X
+    public void SetCoolTime() //쿨타임일 때 스킬 발동 X
     {
-        if (!_isCoolTime)
+        switch (skillKey)
         {
-            StartCoroutine(CoolTimeRoutine());
+            case KeyCode.Q:
+                _cooldownTime = player.Cooltime;
+                break;
+            case KeyCode.W:
+                _cooldownTime = player.WSkillCooltime;
+                break;
+            case KeyCode.E:
+                _cooldownTime = player.ESkillCooltime;
+                break;
+            default:
+                _cooldownTime = 1f; // 쿨타임 기본값
+                break;
         }
     }
 

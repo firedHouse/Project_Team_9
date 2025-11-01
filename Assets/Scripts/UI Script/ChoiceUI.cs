@@ -59,4 +59,3 @@ public class ChoiceUI : MonoBehaviour
 
 
 }
-

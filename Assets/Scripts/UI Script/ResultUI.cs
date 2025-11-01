@@ -6,15 +6,23 @@ using UnityEngine.UIElements.Experimental;
 public class ResultUI : MonoBehaviour
 {
     [SerializeField] private Player player;
+
     void Start()
     {
- 
+        if (player == null)
+        {
+            player = GetComponent<Player>();
+            if (player == null)
+            {
+                Debug.LogError("참조된 Player가 존재하지 않습니다.");
+                return;
+            }
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(player.enabled)
+        if(player.IsDead)
         {
             gameObject.SetActive(true);
         }
