@@ -6,12 +6,18 @@ using UnityEngine.AI; //Nav 사용
 
 public class Enemy : Unit
 {
+    //보상 프리펩
+    [Header("Reward Prefab")]
+    [SerializeField] private GameObject _rewardPrefab;
+
+
     //반납할 때 사용할 키 = 프리펩의 이름
     [Header("Pool Key")]
     [SerializeField] private string _prefabKey = "EnemyPrefabName";
+    
+    
 
     [SerializeField] private float _attackCooldown = 1.0f;
-    [SerializeField] private float _gainExp = 500f;
     private float _lastAttackTime = 0f;
 
     
@@ -107,6 +113,28 @@ public class Enemy : Unit
             navMeshAgent.enabled = false;
         }
         ObjectPoolManager.Instance.ReturnObject(gameObject, _prefabKey);
+        //반납 후 리워드 스폰
+        SpawnReward();
+
+    }
+
+    private void SpawnReward()
+    {
+        GameObject rewardPrefab = _rewardPrefab;
+        if (rewardPrefab == null)
+        {
+            return;
+        }
+        //리워드 가져오기
+        GameObject reward = ObjectPoolManager.Instance.GetObject(rewardPrefab.name);
+        if (reward == null)
+        {
+            return;
+        }
+        //몬스터 위치에서 약간 위에 생성하고 True
+        Vector3 spawnPosition = transform.position + Vector3.up * 0.5f;
+        reward.transform.position = spawnPosition;
+        reward.SetActive(true);
     }
 
 }
