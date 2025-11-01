@@ -7,9 +7,18 @@ using UnityEngine.SceneManagement;
 public class Player : Unit
 {
     private bool isDead = false;
-    private float _rotateInterpolate = 10;
+    private float rotateInterpolate = 10;
+
+    public bool attackTime; 
+    public bool wSkillTime;
+    public bool eSkillTime;
 
     [SerializeField] private Animator animator;
+
+
+    [SerializeField][Range(0, 10)] private float cooltime;
+    [SerializeField][Range(0, 10)] private float wSkillCooltime;
+    [SerializeField][Range(0, 10)] private float eSkillCooltime;
 
     private void Start()
     {
@@ -44,19 +53,20 @@ public class Player : Unit
 
     private void ActiveSkill()
     {
-        if (Input.GetKey(KeyCode.Q))
-        {
-            animator.SetTrigger("Attack");
+        if (Input.GetKeyUp(KeyCode.Q) && attackTime == false)
+        {                                        
+            StartCoroutine(Attack());          
+
         }
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.W) && wSkillTime == false)
         {
-            Debug.Log("W 직업스킬");
+            StartCoroutine(ActiveSkillW());            
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.E) && eSkillTime == false)
         {
-            Debug.Log("E 속성스킬");
+            StartCoroutine(ActiveSkillE());
         }
 
         //if (Input.GetKey(KeyCode.R))
@@ -71,10 +81,32 @@ public class Player : Unit
         //    아직 구현못함
         //}
     }
+
+    IEnumerator Attack()    
+    {
+        attackTime = true;
+        animator.SetTrigger("Attack");
+        yield return new WaitForSeconds(cooltime);  //기본공격 쿨타임
+        attackTime = false;
+
+    }
+    IEnumerator ActiveSkillW()
+    {
+        wSkillTime = true;
+        animator.SetTrigger("Skill W");
+        yield return new WaitForSeconds(wSkillCooltime); //w스킬 쿨타임
+        wSkillTime = false;
+    }
+
+    IEnumerator ActiveSkillE()
+    {
+        eSkillTime = true;
+        animator.SetTrigger("Skill E");
+        yield return new WaitForSeconds(eSkillCooltime); //e스킬 쿨타임
+        eSkillTime = false;
+    }
     private void SetPosition()
     {
-
-
         Vector3 direction = GetNormalizedDirection();
 
         animator.SetBool("Run", direction != Vector3.zero);
@@ -84,7 +116,7 @@ public class Player : Unit
             return;
         }
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), _rotateInterpolate * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(direction), rotateInterpolate * Time.deltaTime);
 
         transform.position += moveSpeed * Time.deltaTime * direction;
     }

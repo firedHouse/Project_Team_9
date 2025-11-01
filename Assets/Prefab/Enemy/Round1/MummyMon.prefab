@@ -542,6 +542,7 @@ GameObject:
   - component: {fileID: 4366871479626139492}
   - component: {fileID: 8464427167626237216}
   - component: {fileID: 1397578479745174626}
+  - component: {fileID: -944269324760710666}
   m_Layer: 0
   m_Name: MummyMon
   m_TagString: Enemy
@@ -611,6 +612,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-944269324760710666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4382703429959335967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5f4654b5a785a448871a0b22ba0fa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  damage: 5
+  moveSpeed: 3
+  currentHp: 5
+  _rewardPrefab: {fileID: 889264829088194449, guid: b2a6b72124267f44bb3a98701160670a, type: 3}
+  _prefabKey: EnemyPrefabName
+  _attackCooldown: 1
+  _gainExp: 500
 --- !u!1 &4413795516374215684
 GameObject:
   m_ObjectHideFlags: 0

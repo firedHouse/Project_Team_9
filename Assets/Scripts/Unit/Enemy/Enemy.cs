@@ -6,14 +6,21 @@ using UnityEngine.AI; //Nav 사용
 
 public class Enemy : Unit
 {
+    //보상 프리펩
+    [Header("Reward Prefab")]
+    [SerializeField] private GameObject _rewardPrefab;
+
+
     //반납할 때 사용할 키 = 프리펩의 이름
     [Header("Pool Key")]
     [SerializeField] private string _prefabKey = "EnemyPrefabName";
+    
+    
 
     [SerializeField] private float _attackCooldown = 1.0f;
-    [SerializeField] private float _gainExp = 500f;
     private float _lastAttackTime = 0f;
 
+    
 
     private float _lastUpdateTime = 0f;
     private float _DestinationInterval = 3f;
@@ -51,6 +58,8 @@ public class Enemy : Unit
         }
     }
 
+   
+
     //거리 계산 후, 감지 거리 내 들어올 시 추적 및 이동 
     private void Update()
     {
@@ -80,10 +89,21 @@ public class Enemy : Unit
             }
         }
     }
+    public override void TakeDamage(float damage)
+    {      
+        currentHp -= damage;
+        Debug.Log($"Enemy가 {damage} 데미지를 받았습니다. 남은 체력: {currentHp}");
+
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            Die();
+        }
+    }
 
     protected override void Die()
     {
-        
+        //SoundManager.Instance.PlaySFX("Player_Fireball");
         Debug.Log($"{gameObject}유닛 사망");
 
         //NavMeshAgent 기능 정지
@@ -93,6 +113,28 @@ public class Enemy : Unit
             navMeshAgent.enabled = false;
         }
         ObjectPoolManager.Instance.ReturnObject(gameObject, _prefabKey);
+        //반납 후 리워드 스폰
+        SpawnReward();
+
+    }
+
+    private void SpawnReward()
+    {
+        GameObject rewardPrefab = _rewardPrefab;
+        if (rewardPrefab == null)
+        {
+            return;
+        }
+        //리워드 가져오기
+        GameObject reward = ObjectPoolManager.Instance.GetObject(rewardPrefab.name);
+        if (reward == null)
+        {
+            return;
+        }
+        //몬스터 위치에서 약간 위에 생성하고 True
+        Vector3 spawnPosition = transform.position + Vector3.up * 0.5f;
+        reward.transform.position = spawnPosition;
+        reward.SetActive(true);
     }
 
 }

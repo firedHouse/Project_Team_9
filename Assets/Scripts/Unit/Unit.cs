@@ -19,6 +19,7 @@ public abstract class Unit : MonoBehaviour
         currentHp = maxHp;
     }
 
+
     public virtual void TakeDamage(float amount)
     {
         currentHp -= amount;

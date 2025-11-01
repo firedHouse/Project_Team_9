@@ -16,6 +16,8 @@ public class SkillUI : MonoBehaviour
 
     private void Awake()
     {
+        //예외처리. skills 컴포넌트가 할당되지 않았을 때 자동으로 할당
+
         if (skills == null)
             skills = GetComponent<Skill>();
 
@@ -27,7 +29,7 @@ public class SkillUI : MonoBehaviour
 
     private void Update()
     {
-        // 테스트용: Q를 누르면 쿨타임 시작
+        // 테스트용: skillKey를 누르면 쿨타임 시작
         if (Input.GetKeyDown(skillKey) && !_isCoolTime)
         {
             Debug.Log("스킬 사용!");
@@ -35,7 +37,7 @@ public class SkillUI : MonoBehaviour
         }
     }
 
-    public void StartCoolDown()
+    public void StartCoolDown() //쿨타임일 때 스킬 발동 X
     {
         if (!_isCoolTime)
         {

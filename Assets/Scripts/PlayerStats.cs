@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    [Header("Exp Management")]
+    [Tooltip("PlayScene에 경험치 증가를 관측하여 필수로 존재해야 할 오브젝트 입니다")]
     [SerializeField] private int _playerMaxLevel = 9;
     [SerializeField] private float _playerMaxExp = 1000;
     [SerializeField] private float _exp = 200;

@@ -38,7 +38,7 @@ public class ChoiceUI : MonoBehaviour
         Debug.Log("Game Start Button Clicked");
     }
 
-    public void ChoiceJob()
+    public void ChoiceJob() // 캐릭터 직업 선택 -> Debug.Log로 확인
     {
         if(JobText.text == "Knight")
         {
