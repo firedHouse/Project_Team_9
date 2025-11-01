@@ -22,7 +22,7 @@ public class PlayerArcherArrow : MonoBehaviour
     {
         isDelay = true;
         SoundManager.Instance.PlaySFX("arrowShot");
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.0f);  //ÄðÅ¸ÀÓ
         isDelay = false;
     }
 

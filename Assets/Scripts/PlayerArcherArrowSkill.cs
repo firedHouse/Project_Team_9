@@ -19,7 +19,7 @@ public class PlayerArcherArrowSkill : MonoBehaviour
     {
         isDelay = true;
         SoundManager.Instance.PlaySFX("3arrows");
-        yield return new WaitForSeconds(1.5f);  //ÄðÅ¸ÀÓ
+        yield return new WaitForSeconds(3.0f);  //ÄðÅ¸ÀÓ
         isDelay = false;
         
     }

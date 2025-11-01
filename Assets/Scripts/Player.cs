@@ -11,12 +11,14 @@ public class Player : Unit
 
     public bool attackTime; 
     public bool wSkillTime;
+    public bool eSkillTime;
 
     [SerializeField] private Animator animator;
 
 
     [SerializeField][Range(0, 10)] private float cooltime;
-    [SerializeField][Range(0, 10)] private float skillCooltime;
+    [SerializeField][Range(0, 10)] private float wSkillCooltime;
+    [SerializeField][Range(0, 10)] private float eSkillCooltime;
 
     private void Start()
     {
@@ -62,9 +64,9 @@ public class Player : Unit
             StartCoroutine(ActiveSkillW());            
         }
 
-        if (Input.GetKeyUp(KeyCode.E))
+        if (Input.GetKeyUp(KeyCode.E) && eSkillTime == false)
         {
-            Debug.Log("E 속성스킬");
+            StartCoroutine(ActiveSkillE());
         }
 
         //if (Input.GetKey(KeyCode.R))
@@ -92,8 +94,16 @@ public class Player : Unit
     {
         wSkillTime = true;
         animator.SetTrigger("Skill W");
-        yield return new WaitForSeconds(skillCooltime); //w스킬 쿨타임
+        yield return new WaitForSeconds(wSkillCooltime); //w스킬 쿨타임
         wSkillTime = false;
+    }
+
+    IEnumerator ActiveSkillE()
+    {
+        eSkillTime = true;
+        animator.SetTrigger("Skill E");
+        yield return new WaitForSeconds(eSkillCooltime); //e스킬 쿨타임
+        eSkillTime = false;
     }
     private void SetPosition()
     {
