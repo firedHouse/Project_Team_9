@@ -6,9 +6,14 @@ public class Sword : MonoBehaviour
 {
     private Collider swordCollider;
     private Player _player;
-    private float _soundCooldown = 1.5f;
     private bool _isQReady = true;
-    private bool _isWReady = true;
+    private bool _isWReady = true;      //사운드딜레이
+
+    public bool attackTime = true; //공격딜레이
+    public bool skillTime = true;   //스킬딜레이
+
+    // private float _soundCooldown = 1.5f; 사운드 쿨타임 기존 설정값
+
 
     private void Awake()
     {
@@ -20,41 +25,57 @@ public class Sword : MonoBehaviour
 
     private void Update()
     {
-        if (_isQReady && Input.GetKeyUp(KeyCode.Q))
+        if (attackTime && _isQReady && Input.GetKeyUp(KeyCode.Q))
         {
-            StartCoroutine(ActivateCollider());
-            StartCoroutine(CooldownQ());
             _isQReady = false;
+            attackTime = false;
+            StartCoroutine(AttackCollider());
+            StartCoroutine(CooldownQ());
         }
-        if (_isWReady && Input.GetKeyDown(KeyCode.W))
+        if (skillTime && _isWReady && Input.GetKeyDown(KeyCode.W))
         {
+            _isWReady = false;
+            skillTime = false;
             StartCoroutine(ActivateCollider());
             StartCoroutine(CooldownW());
-            _isWReady = false;
         }
 
     }
     private IEnumerator CooldownQ()
     {
         SoundManager.Instance.PlaySFX("knightQ");
-        yield return new WaitForSeconds(_soundCooldown);
+        yield return new WaitForSeconds(1.5f);
         _isQReady = true;
     }
     private IEnumerator CooldownW()
     {
         SoundManager.Instance.PlaySFX("Whirlwind");
-        yield return new WaitForSeconds(_soundCooldown);
+        yield return new WaitForSeconds(4.0f);
         _isWReady = true;
 
     }
 
-    private IEnumerator ActivateCollider()
-    {   
-
+    private IEnumerator AttackCollider()
+    {
+        
         yield return new WaitForSeconds(0.5f);
         swordCollider.enabled = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.0f);
         swordCollider.enabled = false;
+        
+        attackTime = true;
+
+    }
+
+    private IEnumerator ActivateCollider()
+    {
+
+        yield return new WaitForSeconds(0.3f);
+        swordCollider.enabled = true;
+        yield return new WaitForSeconds(1.0f);
+        swordCollider.enabled = false;
+        yield return new WaitForSeconds(2.7f);
+        skillTime = true;
 
     }
 

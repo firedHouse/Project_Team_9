@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerArcherArrow : MonoBehaviour
 {
+    private Player _player;
+    private float _arrowDamage;
     [SerializeField] private GameObject _arrow;
     [SerializeField] private float _arrowSpeed;
     private bool isDelay;
@@ -39,6 +42,7 @@ public class PlayerArcherArrow : MonoBehaviour
         
     }
 
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q) && isDelay == false)

@@ -19,11 +19,13 @@ public class PlayerArcherArrowSkill : MonoBehaviour
     {
         isDelay = true;
         SoundManager.Instance.PlaySFX("3arrows");
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.5f);  //ÄðÅ¸ÀÓ
         isDelay = false;
+        
     }
     private IEnumerator MoveAndDestroy(GameObject arrow)
     {
+        
         float lifetime = 5f;
         float elapsed = 0f;
 
@@ -38,7 +40,7 @@ public class PlayerArcherArrowSkill : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.W) && isDelay == false)
+        if (Input.GetKeyUp(KeyCode.Q) == false && Input.GetKeyUp(KeyCode.W) && isDelay == false)
         {           
             ActiveSkill();
         }

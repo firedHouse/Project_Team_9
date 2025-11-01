@@ -7,11 +7,16 @@ using UnityEngine.SceneManagement;
 public class Player : Unit
 {
     private bool isDead = false;
-    private float rotateInterpolate = 10;    
+    private float rotateInterpolate = 10;
 
-    public bool isDelay;    
+    public bool attackTime; 
+    public bool wSkillTime;
 
-    [SerializeField] private Animator animator;       
+    [SerializeField] private Animator animator;
+
+
+    [SerializeField][Range(0, 10)] private float cooltime;
+    [SerializeField][Range(0, 10)] private float skillCooltime;
 
     private void Start()
     {
@@ -46,26 +51,17 @@ public class Player : Unit
 
     private void ActiveSkill()
     {
-        if (Input.GetKeyUp(KeyCode.Q))
-        {
-            if (isDelay == false)
-            {
-                isDelay = true;                
-                StartCoroutine(Attack());
+        if (Input.GetKeyUp(KeyCode.Q) && attackTime == false)
+        {                                        
+            StartCoroutine(Attack());          
 
-            }
         }
 
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.W) && wSkillTime == false)
         {
-            if (isDelay == false)
-            {
-                isDelay = true;
-                StartCoroutine(ActiveSkillW());
-
-            }
+            StartCoroutine(ActiveSkillW());            
         }
-        
+
         if (Input.GetKeyUp(KeyCode.E))
         {
             Debug.Log("E 속성스킬");
@@ -84,17 +80,20 @@ public class Player : Unit
         //}
     }
 
-    IEnumerator Attack()
+    IEnumerator Attack()    
     {
+        attackTime = true;
         animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(1.5f);
-        isDelay = false;
+        yield return new WaitForSeconds(cooltime);  //기본공격 쿨타임
+        attackTime = false;
+
     }
     IEnumerator ActiveSkillW()
     {
+        wSkillTime = true;
         animator.SetTrigger("Skill W");
-        yield return new WaitForSeconds(1.5f);
-        isDelay = false;
+        yield return new WaitForSeconds(skillCooltime); //w스킬 쿨타임
+        wSkillTime = false;
     }
     private void SetPosition()
     {
