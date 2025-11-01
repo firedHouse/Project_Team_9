@@ -20,6 +20,12 @@ public class Player : Unit
     [SerializeField][Range(0, 10)] private float wSkillCooltime;
     [SerializeField][Range(0, 10)] private float eSkillCooltime;
 
+    public float Cooltime => cooltime; // SkillUI에서 쿨타임 접근을 위한 프로퍼티 (읽기만 되게 하기)
+    public float WSkillCooltime => wSkillCooltime;
+    public float ESkillCooltime => eSkillCooltime;
+
+    public bool IsDead => isDead;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
