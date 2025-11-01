@@ -9,7 +9,7 @@ public class PlayerArcherArrowSkill : MonoBehaviour
     private bool isDelay;
     public void ActiveSkill()
     {
-        GameObject arrow = Instantiate(_activeSkill, transform.position, transform.rotation);
+        GameObject arrow = Instantiate(_activeSkill, transform.position, transform.rotation);   //화살생성
 
         StartCoroutine(MoveAndDestroy(arrow));  //코루틴 시작
         StartCoroutine(timer());
