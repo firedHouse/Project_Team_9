@@ -42,6 +42,7 @@ public class Enemy : Unit
             _playerTransform = playerObj.transform;
         }
     }
+
     //풀에서 가져올 때 호출하는 초기화 로직
     public void OnSpawned()
     {
@@ -57,8 +58,6 @@ public class Enemy : Unit
             currentHp = maxHp;
         }
     }
-
-   
 
     //거리 계산 후, 감지 거리 내 들어올 시 추적 및 이동 
     private void Update()
@@ -103,7 +102,6 @@ public class Enemy : Unit
 
     protected override void Die()
     {
-        //SoundManager.Instance.PlaySFX("Player_Fireball");
         Debug.Log($"{gameObject}유닛 사망");
 
         //NavMeshAgent 기능 정지
@@ -115,7 +113,6 @@ public class Enemy : Unit
         ObjectPoolManager.Instance.ReturnObject(gameObject, _prefabKey);
         //반납 후 리워드 스폰
         SpawnReward();
-
     }
 
     private void SpawnReward()

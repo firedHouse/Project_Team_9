@@ -84,7 +84,7 @@ public class GameManager : Singleton<GameManager>
                 //퍼즈 상태 아니였다면 원하는 씬으로 이동.
                 else
                 {
-                    //HandleSceneLoad(state);
+                    HandleSceneLoad(state);
                 }
                 break;
 
