@@ -18,6 +18,9 @@ public class SoundManager : Singleton<SoundManager>
 {
     [Header("BGM Source")]
     [SerializeField] private AudioSource _bgmSource;
+    [Header("BGM Clip")]
+    [SerializeField] private AudioClip _defaultBgmClip;
+
 
     private AudioSource _sfxSource;
 
@@ -70,7 +73,10 @@ public class SoundManager : Singleton<SoundManager>
         InitializeSFXDictionary();
     }
 
-
+    private void Start()
+    {
+        SoundManager.Instance.PlayBGM(_defaultBgmClip);
+    }
 
 
     //BGM 재생, 현재 클립과 다르면 플레이
