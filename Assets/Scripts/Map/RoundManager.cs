@@ -4,86 +4,84 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-// 라운드 관리 매니저
-// 역활 : 라운드 상태 관리, 시간 관리, 적 관리, 다음 방 이동 처리
+//기존 라운드 관리 매니저 제거하고 간단히 제작
+//벡터값 받고 2라운드까지만 이동하게 하드코딩(여현구)
 
 public class RoundManager : Singleton<RoundManager>
 {
-    public enum RoundState
+    //라운드 시간 상수로 지정.
+    [SerializeField] private float RoundTime = 115.0f;
+    [SerializeField] private float NextRoundTime = 120.0f;
+
+    //플레이어, 경과시간, 진행여부, 매 프레임마다 이동하지 않게 115초에 한 번만 이동하도록 제한하는 필드
+    private Player _player;
+    private float _elapsedTime = 0f;
+    private bool _isRoundRunning = false;
+    private bool _logTriggered = false;
+
+    //다음 라운드 위치 직렬화, 기본값 2라운드 시작점으로 지정
+    [SerializeField] private Vector3 _nextRoundPosition = new Vector3(138f, 1.5f, -25f);
+
+    protected override void Awake()
     {
-        Ready,
-        Playing,
-        Cleared,
-        Failed,
-        End
+        base.Awake();
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObj != null)
+        {
+            _player = playerObj.GetComponent<Player>();
+        }
+        //상태변경 구독
+        GameManager.Instance.OnStateChanged += HandleGameStateChange;
     }
 
-    private RoundState _currentState = RoundState.Ready;
-    public RoundState CurrentState => _currentState;
-
-    public event Action<RoundState> OnRoundStateChanged;
-
-    [SerializeField] private float roundTime = 120f;
-    private float _timer = 0f;
-    public List<Enemy> enemies = new List<Enemy>();
-
-    private bool _isTransitioning = false;
-
-    private void Start()
+    //플레이 진입 시 타이머 시작하는 메서드 실행하는 메서드
+    private void HandleGameStateChange(GameManager.GameState newState)
     {
-        StartRound();
+        if (newState == GameManager.GameState.Play)
+        {
+            Debug.Log("플레이씬 진입, 라운드시작'");
+            RoundStart();
+        }
+    }
+    //라운드 시작하면서 타이머 시작
+    public void RoundStart()
+    {
+        if (_isRoundRunning)
+        {
+            return;
+        }
+        _elapsedTime = 0f;
+        _logTriggered = false;
+        _isRoundRunning = true;
     }
 
+    //다음 라운드로 플레이어 포지션값 이동
+    private void RoundEnd()
+    {
+        _isRoundRunning = false;
+        _player.transform.position = _nextRoundPosition;
+    }
+
+    //매 업데이트마다 경과시간 누적, 115초에 로그, 120초에 이동
     private void Update()
     {
-        if (_currentState != RoundState.Playing)
+        if (!_isRoundRunning)
+        {
             return;
-
-        _timer -= Time.deltaTime;
-        enemies.RemoveAll(e => e == null);
-
-        if (_timer <= 0f && !_isTransitioning)
-        {
-            EndRound(true);
         }
-        else if (enemies.Count == 0 && !_isTransitioning)
-        {
-            EndRound(true);
-        }
-    }
-    // 라운드 시작
-    public void StartRound()
-    {
-        _currentState = RoundState.Playing;
-        _timer = roundTime;
-        _isTransitioning = false;
-        OnRoundStateChanged?.Invoke(_currentState);
-        Debug.Log("라운드 시작");
-    }
-    // 라운드 종료
-    private void EndRound(bool cleared)
-    {
-        _currentState = cleared ? RoundState.Cleared : RoundState.Failed;
-        OnRoundStateChanged?.Invoke(_currentState);
+        _elapsedTime += Time.deltaTime;
 
-        if (cleared)
+        //115초 이후 로그 트리거가 true로 변환되어 1번만 로그가 출력되도록 설정
+        if (!_logTriggered && _elapsedTime >= RoundTime)
         {
-            StartCoroutine(NextPortalSequence());
+            Debug.Log("5초 뒤 이동합니다(UI 구현 바랍니다)");
+            _logTriggered = true; 
         }
-        else
+        //120초 경과시 라운드 끝내고 다음 라운드 시작점으로 포지션값 변경
+        if (_elapsedTime >= NextRoundTime)
         {
-            GameManager.Instance.ChangeState(GameManager.GameState.Result);
+            RoundEnd();
         }
     }
-    
-    private IEnumerator NextPortalSequence()
-    {
-        _isTransitioning = true;
-        Debug.Log("5초 뒤 다음 방으로 이동합니다...");
-        yield return new WaitForSeconds(5f);
-
-        PortalManager.Instance.MoveToNextPortal();
-    }
-
-    public float GetRemainingTime() => _timer;
 }
