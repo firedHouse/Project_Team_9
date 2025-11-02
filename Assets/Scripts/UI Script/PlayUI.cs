@@ -7,22 +7,12 @@ public class PlayUI : MonoBehaviour
 {
     [SerializeField] private GameObject menuUI;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             OnMenu();
         }
-
-        // expBar.value = Player.Instance.Exp / Player.Instance.MaxExp;
 
     }
 
@@ -32,12 +22,5 @@ public class PlayUI : MonoBehaviour
         menuUI.SetActive(true);
         Debug.Log("Menu Button Clicked");
     }
-
-    public void LevelUp()
-    {
-        
-        
-    }
-
 
 }

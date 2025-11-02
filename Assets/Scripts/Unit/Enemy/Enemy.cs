@@ -91,8 +91,6 @@ public class Enemy : Unit
     public override void TakeDamage(float damage)
     {      
         currentHp -= damage;
-        GameObject DmgTxtClone = Instantiate(Resources.Load<GameObject>("DamageText"), transform.position + Vector3.up * 1.5f, Quaternion.identity);
-        DmgTxtClone.GetComponent<DmgTxt>().DisplayDamage(damage);
         Debug.Log($"Enemy가 {damage} 데미지를 받았습니다. 남은 체력: {currentHp}");
 
         if (currentHp <= 0)

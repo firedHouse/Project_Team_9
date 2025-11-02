@@ -34,6 +34,7 @@ public class ChoiceUI : MonoBehaviour
     }
     public void OnClinkGameStart()
     {
+        GameManager.Instance.ChangeState(GameManager.GameState.Play);
         UnityEngine.SceneManagement.SceneManager.LoadScene("HansolTestScene");
         Debug.Log("Game Start Button Clicked");
     }
