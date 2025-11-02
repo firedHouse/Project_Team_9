@@ -5619,37 +5619,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1 &1722491657
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1722491658}
-  m_Layer: 0
-  m_Name: Round2StartPosition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1722491658
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722491657}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 138.212, y: 1.289, z: -25.22}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1747901556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28160,13 +28129,12 @@ SceneRoots:
   - {fileID: 808091717}
   - {fileID: 1318928359}
   - {fileID: 441688359}
-  - {fileID: 1887100376514341410}
+  - {fileID: 1887669262}
   - {fileID: 681021974}
-  - {fileID: 102006816}
   - {fileID: 452415172}
   - {fileID: 1529951423}
-  - {fileID: 1887669262}
-  - {fileID: 791914196}
   - {fileID: 1583935823}
-  - {fileID: 1722491658}
+  - {fileID: 102006816}
   - {fileID: 208033166}
+  - {fileID: 791914196}
+  - {fileID: 1887100376514341410}
