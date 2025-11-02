@@ -1,23 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
+using UnityEngine.UI;
 
 public class ResultUI : MonoBehaviour
 {
     [SerializeField] private Player player;
 
-    void Start()
+    private void OnEnable()
     {
-        if (player == null)
-        {
-            player = GetComponent<Player>();
-            if (player == null)
-            {
-                Debug.LogError("참조된 Player가 존재하지 않습니다.");
-                return;
-            }
-        }
+        GameManager.Instance.OnStateChanged += OnResultUIActive;
+    }
+    private void OnDisable()
+    {
+        GameManager.Instance.OnStateChanged -= OnResultUIActive;
     }
 
     void Update()
@@ -30,13 +26,27 @@ public class ResultUI : MonoBehaviour
 
     public void OnClinkReGame()
     {
+        GameManager.Instance.ChangeState(GameManager.GameState.Play);
         UnityEngine.SceneManagement.SceneManager.LoadScene("HansolTestScene");
         gameObject.SetActive(false);
     }
 
     public void OnClinkBackToLobby()
     {
+        GameManager.Instance.ChangeState(GameManager.GameState.Lobby);
         UnityEngine.SceneManagement.SceneManager.LoadScene("TestLobbyScene");
         gameObject.SetActive(false);
+    }
+    
+    private void OnResultUIActive(GameManager.GameState state)
+    {
+        if (state == GameManager.GameState.Result)
+        {
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
