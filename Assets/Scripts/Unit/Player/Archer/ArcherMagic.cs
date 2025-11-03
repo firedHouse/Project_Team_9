@@ -51,26 +51,8 @@ public class ArcherMagic : MonoBehaviour
         isDelay = false;
 
     }
-    private IEnumerator MagicCollider()
-    {
-        isDelay = true;
-        Collider magicColider = gameObject.GetComponent<Collider>();
-        magicColider.enabled = true;
-        yield return new WaitForSeconds(5.0f);
-        magicColider.enabled = false;
-        isDelay = false;
-    }
 
-    private void OnTriggerEnter(Collider player)
-    {
-        if (player.CompareTag("Player"))
-        {
-            Player playerHp = player.gameObject.GetComponent<Player>();
-
-            playerHp.currentHp += 5.0f;
-            Debug.Log($"체력 5회복");
-        }
-    }
+    
 
 
     private void Update()
@@ -78,7 +60,6 @@ public class ArcherMagic : MonoBehaviour
         if (eSkillUnlocked && Input.GetKey(KeyCode.E) && isDelay == false)
         {
             StartCoroutine(Spawn());
-            StartCoroutine(MagicCollider());
             StartCoroutine(timer());
         }
     }
