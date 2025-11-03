@@ -14,9 +14,12 @@ public class Enemy : Unit
     //반납할 때 사용할 키 = 프리펩의 이름
     [Header("Pool Key")]
     [SerializeField] private string _prefabKey = "EnemyPrefabName";
-    
-    
 
+    //데미지 텍스트 프리팹
+    [Header("Damage Text Prefab")]
+    [SerializeField] private GameObject dmgTextPrefab;
+
+    [Header("Attack Settings")]
     [SerializeField] private float _attackCooldown = 1.0f;
     private float _lastAttackTime = 0f;
 
@@ -91,6 +94,9 @@ public class Enemy : Unit
     public override void TakeDamage(float damage)
     {      
         currentHp -= damage;
+
+        ShowDamageText(damage);
+
         Debug.Log($"Enemy가 {damage} 데미지를 받았습니다. 남은 체력: {currentHp}");
 
         if (currentHp <= 0)
@@ -134,4 +140,22 @@ public class Enemy : Unit
         reward.SetActive(true);
     }
 
+    private void ShowDamageText(float damage)
+    {
+    
+        if(dmgTextPrefab == null)
+        {
+            Debug.Log("오브젝트를 가져올 수 없습니다.");
+        }
+
+        Vector3 dmgTxtPos = transform.position + Vector3.up * 2f;
+        GameObject dmgTxtObj = Instantiate(dmgTextPrefab, dmgTxtPos, Quaternion.identity);
+
+        DmgTxt dmgTextComponent = dmgTextPrefab.GetComponent<DmgTxt>();
+
+        if(dmgTextComponent != null)
+        {
+            dmgTextComponent.DisplayDamage(damage);
+        }
+    }
 }
