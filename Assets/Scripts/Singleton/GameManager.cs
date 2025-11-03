@@ -37,10 +37,10 @@ public class GameManager : Singleton<GameManager>
     private GameState _currentState = GameState.Lobby;
     public GameState currentState => _currentState;
 
-    //플레이씬 테스트용 코드 나중에 스타트 채로 날려야 합니다!
     private void Start()
     {
-        ChangeState(GameState.Play);
+        ChangeState(GameState.Lobby);
+        SoundManager.Instance.LobbyBGM();
     }
 
     public void ChangeState(GameState state)
@@ -64,8 +64,6 @@ public class GameManager : Singleton<GameManager>
                 if (previousState == GameState.Play)
                 {
                     Time.timeScale = 0f;
-
-                    //여현구: UI 출력 관련 로직 넣으시면 됩니다.
                 }
                 else
                 {
@@ -85,11 +83,15 @@ public class GameManager : Singleton<GameManager>
                 else
                 {
                     HandleSceneLoad(state);
+                    SoundManager.Instance.PlayBGM();
                 }
                 break;
-
             case GameState.Lobby:
             case GameState.CharacterSelect:
+                HandleSceneLoad(state);
+                SoundManager.Instance.LobbyBGM();
+                Time.timeScale = 1f;
+                break;
             case GameState.Result:
                 HandleSceneLoad(state);
                 Time.timeScale = 1f;
@@ -105,10 +107,10 @@ public class GameManager : Singleton<GameManager>
             SceneName sceneToLoad = _sceneChange[state];
 
             //현재 씬과 다를 경우에만 로드
-            if (sceneToLoad != (SceneName)SceneManager.GetActiveScene().buildIndex)
+            if (sceneToLoad.ToString() != SceneManager.GetActiveScene().name)
             {
                 Debug.Log($"{sceneToLoad}씬 로딩중");
-                SceneManager.LoadScene((int)sceneToLoad);
+                SceneManager.LoadScene(sceneToLoad.ToString());
             }
         }
     }

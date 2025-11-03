@@ -19,10 +19,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
                 if (_instance == null)
                 {
-                    //설계도 없으므로 new
-                    GameObject singletoneObj = new GameObject();
-                    _instance = singletoneObj.AddComponent<T>();
-                    singletoneObj.name = typeof(T).ToString();
+                    Debug.LogError("인스턴스 없어요");
                 }
             }
 
@@ -39,7 +36,9 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
         else
         {
-            if (_instance != this)
+            //이미 인스턴스 있고, 서로 다른 경우 (중복)
+            //원본 아니니까(이미 있으니까) 파괴
+            if (_instance.gameObject != gameObject)
             {
                 Destroy(gameObject);
             }
