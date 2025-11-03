@@ -8958,6 +8958,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1350397275444179107, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
+      propertyPath: m_Name
+      value: RoundText
+      objectReference: {fileID: 0}
     - target: {fileID: 2133938947029027299, guid: 283a3207371ca474ea6d2f7cddd72d9c, type: 3}
       propertyPath: skills
       value: 
