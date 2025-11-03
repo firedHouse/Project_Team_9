@@ -18,6 +18,8 @@ public class SoundManager : Singleton<SoundManager>
 {
     private AudioSource _bgmSource;
     [Header("BGM Clip")]
+
+    [SerializeField] private AudioClip _defaultLobbyClip;
     [SerializeField] private AudioClip _defaultBgmClip;
 
 
@@ -70,27 +72,45 @@ public class SoundManager : Singleton<SoundManager>
         _bgmSource.volume = _bgmVolume;
         _sfxSource.volume = _sfxVolume;
         InitializeSFXDictionary();
+        Debug.Log("사운드매니저 어웨이크 완료 생성.");
     }
-
-    private void Start()
-    {
-        SoundManager.Instance.PlayBGM(_defaultBgmClip);
-    }
-
 
     //BGM 재생, 현재 클립과 다르면 플레이
-    public void PlayBGM(AudioClip clip)
+    public void PlayBGM()
     {
+        AudioClip clip = _defaultBgmClip;
         if (clip == null)
         {
-            Debug.Log("노래 없어요");
+            Debug.LogError("노래 없어요");
+            return;
+        }
+        if (_bgmSource.clip != clip || !_bgmSource.isPlaying)
+        {
+            _bgmSource.clip = clip;
+            _bgmSource.Play();
+            Debug.Log("재생 시작");
+        }
+    }
+
+    public void LobbyBGM()
+    {
+        AudioClip clip = _defaultLobbyClip;
+        if (clip == null)
+        {
+            Debug.LogError("노래 없어요");
             return;
         }
         if (_bgmSource.clip != clip)
         {
             _bgmSource.clip = clip;
             _bgmSource.Play();
+            Debug.Log($"[SoundManager] Lobby BGM 재생 요청: {clip.name}");
         }
+        else
+        {
+            Debug.Log("[SoundManager] Lobby BGM이 이미 재생 중이거나 클립이 동일합니다.");
+        }
+
     }
 
     public void StopBGM(GameManager.GameState newState)
