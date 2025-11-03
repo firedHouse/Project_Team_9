@@ -13,19 +13,53 @@ public class SkillUI : MonoBehaviour
     private float _currentCoolTime;
     private bool _isCoolTime;
 
-    private void Awake()
+    void Start()
     {
-        //예외처리. Player 컴포넌트가 할당되지 않았을 때 자동으로 할당
-
-        if (player == null)
-            player = GetComponent<Player>();
+        StartCoroutine(FindPlayer());
 
         coolTimeImage.fillAmount = 0f;
         coolTimeText.text = "";
     }
+    private void Start()
+    {
+        if (player == null)
+        {
+            var foundPlayer = FindObjectOfType<Player>();
+            if (foundPlayer != null)
+            {
+                player = foundPlayer.GetComponent<Player>();
+            }
+            else
+            {
+                Debug.LogError("참조된 Player가 존재하지 않습니다.");
+            }
+        }
+        coolTimeImage.fillAmount = 0f;
+        coolTimeText.text = "";
 
+<<<<<<< Updated upstream
+    }
+=======
+    private IEnumerator FindPlayer()
+    {
+        while (player == null) // 게임 시작할 때, Player 를 자동으로 삽입
+        {
+            player = FindObjectOfType<Player>();
+            if (player != null)
+            {
+                yield break;
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+>>>>>>> Stashed changes
     private void Update()
     {
+        if (player == null) // Player 없으면 일단 대기
+        {
+            return;
+        }
         // 테스트용: skillKey를 누르면 쿨타임 시작
         if (Input.GetKeyDown(skillKey) && !_isCoolTime)
         {

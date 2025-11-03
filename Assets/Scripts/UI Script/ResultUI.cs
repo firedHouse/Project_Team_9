@@ -18,8 +18,9 @@ public class ResultUI : MonoBehaviour
 
     void Update()
     {
-        if(player.IsDead)
+        if(player.currentHp <= 0)
         {
+            GameManager.Instance.ChangeState(GameManager.GameState.Result);
             gameObject.SetActive(true);
         }
     }

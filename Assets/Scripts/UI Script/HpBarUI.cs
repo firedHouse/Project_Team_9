@@ -7,22 +7,61 @@ public class HpBarUI : MonoBehaviour
 {
     [SerializeField] private Slider hpBar;
     [SerializeField] private Text hpText;
+<<<<<<< Updated upstream
+    [SerializeField] private Player player;    
+
+    private void Start() // 시작 시, Player 찾아서 적용
+=======
     [SerializeField] private Player player;
-    private float maxHp;
-    private float curruntHp;
         
     void Start()
+>>>>>>> Stashed changes
     {
-        if (player == null)
+        StartCoroutine(FindPlayer());
+    }
+
+    private IEnumerator FindPlayer()
+    {
+        while (player == null) // 게임 시작할 때, Player 를 자동으로 삽입
         {
-            Debug.LogError("참조된 Player가 존재하지 않습니다.");
+<<<<<<< Updated upstream
+            var foundPlayer = FindObjectOfType<Player>();
+            if (foundPlayer != null)
+            {
+                player = foundPlayer.GetComponent<Player>();
+            }
+            else
+            {
+                Debug.LogError("참조된 Player가 존재하지 않습니다.");
+            }
+=======
+            player = FindObjectOfType<Player>();
+            if (player != null)
+            {
+                yield break;
+            }
+            yield return new WaitForSeconds(0.2f);
+>>>>>>> Stashed changes
         }
+
     }
 
     void Update()
     {
-        maxHp = player.maxHp;
-        curruntHp = player.currentHp;
+<<<<<<< Updated upstream
+        if(player == null)
+        {
+                       return;
+        }
+
+=======
+        if (player == null) // Player 없으면 일단 대기
+        {
+            return;
+        }
+>>>>>>> Stashed changes
+        float maxHp = player.maxHp;
+        float curruntHp = player.currentHp;
 
         hpBar.value = curruntHp / maxHp;
 
