@@ -6,14 +6,30 @@ using UnityEngine.SceneManagement;
 
 public class Player : Unit
 {
+    [SerializeField] private Animator animator;
+    private PlayerStats playerStats;
+
     private bool isDead = false;
     private float rotateInterpolate = 10;
 
-    public bool attackTime; 
-    public bool wSkillTime;
-    public bool eSkillTime;
+    //QWE 키 모션쿨타임
+    private bool attackTime;
+    private bool wSkillTime;
+    private bool eSkillTime;
 
-    [SerializeField] private Animator animator;
+    //WE 스킬 해금 기본값은 false
+    private bool wSkillUnlocked = false;
+    private bool eSkillUnlocked = false;
+    public bool WSkillUnlocked
+    {
+        get => wSkillUnlocked;
+    }
+    public bool ESkillUnlocked
+    {
+        get => eSkillUnlocked;
+    }
+
+
 
 
     [SerializeField][Range(0, 10)] private float cooltime;
@@ -24,11 +40,34 @@ public class Player : Unit
     public float WSkillCooltime => wSkillCooltime;
     public float ESkillCooltime => eSkillCooltime;
 
+
     public bool IsDead => isDead;
 
     private void Start()
     {
+        //애니메이션과 플레이어스텟정보 가져오기
         animator = GetComponent<Animator>();
+        playerStats = FindObjectOfType<PlayerStats>();
+
+        if (playerStats != null)
+        {
+            playerStats.OnLevelChanged += CheckLevel;
+        }
+    }
+
+    private void CheckLevel(int currentLevel, int maxLevel)
+    {
+        if(currentLevel >= 3 && wSkillUnlocked == false)
+        {
+            wSkillUnlocked = true;
+            Debug.Log("W 스킬 해금");
+        }
+
+        if (currentLevel >= 6 && eSkillUnlocked == false)
+        {
+            eSkillUnlocked = true;
+            Debug.Log("E 스킬 해금");
+        }
     }
 
     private Vector3 GetNormalizedDirection()
@@ -64,12 +103,12 @@ public class Player : Unit
 
         }
 
-        if (Input.GetKeyUp(KeyCode.W) && wSkillTime == false)
+        if (wSkillUnlocked && Input.GetKeyUp(KeyCode.W) && wSkillTime == false)
         {
             StartCoroutine(ActiveSkillW());            
         }
 
-        if (Input.GetKeyUp(KeyCode.E) && eSkillTime == false)
+        if (eSkillUnlocked && Input.GetKeyUp(KeyCode.E) && eSkillTime == false)
         {
             StartCoroutine(ActiveSkillE());
         }
