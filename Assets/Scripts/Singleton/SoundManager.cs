@@ -95,7 +95,7 @@ public class SoundManager : Singleton<SoundManager>
 
     public void StopBGM(GameManager.GameState newState)
     {
-        if (_bgmSource.isPlaying)
+        if (newState == GameManager.GameState.Result)
         {
             StartCoroutine(FadeOutBGM(3f));
         }
