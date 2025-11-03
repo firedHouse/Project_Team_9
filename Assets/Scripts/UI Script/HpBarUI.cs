@@ -7,22 +7,34 @@ public class HpBarUI : MonoBehaviour
 {
     [SerializeField] private Slider hpBar;
     [SerializeField] private Text hpText;
-    [SerializeField] private Player player;
-    private float maxHp;
-    private float curruntHp;
-        
-    void Start()
+    [SerializeField] private Player player;    
+
+    private void Start() // 시작 시, Player 찾아서 적용
     {
         if (player == null)
         {
-            Debug.LogError("참조된 Player가 존재하지 않습니다.");
+            var foundPlayer = FindObjectOfType<Player>();
+            if (foundPlayer != null)
+            {
+                player = foundPlayer.GetComponent<Player>();
+            }
+            else
+            {
+                Debug.LogError("참조된 Player가 존재하지 않습니다.");
+            }
         }
+
     }
 
     void Update()
     {
-        maxHp = player.maxHp;
-        curruntHp = player.currentHp;
+        if(player == null)
+        {
+                       return;
+        }
+
+        float maxHp = player.maxHp;
+        float curruntHp = player.currentHp;
 
         hpBar.value = curruntHp / maxHp;
 

@@ -23,7 +23,24 @@ public class SkillUI : MonoBehaviour
         coolTimeImage.fillAmount = 0f;
         coolTimeText.text = "";
     }
+    private void Start()
+    {
+        if (player == null)
+        {
+            var foundPlayer = FindObjectOfType<Player>();
+            if (foundPlayer != null)
+            {
+                player = foundPlayer.GetComponent<Player>();
+            }
+            else
+            {
+                Debug.LogError("참조된 Player가 존재하지 않습니다.");
+            }
+        }
+        coolTimeImage.fillAmount = 0f;
+        coolTimeText.text = "";
 
+    }
     private void Update()
     {
         // 테스트용: skillKey를 누르면 쿨타임 시작
