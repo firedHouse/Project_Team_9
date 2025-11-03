@@ -5224,6 +5224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RoundTime: 7
   NextRoundTime: 13
+  RoundText: {fileID: 0}
   _nextRoundPosition: {x: 138, y: 2, z: -25}
 --- !u!4 &1583935823
 Transform:
@@ -10992,6 +10993,10 @@ PrefabInstance:
     - target: {fileID: 4276525892591518870, guid: 0524a75c0c76c5a43a9265c328d96d52, type: 3}
       propertyPath: m_Name
       value: Knight
+      objectReference: {fileID: 0}
+    - target: {fileID: 5590272874191591901, guid: 0524a75c0c76c5a43a9265c328d96d52, type: 3}
+      propertyPath: damage
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6454797353124209088, guid: 0524a75c0c76c5a43a9265c328d96d52, type: 3}
       propertyPath: m_IsTrigger
