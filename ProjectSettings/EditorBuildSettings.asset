@@ -10,14 +10,14 @@ EditorBuildSettings:
     guid: c976f96764556974ebadf00d52585d49
   - enabled: 1
     path: Assets/Scenes/PlayScene.unity
-    guid: 6ead42c02743ebd4599b7fd0f4499cf7
-  - enabled: 1
+    guid: 74eaa2f2e2ca6c042950ecf6a9c9e3a2
+  - enabled: 0
     path: Assets/Scenes/ResultScene.unity
     guid: fcd8f8c5489218d4baa8f2c493895e16
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/UIScene/HansolTestScene.unity
     guid: 58145421544d18442ac46d3ab0b5bdb4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/UIScene/TestLobbyScene.unity
     guid: 97a23ad3b5da4f343a40eec316dd7ee0
   m_configObjects: {}
