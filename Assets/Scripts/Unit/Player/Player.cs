@@ -164,6 +164,15 @@ public class Player : Unit
         //Destroy(gameObject) <= 계속 씬 전환 일어날 시 사용
     }
 
+    public void LevelUpStats(float levelUpMaxHp, float levelUpDamage)
+    {
+        maxHp += levelUpMaxHp;
+        damage += levelUpDamage;
+
+        Debug.Log($"{maxHp}+{damage}증가");
+
+    }
+
     private void Update()
     {
         SetPosition();
