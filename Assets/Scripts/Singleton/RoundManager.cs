@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //기존 라운드 관리 매니저 제거하고 간단히 제작
@@ -12,12 +13,14 @@ public class RoundManager : Singleton<RoundManager>
     //라운드 시간 상수로 지정.
     [SerializeField] private float RoundTime = 115.0f;
     [SerializeField] private float NextRoundTime = 120.0f;
+    [SerializeField] private Text RoundText;
 
     //플레이어, 경과시간, 진행여부, 매 프레임마다 이동하지 않게 115초에 한 번만 이동하도록 제한하는 필드
     private Player _player;
     private float _elapsedTime = 0f;
     private bool _isRoundRunning = false;
     private bool _logTriggered = false;
+    private float _displaytime = 0;
 
     //다음 라운드 위치 직렬화, 기본값 2라운드 시작점으로 지정
     [SerializeField] private Vector3 _nextRoundPosition = new Vector3(138f, 1.5f, -25f);
@@ -40,6 +43,7 @@ public class RoundManager : Singleton<RoundManager>
     {
         if (newState == GameManager.GameState.Play)
         {
+        
             Debug.Log("플레이씬 진입, 라운드시작'");
             RoundStart();
         }
@@ -76,12 +80,25 @@ public class RoundManager : Singleton<RoundManager>
         if (!_logTriggered && _elapsedTime >= RoundTime)
         {
             Debug.Log("5초 뒤 이동합니다(UI 구현 바랍니다)");
-            _logTriggered = true; 
+            _logTriggered = true;
+            RoundText.gameObject.SetActive(true);
+            RoundText.text = "5초 뒤 이동합니다.";
+            _displaytime = 3f;
+ 
         }
         //120초 경과시 라운드 끝내고 다음 라운드 시작점으로 포지션값 변경
         if (_elapsedTime >= NextRoundTime)
         {
             RoundEnd();
+        }
+
+        if(_displaytime > 0)
+        {
+            _displaytime -= Time.deltaTime;
+            if(_displaytime <= 0 )
+            {
+                RoundText.gameObject.SetActive(false);
+            }
         }
     }
 }
