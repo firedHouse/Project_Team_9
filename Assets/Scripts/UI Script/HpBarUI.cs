@@ -29,14 +29,13 @@ public class HpBarUI : MonoBehaviour
 
     void Update()
     {
-        if (player == null) // Player 없으면 일단 대기
-        {
-            return;
-        }
+        if (player == null) return;
 
         float maxHp = player.maxHp;
         float currHp = Mathf.Clamp(player.currentHp, 0, maxHp);
 
+        hpBar.maxValue = maxHp;
+        hpBar.value = currHp;
+        hpText.text = $"{currHp:F0}/{maxHp:F0}";
     }
 }
-

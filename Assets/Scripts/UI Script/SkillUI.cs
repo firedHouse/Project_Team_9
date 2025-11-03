@@ -41,16 +41,16 @@ public class SkillUI : MonoBehaviour
 
     private void Update()
     {
-        // í…ŒìŠ¤íŠ¸ìš©: skillKeyë¥¼ ëˆ„ë¥´ë©´ ì¿¨íƒ€ì„ ì‹œì‘
+        // Å×½ºÆ®¿ë: skillKey¸¦ ´©¸£¸é ÄğÅ¸ÀÓ ½ÃÀÛ
         if (Input.GetKeyDown(skillKey) && !_isCoolTime)
         {
-            Debug.Log($"{skillKey}ìŠ¤í‚¬ ì‚¬ìš©!");
+            Debug.Log($"{skillKey}½ºÅ³ »ç¿ë!");
             SetCoolTime();
             StartCoroutine(CoolTimeRoutine());
         }
     }
 
-    public void SetCoolTime() //ì¿¨íƒ€ì„ì¼ ë•Œ ìŠ¤í‚¬ ë°œë™ X
+    public void SetCoolTime() //ÄğÅ¸ÀÓÀÏ ¶§ ½ºÅ³ ¹ßµ¿ X
     {
         switch (skillKey)
         {
@@ -64,7 +64,7 @@ public class SkillUI : MonoBehaviour
                 _cooldownTime = player.ESkillCooltime;
                 break;
             default:
-                _cooldownTime = 1f; // ì¿¨íƒ€ì„ ê¸°ë³¸ê°’
+                _cooldownTime = 1f; // ÄğÅ¸ÀÓ ±âº»°ª
                 break;
         }
     }
@@ -75,7 +75,7 @@ public class SkillUI : MonoBehaviour
         _currentCoolTime = _cooldownTime;
         coolTimeImage.fillAmount = 1f;
 
-        // ì¿¨íƒ€ì„ì´ ì¤„ì–´ë“œëŠ” ë™ì•ˆ ë°˜ë³µ
+        // ÄğÅ¸ÀÓÀÌ ÁÙ¾îµå´Â µ¿¾È ¹İº¹
         while (_currentCoolTime > 0)
         {
             _currentCoolTime -= Time.deltaTime;
@@ -84,11 +84,11 @@ public class SkillUI : MonoBehaviour
             yield return null;
         }
 
-        // ì¿¨íƒ€ì„ ë
+        // ÄğÅ¸ÀÓ ³¡
         coolTimeImage.fillAmount = 0f;
         coolTimeText.text = "";
         _isCoolTime = false;
 
-        yield break; // ì½”ë£¨í‹´ ì¢…ë£Œ
+        yield break; // ÄÚ·çÆ¾ Á¾·á
     }
 }
