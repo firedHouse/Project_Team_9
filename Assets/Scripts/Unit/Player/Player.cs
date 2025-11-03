@@ -12,6 +12,8 @@ public class Player : Unit
     private bool isDead = false;
     private float rotateInterpolate = 10;
 
+    private float healHp = 5.0f;
+
     //QWE 키 모션쿨타임
     private bool attackTime;
     private bool wSkillTime;
@@ -210,6 +212,15 @@ public class Player : Unit
         Debug.Log($"{maxHp}+{damage}증가");
 
     }
+    private void OnTriggerStay(Collider heal)
+    {
+        if (heal.CompareTag("Heal") && currentHp < maxHp)
+        {
+            Debug.Log("힐존에 진입");
+            currentHp += healHp * Time.deltaTime;
+        }
+    }
+
 
     private void Update()
     {
