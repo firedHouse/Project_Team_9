@@ -7,22 +7,10 @@ public class HpBarUI : MonoBehaviour
 {
     [SerializeField] private Slider hpBar;
     [SerializeField] private Text hpText;
-<<<<<<< Updated upstream
+
     [SerializeField] private Player player;
-    private float maxHp;
-    private float curruntHp;
+
         
-    void Start()
-    {
-        if (player == null)
-        {
-            Debug.LogError("ÂüÁ¶µÈ Player°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
-        }
-=======
-
-    private Player player;    
-
-
     void Start()
     {
         StartCoroutine(WaitForPlayer());
@@ -36,25 +24,19 @@ public class HpBarUI : MonoBehaviour
         }
 
         player = Player.Instance;
->>>>>>> Stashed changes
+
     }
 
     void Update()
     {
-<<<<<<< Updated upstream
-        maxHp = player.maxHp;
-        curruntHp = player.currentHp;
-=======
-        if (player == null) // Player ¾øÀ¸¸é ÀÏ´Ü ´ë±â
+        if (player == null) // Player ì—†ìœ¼ë©´ ì¼ë‹¨ ëŒ€ê¸°
         {
             return;
         }
 
         float maxHp = player.maxHp;
         float currHp = Mathf.Clamp(player.currentHp, 0, maxHp);
->>>>>>> Stashed changes
 
-        hpBar.value = currHp / maxHp;
-        hpText.text = $"{currHp} / {maxHp}";
     }
 }
+

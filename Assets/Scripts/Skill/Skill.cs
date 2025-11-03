@@ -7,12 +7,13 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
-    public enum Skills { Fire, Water, Electic, End }
+    public enum Skills { Fire, Ice, End }
     [SerializeField] private PlayerStats _playerStats;
+    [SerializeField] private GameObject[] SkillEffects;
 
     [Header("Skill Stats")]
     [SerializeField] private Skills _skillProperty;
-    [SerializeField] private GameObject _skillObject;
+     private GameObject _skillObject;
     [SerializeField] private float _skillAttackSpeed = 0.5f;
     [SerializeField] private float _skillDamage = 10f;
     [SerializeField] private float _skillRange = 3f;
@@ -37,12 +38,6 @@ public class Skill : MonoBehaviour
         set => _skillRange = value;
     }
 
-    public float SkillCooldown
-    {
-        get => _skillCooldown;
-        set => _skillCooldown = value;
-    }
-
     private void Awake()
     {
         Init();
@@ -52,11 +47,15 @@ public class Skill : MonoBehaviour
     {
         _playerStats = FindObjectOfType<PlayerStats>();
         _enemyScanner = FindObjectOfType<EnemyScanner>();
-        if (_enemyScanner == null)
-        {
-            Debug.Log("에너미 스캐너 초기화 안됨");
-            _enemyScanner = new EnemyScanner();
-        }
+
+        // _skillObject 생성 시 속성(property) 따라 다른 _skillObject 설정
+        int propertyInt = PlayerPrefs.GetInt("Property");
+        _skillProperty = (Skills)propertyInt;
+        //Debug.Log(propertyStr);
+
+        // 속성에 따라 스킬 오브젝트 지정
+        _skillObject = SkillEffects[(int)_skillProperty];
+
         // 코루틴으로 SkillAttack을 _skillCooldown마다 반복
         Debug.Log("코루틴 실행");
         StartCoroutine("RepeatSkillAttack", _skillCooldown);
@@ -69,22 +68,12 @@ public class Skill : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        // 투사체 이동
-        if (_attacker != null)
-        {
-            _attacker?.transform.Translate(Vector3.forward * _skillAttackSpeed * Time.deltaTime);
-        }
-    }
-
-
     // 속성 자동 공격
     IEnumerator RepeatSkillAttack(float cooldownTime)
     {
         if(_target == null)
         {
-            Debug.Log("타겟 없음");
+            Debug.Log("[Skill] 타겟 없음");
             _target = _enemyScanner.GetRandom(SkillRange);
             yield return new WaitForSeconds(cooldownTime);
         }
@@ -98,70 +87,68 @@ public class Skill : MonoBehaviour
             _target = _enemyScanner.GetRandom(SkillRange);
             if(_target == null)
             {
-                Debug.Log("타겟 없음");
+                Debug.Log("[Skill] 타겟 없음");
                 _target = _enemyScanner.GetRandom(SkillRange);
                 yield return new WaitForSeconds(cooldownTime);
                 continue;
             }
-            Debug.Log("타겟이 존재");
+            
+            Debug.Log("[Skill] 타겟이 존재");
             AttackerSpawn();
+
+            // 스킬 오브젝트 생성 확인
+            if (_attacker != null)
+            {
+                SkillSound();
+                SkillAttack();
+                DestroyAttacker();
+            }
+
             yield return new WaitForSeconds(cooldownTime);
         }
     }
 
-    // 투사체 위치 조정 및 생성 
-    // 문제점: 투사체 발사 시 대상을 향하긴 하는데 바닥을 향함
-    // 방향 지정 문제로 보입니다
+    // 공격 주체 위치 조정 및 생성 
     private void AttackerSpawn()
     {
         _targetPosition = _target.position;
-        Vector3 _posDiff = transform.position - _targetPosition;
-        _targetRotation = new Vector3(_posDiff.x, 0f, _posDiff.z);
-
-        // 투사체 프리팹 가져오기
-        //GameObject attacker = ObjectPoolManager.Instance.GetObject(_skillObject.name);
-        //Vector3 attackerPosition = transform.position + _targetRotation * 0.5f;
-        //attacker.SetActive(true);
-
-        _attacker = Instantiate(_skillObject, transform.GetChild(transform.childCount - 1).position, transform.rotation);
-        //_attacker.transform.LookAt(_target);
+        _attacker = Instantiate(_skillObject, _targetPosition, _target.transform.rotation);
     }
 
+    // 공격 주체가 공격하여 타겟에게 데미지
     private void SkillAttack()
     {
-        AttackerSpawn();
-        Vector3 _targetPosition = _target.position;
-        Vector3 _targetDirection = (_targetPosition - transform.position).normalized;
-        Debug.Log(_targetPosition);
+        // 데미지 처리
+        Enemy enemyUnit = _target.gameObject.GetComponent<Enemy>();
+        enemyUnit?.TakeDamage(_skillDamage);
+    }
 
+    // 공격 주체 소멸
+    private void DestroyAttacker()
+    {
+        Destroy(_attacker, 0.5f);
+    }
+
+    public void SkillSound()
+    {
+        switch (_skillProperty)
+        {
+            case Skills.Fire:
+                SoundManager.Instance.PlaySFX("fireMagic");
+                break;
+            case Skills.Ice:
+                SoundManager.Instance.PlaySFX("iceSlash");
+                break;
+        }
     }
 
     // 속성 강화
     public void SkillUpgrade(int curLvl, int maxLvl)
     {
-        // 속성 강화 로직
-        // level에 따라 다른 속성 강화 메서드 호출
-        // 3, 6, 9 제외한 레벨
-        switch (curLvl)
+        if(curLvl < maxLvl)
         {
-            case 3:
-                // Slash 갯수 증가
-                Debug.Log($"[SkillUpgrade] 투사체 갯수 증가");
-                //StartCoroutine("RepeatSkillAttack", _skillCooldown* 1.5f);
-                break;
-            case 6:
-                // 뎀 증가
-                SkillDamageUpgrade();
-                Debug.Log("스킬 이펙트 변경");
-                // skillObject 변경?
-                break;
-            case 9:
-                // 새로운 스킬 생성
-                break;
-            default:
-                SkillDamageUpgrade();
-                SkillRangeUpgrade();
-                break;
+            SkillDamageUpgrade();
+            SkillRangeUpgrade();
         }
     }
 
@@ -172,17 +159,10 @@ public class Skill : MonoBehaviour
         _skillDamage++;
     }
 
-    // 범위 업그레이드
+    // 스캔 범위 업그레이드
     private void SkillRangeUpgrade()
     {
         Debug.Log("스킬 범위 증가");
         _skillRange += 0.5f;
-    }
-
-    // 쿨타임 업그레이드
-    private void SkillCooldownUpgrade()
-    {
-        Debug.Log("스킬 쿨다운 감소");
-        _skillCooldown -= 0.5f;
     }
 }

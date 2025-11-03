@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,14 +29,24 @@ public class RoundManager : Singleton<RoundManager>
     protected override void Awake()
     {
         base.Awake();
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
 
-        if (playerObj != null)
-        {
-            _player = playerObj.GetComponent<Player>();
-        }
         //상태변경 구독
         GameManager.Instance.OnStateChanged += HandleGameStateChange;
+    }
+
+    //플레이어 찾는 메서드, Awake에서 이관
+    private void FindPlayer()
+    {
+        // _player가 null일 때만 시도
+        if (_player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                // 플레이어를 찾았으면 컴포넌트를 할당
+                _player = playerObj.GetComponent<Player>();
+            }
+        }
     }
 
     //플레이 진입 시 타이머 시작하는 메서드 실행하는 메서드
@@ -70,6 +81,12 @@ public class RoundManager : Singleton<RoundManager>
     //매 업데이트마다 경과시간 누적, 115초에 로그, 120초에 이동
     private void Update()
     {
+        //플레이어 찾는 메서드 추가, Awake에서 이전
+        if (_player == null)
+        {
+            FindPlayer();
+        }
+
         if (!_isRoundRunning)
         {
             return;
@@ -79,7 +96,7 @@ public class RoundManager : Singleton<RoundManager>
         //115초 이후 로그 트리거가 true로 변환되어 1번만 로그가 출력되도록 설정
         if (!_logTriggered && _elapsedTime >= RoundTime)
         {
-            Debug.Log("5초 뒤 이동합니다(UI 구현 바랍니다)");
+            Debug.Log("5초 뒤 이동합니다(여현구: UI 출력 구현 바랍니다)");
             _logTriggered = true;
             RoundText.gameObject.SetActive(true);
             RoundText.text = "5초 뒤 이동합니다.";

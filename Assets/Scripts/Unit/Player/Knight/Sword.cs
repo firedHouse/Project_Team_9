@@ -7,10 +7,12 @@ public class Sword : MonoBehaviour
     private Collider _swordCollider;
     private Player _player;
     private bool _isQReady = true;
-    private bool _isWReady = true;      //사운드딜레이
+    private bool _isWReady = true;
+    private bool _isEReady = true;  //사운드딜레이
 
-    public bool attackTime = true; //공격딜레이
-    public bool skillTime = true;   //스킬딜레이
+    private bool _attackTime = true; //공격딜레이
+    private bool _wSkillTime = true;
+    private bool _eSkillTime = true;  //스킬딜레이
 
     // private float _soundCooldown = 1.5f; 사운드 쿨타임 기존 설정값
 
@@ -25,19 +27,27 @@ public class Sword : MonoBehaviour
 
     private void Update()
     {
-        if (attackTime && _isQReady && Input.GetKeyUp(KeyCode.Q))
+        if (_attackTime && _isQReady && Input.GetKeyUp(KeyCode.Q))
         {
             _isQReady = false;
-            attackTime = false;
+            _attackTime = false;
             StartCoroutine(AttackCollider());
             StartCoroutine(CooldownQ());
         }
-        if (skillTime && _isWReady && Input.GetKeyDown(KeyCode.W))
+        if (_player.WSkillUnlocked && _wSkillTime && _isWReady && Input.GetKeyDown(KeyCode.W))
         {
+            Debug.Log("w스킬 발동");
             _isWReady = false;
-            skillTime = false;
+            _wSkillTime = false;
             StartCoroutine(ActivateCollider());
             StartCoroutine(CooldownW());
+        }
+        if (_player.ESkillUnlocked && _isEReady && Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("E스킬 발동");
+            _isEReady = false;
+            _eSkillTime = false;
+            StartCoroutine(CooldownE());
         }
 
     }
@@ -54,6 +64,13 @@ public class Sword : MonoBehaviour
         _isWReady = true;
 
     }
+    private IEnumerator CooldownE()
+    {
+        SoundManager.Instance.PlaySFX("KnightE");
+        yield return new WaitForSeconds(5.0f);
+        _isEReady = true;
+
+    }
 
     private IEnumerator AttackCollider()    //기본공격 쿨타임
     {
@@ -62,12 +79,12 @@ public class Sword : MonoBehaviour
         _swordCollider.enabled = true;
         yield return new WaitForSeconds(1.0f);
         _swordCollider.enabled = false;
-        
-        attackTime = true;
+
+        _attackTime = true;
 
     }
 
-    private IEnumerator ActivateCollider()  //w스킬 쿨타임
+    private IEnumerator ActivateCollider()  //W스킬 쿨타임
     {
 
         yield return new WaitForSeconds(0.3f);
@@ -75,9 +92,21 @@ public class Sword : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         _swordCollider.enabled = false;
         yield return new WaitForSeconds(2.7f);
-        skillTime = true;
+        _wSkillTime = true;
 
     }
+
+    //private IEnumerator ActivateCollider()  //E스킬 쿨타임
+    //{
+    //
+    //    yield return new WaitForSeconds(0.3f);
+    //    _swordCollider.enabled = true;
+    //    yield return new WaitForSeconds(1.0f);
+    //    _swordCollider.enabled = false;
+    //    yield return new WaitForSeconds(2.7f);
+    //    _eSkillTime = true;
+    //
+    //}
 
     private void OnTriggerEnter(Collider enemy)
     {
