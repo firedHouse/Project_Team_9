@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     //플레이어 감지 사거리
     [Header("Detection Settings")]
-    [SerializeField] private float _detectionRange = 5000f;
+    [SerializeField] private float _detectionRange = 50f;
     private bool _isSpawningActive = false;
 
 
@@ -130,7 +130,6 @@ public class EnemySpawner : MonoBehaviour
         if (newEnemy != null)
         {
             newEnemy.transform.position = spawnPosition;
-            newEnemy.SetActive(true);
             Enemy enemyOnSpanwed = newEnemy.GetComponent<Enemy>();
             if (enemyOnSpanwed != null)
             {

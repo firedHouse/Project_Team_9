@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class LobbyUI : MonoBehaviour
 {
     [SerializeField] private GameObject powerUpUI;
-    [SerializeField] private GameObject OptionUI;
-    [SerializeField] private GameObject ChoiceUI;
-    // Start is called before the first frame update
+    [SerializeField] private GameObject optionUI;
+    [SerializeField] private GameObject choiceUI;
+
     void Start()
     {
-        
+        if (powerUpUI != null) powerUpUI.SetActive(false);
+        if (optionUI != null) optionUI.SetActive(false);
+        if (choiceUI != null) choiceUI.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -21,7 +23,7 @@ public class LobbyUI : MonoBehaviour
 
     public void OnClinkStart()
     {
-        ChoiceUI.SetActive(true);
+        choiceUI.SetActive(true);
         Debug.Log("Start Button Clicked");
     }
     public void OnClinkPowerUp()
@@ -31,14 +33,18 @@ public class LobbyUI : MonoBehaviour
     }
     public void OnClinkOptions()
     {
-        OptionUI.SetActive(true);
+        optionUI.SetActive(true);
         Debug.Log("Options Button Clicked");
     }
     public void OnClinkQuit()
     {
+#if UNITY_EDITOR // 신기해서 적용해보고 싶음. Unity Editor에서 플레이 모드를 종료하는 코드
         UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); // 빌드된 애플리케이션에서 실행 시 애플리케이션 종료 라고 하는데 맞는지 모르겠음. 실험 해봐야할듯.
+#endif
         Debug.Log("Quit Button Clicked");
-        // Application.Quit(); -> 제작이 끝나면 이걸로 변경
+
     }
 
 }

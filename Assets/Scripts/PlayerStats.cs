@@ -13,7 +13,9 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float _expIncreaseAmount = 700;
     private int _playerCurrentLevel = 1;
     private float _playerCurrentExp = 0;
-    // 플레이어 체력, 경험치, 이속(변수 이미 존재)
+    // 레벨업시 증가할 스텟량
+    private float _addHp = 20f;
+    private float _addDamage = 0.5f;
 
     public event Action<float, float> OnExpChanged;
     public event Action<int, int> OnLevelChanged;
@@ -24,12 +26,14 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
+        
+
         // 테스트 코드
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            GetExp(_exp);
-            Debug.Log($"현재 레벨 : {_playerCurrentLevel} | {_playerCurrentExp} / {_playerMaxExp}");
-        }
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
+        //    GetExp(_exp);
+        //    Debug.Log($"현재 레벨 : {_playerCurrentLevel} | {_playerCurrentExp} / {_playerMaxExp}");
+        //}
     }
 
     // 추후 이동 가능
@@ -67,5 +71,10 @@ public class PlayerStats : MonoBehaviour
         _playerCurrentExp = 0;
         
         OnLevelChanged?.Invoke(_playerCurrentLevel, _playerMaxLevel);
+
+        //레벨업시 스텟 증가
+        Player player = FindObjectOfType<Player>();
+
+        player.LevelUpStats(_addHp, _addDamage);
     }
 }

@@ -24,7 +24,7 @@ public class ChoiceUI : MonoBehaviour
     }
     private void LateUpdate()
     {
-        ChoiceJob();
+        
     }
 
     public void OnClickChoiceExit()
@@ -34,7 +34,9 @@ public class ChoiceUI : MonoBehaviour
     }
     public void OnClinkGameStart()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("HansolTestScene");
+        ChoiceJob();
+
+        GameManager.Instance.ChangeState(GameManager.GameState.Play);
         Debug.Log("Game Start Button Clicked");
     }
 
@@ -59,4 +61,3 @@ public class ChoiceUI : MonoBehaviour
 
 
 }
-

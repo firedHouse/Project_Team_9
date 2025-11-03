@@ -14,9 +14,12 @@ public class Enemy : Unit
     //반납할 때 사용할 키 = 프리펩의 이름
     [Header("Pool Key")]
     [SerializeField] private string _prefabKey = "EnemyPrefabName";
-    
-    
 
+    //데미지 텍스트 프리팹
+    [Header("Damage Text Prefab")]
+    [SerializeField] private GameObject dmgTextPrefab;
+
+    [Header("Attack Settings")]
     [SerializeField] private float _attackCooldown = 1.0f;
     private float _lastAttackTime = 0f;
 
@@ -42,6 +45,7 @@ public class Enemy : Unit
             _playerTransform = playerObj.transform;
         }
     }
+
     //풀에서 가져올 때 호출하는 초기화 로직
     public void OnSpawned()
     {
@@ -57,8 +61,6 @@ public class Enemy : Unit
             currentHp = maxHp;
         }
     }
-
-   
 
     //거리 계산 후, 감지 거리 내 들어올 시 추적 및 이동 
     private void Update()
@@ -92,6 +94,9 @@ public class Enemy : Unit
     public override void TakeDamage(float damage)
     {      
         currentHp -= damage;
+
+        ShowDamageText(damage);
+
         Debug.Log($"Enemy가 {damage} 데미지를 받았습니다. 남은 체력: {currentHp}");
 
         if (currentHp <= 0)
@@ -103,7 +108,6 @@ public class Enemy : Unit
 
     protected override void Die()
     {
-        //SoundManager.Instance.PlaySFX("Player_Fireball");
         Debug.Log($"{gameObject}유닛 사망");
 
         //NavMeshAgent 기능 정지
@@ -115,7 +119,6 @@ public class Enemy : Unit
         ObjectPoolManager.Instance.ReturnObject(gameObject, _prefabKey);
         //반납 후 리워드 스폰
         SpawnReward();
-
     }
 
     private void SpawnReward()
@@ -137,4 +140,22 @@ public class Enemy : Unit
         reward.SetActive(true);
     }
 
+    private void ShowDamageText(float damage)
+    {
+    
+        if(dmgTextPrefab == null)
+        {
+            Debug.Log("오브젝트를 가져올 수 없습니다.");
+        }
+
+        Vector3 dmgTxtPos = transform.position + Vector3.up * 2f;
+        GameObject dmgTxtObj = Instantiate(dmgTextPrefab, dmgTxtPos, Quaternion.identity);
+
+        DmgTxt dmgTextComponent = dmgTextPrefab.GetComponent<DmgTxt>();
+
+        if(dmgTextComponent != null)
+        {
+            dmgTextComponent.DisplayDamage(damage);
+        }
+    }
 }
