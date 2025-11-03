@@ -16,8 +16,7 @@ public class SFXClip
 
 public class SoundManager : Singleton<SoundManager>
 {
-    [Header("BGM Source")]
-    [SerializeField] private AudioSource _bgmSource;
+    private AudioSource _bgmSource;
     [Header("BGM Clip")]
     [SerializeField] private AudioClip _defaultBgmClip;
 
@@ -94,13 +93,25 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    public void StopBGM()
+    public void StopBGM(GameManager.GameState newState)
     {
-        if (_bgmSource.isPlaying)
+        if (newState == GameManager.GameState.Result)
         {
             StartCoroutine(FadeOutBGM(3f));
         }
     }
+
+    //private void OnGameStateChanged(GameManager.GameState newState)
+    //{
+    //    if (newState == GameManager.GameState.Play)
+    //    {
+    //        _isGamePlaying = true;
+    //    }
+    //    else
+    //    {
+    //        _isGamePlaying = false;
+    //    }
+    //}
 
     //타이머 하나 만들어서 타이머가 입력받은 인자값만큼 지나면서 천천히 볼륨 감소.
     private IEnumerator FadeOutBGM(float duration)
@@ -145,5 +156,4 @@ public class SoundManager : Singleton<SoundManager>
     {
         _sfxVolume = Mathf.Clamp01(volume);
     }
-
 }
