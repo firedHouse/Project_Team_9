@@ -16,8 +16,7 @@ public class SFXClip
 
 public class SoundManager : Singleton<SoundManager>
 {
-    [Header("BGM Source")]
-    [SerializeField] private AudioSource _bgmSource;
+    private AudioSource _bgmSource;
     [Header("BGM Clip")]
     [SerializeField] private AudioClip _defaultBgmClip;
 
@@ -94,9 +93,9 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    public void StopBGM()
+    public void StopBGM(GameManager.GameState newState)
     {
-        if (_bgmSource.isPlaying)
+        if (newState == GameManager.GameState.Result)
         {
             StartCoroutine(FadeOutBGM(3f));
         }
