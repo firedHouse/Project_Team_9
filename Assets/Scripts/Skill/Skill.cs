@@ -5,33 +5,23 @@ using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 
-// Enemy가 데미지 입고 Die처리 되는 것 확인
-// 문제: Enemy가 Hp가 다 닳아서 죽어야 할 상황에 안죽고 한번 더 맞아야 사라짐
-
-
-//[RequireComponent(typeof(Player))]
-//[RequireComponent(typeof(PlayerStats))]
 public class Skill : MonoBehaviour
 {
-    public enum Skills { Fire, Water, Wind, Electic, Earth, End}
-    [Header("Skill")]
-    [SerializeField] private Skills _skillProperty;
-
+    public enum Skills { Fire, Water, Electic, End }
     [SerializeField] private PlayerStats _playerStats;
 
     [Header("Skill Stats")]
+    [SerializeField] private Skills _skillProperty;
     [SerializeField] private GameObject _skillObject;
     [SerializeField] private float _skillAttackSpeed = 0.5f;
     [SerializeField] private float _skillDamage = 10f;
     [SerializeField] private float _skillRange = 3f;
     [SerializeField] private float _skillCooldown = 5f;
 
-    [SerializeField] private Player _player;
-
     [Header("Skill Attacker")]
-    private EnemyScanner _enemyScanner;
-    private Transform _target;
-    private GameObject _attacker;
+    [SerializeField] private EnemyScanner _enemyScanner;
+    [SerializeField] private Transform _target;
+    [SerializeField] private GameObject _attacker;
     private Vector3 _targetPosition;
     private Vector3 _targetRotation;
 
@@ -53,23 +43,30 @@ public class Skill : MonoBehaviour
         set => _skillCooldown = value;
     }
 
-
     private void Awake()
     {
         Init();
     }
+
+    private void Start()
+    {
+        _playerStats = FindObjectOfType<PlayerStats>();
+        _enemyScanner = FindObjectOfType<EnemyScanner>();
+        if (_enemyScanner == null)
+        {
+            Debug.Log("에너미 스캐너 초기화 안됨");
+            _enemyScanner = new EnemyScanner();
+        }
+        // 코루틴으로 SkillAttack을 _skillCooldown마다 반복
+        Debug.Log("코루틴 실행");
+        StartCoroutine("RepeatSkillAttack", _skillCooldown);
+    }
     
     private void Init()
     {
-        _playerStats = GetComponent<PlayerStats>();
-        _player = GetComponent<Player>();
-        _enemyScanner = GetComponent<EnemyScanner>();
-
         // 옵저버 등록
         _playerStats.OnLevelChanged += SkillUpgrade;
 
-        // 코루틴으로 SkillAttack을 _skillCooldown마다 반복
-        StartCoroutine("RepeatSkillAttack", _skillCooldown);
     }
 
     private void Update()
@@ -87,7 +84,9 @@ public class Skill : MonoBehaviour
     {
         if(_target == null)
         {
-            yield return null;
+            Debug.Log("타겟 없음");
+            _target = _enemyScanner.GetRandom(SkillRange);
+            yield return new WaitForSeconds(cooldownTime);
         }
 
         // 플레이어가 살아있는 경우 반복하도록 변경
@@ -97,7 +96,14 @@ public class Skill : MonoBehaviour
             Debug.Log("=== 자동 공격 ===");
             // 공격 대상 스캔
             _target = _enemyScanner.GetRandom(SkillRange);
-            
+            if(_target == null)
+            {
+                Debug.Log("타겟 없음");
+                _target = _enemyScanner.GetRandom(SkillRange);
+                yield return new WaitForSeconds(cooldownTime);
+                continue;
+            }
+            Debug.Log("타겟이 존재");
             AttackerSpawn();
             yield return new WaitForSeconds(cooldownTime);
         }
@@ -112,9 +118,13 @@ public class Skill : MonoBehaviour
         Vector3 _posDiff = transform.position - _targetPosition;
         _targetRotation = new Vector3(_posDiff.x, 0f, _posDiff.z);
 
-        // 투사체 프리팹 생성
+        // 투사체 프리팹 가져오기
+        //GameObject attacker = ObjectPoolManager.Instance.GetObject(_skillObject.name);
+        //Vector3 attackerPosition = transform.position + _targetRotation * 0.5f;
+        //attacker.SetActive(true);
+
         _attacker = Instantiate(_skillObject, transform.GetChild(transform.childCount - 1).position, transform.rotation);
-        _attacker.transform.LookAt(_target);
+        //_attacker.transform.LookAt(_target);
     }
 
     private void SkillAttack()
@@ -137,7 +147,7 @@ public class Skill : MonoBehaviour
             case 3:
                 // Slash 갯수 증가
                 Debug.Log($"[SkillUpgrade] 투사체 갯수 증가");
-                StartCoroutine("RepeatSkillAttack", _skillCooldown* 1.5f);
+                //StartCoroutine("RepeatSkillAttack", _skillCooldown* 1.5f);
                 break;
             case 6:
                 // 뎀 증가
@@ -151,7 +161,6 @@ public class Skill : MonoBehaviour
             default:
                 SkillDamageUpgrade();
                 SkillRangeUpgrade();
-                //SkillCooldownUpgrade();
                 break;
         }
     }

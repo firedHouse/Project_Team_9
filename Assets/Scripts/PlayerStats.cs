@@ -20,6 +20,11 @@ public class PlayerStats : MonoBehaviour
     public event Action<float, float> OnExpChanged;
     public event Action<int, int> OnLevelChanged;
 
+    public int PlayerCurrentLevel 
+    {
+        get => _playerCurrentLevel;
+    }
+
     private void Awake()
     {
     }
