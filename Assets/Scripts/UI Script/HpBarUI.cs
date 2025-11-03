@@ -7,33 +7,43 @@ public class HpBarUI : MonoBehaviour
 {
     [SerializeField] private Slider hpBar;
     [SerializeField] private Text hpText;
-    [SerializeField] private Player player;
-    private float maxHp;
-    private float curruntHp;
-        
+
+
+
+    private Player player;    
+
+
+
     void Start()
     {
-        if (player == null)
+        StartCoroutine(WaitForPlayer());
+    }
+
+    private IEnumerator WaitForPlayer()
+    {
+        while (Player.Instance == null)
         {
-            Debug.LogError("참조된 Player가 존재하지 않습니다.");
+            yield return new WaitForSeconds(0.1f);
         }
+
+        player = Player.Instance;
     }
 
     void Update()
     {
-        maxHp = player.maxHp;
-        curruntHp = player.currentHp;
+        if (player == null) // Player 없으면 일단 대기
 
-        hpBar.value = curruntHp / maxHp;
+        {
+            return;
+        }
 
-        if (curruntHp > maxHp)
-        {
-            curruntHp = maxHp;
-        }
-        if (curruntHp < 0)
-        {
-            curruntHp = 0;
-        }
-        hpText.text = curruntHp + " / " + maxHp;
+        float maxHp = player.maxHp;
+        float currHp = Mathf.Clamp(player.currentHp, 0, maxHp);
+
+
+        hpBar.value = currHp / maxHp;
+        hpText.text = $"{currHp} / {maxHp}";
+
     }
 }
+

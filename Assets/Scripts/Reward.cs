@@ -5,9 +5,7 @@ using UnityEngine;
 public class Reward : MonoBehaviour
 {
     [SerializeField] private float _expAmount = 20;
-    //반납할 때 사용할 키 = 프리펩의 이름
-    [Header("Pool Key")]
-    [SerializeField] private string _prefabKey = "EnemyPrefabName";
+
 
     private void OnTriggerEnter(Collider other)
     {

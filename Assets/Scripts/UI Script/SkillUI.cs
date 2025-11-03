@@ -6,9 +6,9 @@ public class SkillUI : MonoBehaviour
 {
     [SerializeField] private Text coolTimeText;
     [SerializeField] private Image coolTimeImage;
-
     [SerializeField] private KeyCode skillKey;
-    [SerializeField] private Skill skills;
+    
+    private Player player;
 
     private float _cooldownTime;
     private float _currentCoolTime;
@@ -16,32 +16,56 @@ public class SkillUI : MonoBehaviour
 
     private void Awake()
     {
-        //¿¹¿ÜÃ³¸®. skills ÄÄÆ÷³ÍÆ®°¡ ÇÒ´çµÇÁö ¾Ê¾ÒÀ» ¶§ ÀÚµ¿À¸·Î ÇÒ´ç
 
-        if (skills == null)
-            skills = GetComponent<Skill>();
 
-        _cooldownTime = skills.SkillCooldown;
+        if (player == null)
+        {
+            player = GetComponent<Player>();
+        }
+        StartCoroutine(WaitForPlayer());
 
         coolTimeImage.fillAmount = 0f;
         coolTimeText.text = "";
     }
 
+    private IEnumerator WaitForPlayer()
+    {
+        while (Player.Instance == null)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        player = Player.Instance;
+
+    }
+
     private void Update()
     {
-        // Å×½ºÆ®¿ë: skillKey¸¦ ´©¸£¸é ÄğÅ¸ÀÓ ½ÃÀÛ
+        // í…ŒìŠ¤íŠ¸ìš©: skillKeyë¥¼ ëˆ„ë¥´ë©´ ì¿¨íƒ€ì„ ì‹œì‘
         if (Input.GetKeyDown(skillKey) && !_isCoolTime)
         {
-            Debug.Log("½ºÅ³ »ç¿ë!");
-            StartCoolDown();
+            Debug.Log($"{skillKey}ìŠ¤í‚¬ ì‚¬ìš©!");
+            SetCoolTime();
+            StartCoroutine(CoolTimeRoutine());
         }
     }
 
-    public void StartCoolDown() //ÄğÅ¸ÀÓÀÏ ¶§ ½ºÅ³ ¹ßµ¿ X
+    public void SetCoolTime() //ì¿¨íƒ€ì„ì¼ ë•Œ ìŠ¤í‚¬ ë°œë™ X
     {
-        if (!_isCoolTime)
+        switch (skillKey)
         {
-            StartCoroutine(CoolTimeRoutine());
+            case KeyCode.Q:
+                _cooldownTime = player.Cooltime;
+                break;
+            case KeyCode.W:
+                _cooldownTime = player.WSkillCooltime;
+                break;
+            case KeyCode.E:
+                _cooldownTime = player.ESkillCooltime;
+                break;
+            default:
+                _cooldownTime = 1f; // ì¿¨íƒ€ì„ ê¸°ë³¸ê°’
+                break;
         }
     }
 
@@ -51,7 +75,7 @@ public class SkillUI : MonoBehaviour
         _currentCoolTime = _cooldownTime;
         coolTimeImage.fillAmount = 1f;
 
-        // ÄğÅ¸ÀÓÀÌ ÁÙ¾îµå´Â µ¿¾È ¹İº¹
+        // ì¿¨íƒ€ì„ì´ ì¤„ì–´ë“œëŠ” ë™ì•ˆ ë°˜ë³µ
         while (_currentCoolTime > 0)
         {
             _currentCoolTime -= Time.deltaTime;
@@ -60,11 +84,11 @@ public class SkillUI : MonoBehaviour
             yield return null;
         }
 
-        // ÄğÅ¸ÀÓ ³¡
+        // ì¿¨íƒ€ì„ ë
         coolTimeImage.fillAmount = 0f;
         coolTimeText.text = "";
         _isCoolTime = false;
 
-        yield break; // ÄÚ·çÆ¾ Á¾·á
+        yield break; // ì½”ë£¨í‹´ ì¢…ë£Œ
     }
 }

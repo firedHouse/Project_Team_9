@@ -27,10 +27,6 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
     protected override void Awake()
     {
         base.Awake();
-
-    }
-    private void Start()
-    {
         InitializePools();
     }
 
@@ -71,6 +67,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
         if (objectQueue.Count > 0)
         {
             GameObject objectToSpawn = objectQueue.Dequeue();
+            objectToSpawn.SetActive(true);
             return objectToSpawn;
         }
         //오브젝트 없으면 null 반환

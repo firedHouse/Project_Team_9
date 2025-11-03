@@ -11,9 +11,6 @@ public class SoundUI : MonoBehaviour
     [SerializeField] private Slider MusicSound;
     
     private SoundManager soundManager;
-  
-
-    private bool isInitialized = false;
 
     private void Awake()
     {
@@ -28,8 +25,13 @@ public class SoundUI : MonoBehaviour
         EffectSound.onValueChanged.AddListener(OnEffectVolumeChanged);
         MusicSound.onValueChanged.AddListener(OnMusicVolumeChanged);
 
-        ApplyVolumes(); // 볼륨 적용
     }
+
+    private void Start()
+    {
+        ApplyVolumes();
+    }
+
 
     private void OnDisable()
     {
@@ -47,17 +49,22 @@ public class SoundUI : MonoBehaviour
         AudioListener.volume = value;
         PlayerPrefs.SetFloat("MainVolume", value); // 변경된 값 저장
         PlayerPrefs.Save();
-
     }
     private void OnEffectVolumeChanged(float value)
     {
-        soundManager.SetSFXVolume(value);
+        if (soundManager != null)
+        {
+            soundManager.SetSFXVolume(value);
+        }
         PlayerPrefs.SetFloat("EffectVolume", value);
         PlayerPrefs.Save();
     }
     private void OnMusicVolumeChanged(float value)
     {
-        soundManager.SetBGMVolume(value);
+        if (soundManager != null)
+        {
+            soundManager.SetBGMVolume(value);
+        }
         PlayerPrefs.SetFloat("MusicVolume", value);
         PlayerPrefs.Save();
     }

@@ -7,6 +7,10 @@ public class DmgTxt : MonoBehaviour
     public TextMesh dmgText;
     void Start()
     {
+        if (dmgText == null)
+        {
+             dmgText = GetComponent<TextMesh>();
+        }
         Destroy(gameObject, 1f);
     }
 
@@ -17,7 +21,11 @@ public class DmgTxt : MonoBehaviour
 
     public void DisplayDamage(float dmg)
     {
-        dmgText.text = dmg.ToString();
+        if (dmgText == null)
+        {
+            dmgText = GetComponent<TextMesh>();
+        }
+        dmgText.text = ((int)dmg).ToString();
 
     }
 }
