@@ -43,17 +43,6 @@ public class EnemySpawner : MonoBehaviour
     //라운드마다 스포너가 작동하도록 유저와의 거리를 탐지해 스폰하도록 수정
     private void Update()
     {
-        if (!_isGamePlaying || _playerTransform == null)
-        {
-            // 게임이 Play 상태가 아닐 때 스폰이 켜져 있으면 스폰 끝내기
-            if (_isSpawningActive)
-            {
-                CancelInvoke(nameof(SpawnEnemy));
-                _isSpawningActive = false;
-                Debug.Log("플레이상태아님");
-            }
-            return;
-        }
 
         float distanceToPlayer = Vector3.Distance(transform.position, _playerTransform.position);
 
@@ -143,7 +132,7 @@ public class EnemySpawner : MonoBehaviour
     {
         NavMeshHit hit;
 
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 30; i++)
         {
             //반지름이 radius인 구에서 무작위 점을 지정하기
             Vector3 randomDirection = UnityEngine.Random.insideUnitSphere * _spawnRadius;

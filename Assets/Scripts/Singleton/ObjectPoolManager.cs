@@ -27,10 +27,6 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager>
     protected override void Awake()
     {
         base.Awake();
-
-    }
-    private void Start()
-    {
         InitializePools();
     }
 

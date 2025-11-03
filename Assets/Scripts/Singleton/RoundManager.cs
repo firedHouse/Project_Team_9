@@ -24,7 +24,7 @@ public class RoundManager : Singleton<RoundManager>
     private float _displaytime = 0;
 
     //다음 라운드 위치 직렬화, 기본값 2라운드 시작점으로 지정
-    [SerializeField] private Vector3 _nextRoundPosition = new Vector3(138f, 1.5f, -25f);
+    [SerializeField] private Vector3 _nextRoundPosition = new Vector3(138f, 0f, -25f);
 
     protected override void Awake()
     {
@@ -43,6 +43,7 @@ public class RoundManager : Singleton<RoundManager>
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj != null)
             {
+                Debug.Log("플레이어 찾았다(라운드매니저)");
                 // 플레이어를 찾았으면 컴포넌트를 할당
                 _player = playerObj.GetComponent<Player>();
             }
@@ -74,8 +75,15 @@ public class RoundManager : Singleton<RoundManager>
     //다음 라운드로 플레이어 포지션값 이동
     private void RoundEnd()
     {
+        // 먼저 Round 중단
+        bool wasRunning = _isRoundRunning;
         _isRoundRunning = false;
-        _player.transform.position = _nextRoundPosition;
+
+        if (wasRunning && _player != null)
+        {
+            _player.transform.position = _nextRoundPosition;
+            Debug.Log("라운드 종료: 플레이어 이동 완료");
+        }
     }
 
     //매 업데이트마다 경과시간 누적, 115초에 로그, 120초에 이동
@@ -86,36 +94,37 @@ public class RoundManager : Singleton<RoundManager>
         {
             FindPlayer();
         }
-
-        if (!_isRoundRunning)
+        if (_isRoundRunning)
         {
-            return;
-        }
-        _elapsedTime += Time.deltaTime;
-
-        //115초 이후 로그 트리거가 true로 변환되어 1번만 로그가 출력되도록 설정
-        if (!_logTriggered && _elapsedTime >= RoundTime)
-        {
-            Debug.Log("5초 뒤 이동합니다(여현구: UI 출력 구현 바랍니다)");
-            _logTriggered = true;
-            RoundText.gameObject.SetActive(true);
-            RoundText.text = "5초 뒤 이동합니다.";
-            _displaytime = 3f;
- 
-        }
-        //120초 경과시 라운드 끝내고 다음 라운드 시작점으로 포지션값 변경
-        if (_elapsedTime >= NextRoundTime)
-        {
-            RoundEnd();
-        }
-
-        if(_displaytime > 0)
-        {
-            _displaytime -= Time.deltaTime;
-            if(_displaytime <= 0 )
+            _elapsedTime += Time.deltaTime;
+            //115초 이후 로그 트리거가 true로 변환되어 1번만 로그가 출력되도록 설정
+            if (!_logTriggered && _elapsedTime >= RoundTime)
             {
-                RoundText.gameObject.SetActive(false);
+                Debug.Log("5초 뒤 이동합니다(여현구: UI 출력 구현 바랍니다)");
+                _logTriggered = true;
+                RoundText.gameObject.SetActive(true);
+                RoundText.text = "5초 뒤 이동합니다.";
+                _displaytime = 3f;
+
             }
+            //120초 경과시 라운드 끝내고 다음 라운드 시작점으로 포지션값 변경
+            if (_elapsedTime >= NextRoundTime)
+            {
+                RoundEnd();
+            }
+
+            if (_displaytime > 0)
+            {
+                _displaytime -= Time.deltaTime;
+                if (_displaytime <= 0)
+                {
+                    RoundText.gameObject.SetActive(false);
+                }
+            }
+
         }
+
+
+
     }
 }

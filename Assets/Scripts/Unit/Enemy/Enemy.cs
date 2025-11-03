@@ -23,7 +23,7 @@ public class Enemy : Unit
     [SerializeField] private float _attackCooldown = 1.0f;
     private float _lastAttackTime = 0f;
 
-    
+
 
     private float _lastUpdateTime = 0f;
     private float _DestinationInterval = 3f;
@@ -33,10 +33,14 @@ public class Enemy : Unit
     protected override void Awake()
     {
         base.Awake();
+
+    }
+    private void OnEnable()
+    {
         navMeshAgent = GetComponent<NavMeshAgent>();
         if (navMeshAgent != null)
         {
-            navMeshAgent.enabled = false;
+            navMeshAgent.enabled = true;
         }
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -49,16 +53,49 @@ public class Enemy : Unit
     //풀에서 가져올 때 호출하는 초기화 로직
     public void OnSpawned()
     {
-        if (navMeshAgent == null)
+        StopAllCoroutines();
+        if (navMeshAgent == null) navMeshAgent = GetComponent<NavMeshAgent>();
+
+        currentHp = maxHp;
+
+        // 항상 에이전트 비활성 상태에서 시작 (프리팹에서도 비활성화 권장)
+        navMeshAgent.enabled = false;
+
+        // NavMesh 근처 좌표로 보정 후 에이전트 활성화
+        Vector3 spawnPos = transform.position;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(spawnPos, out hit, 5f, NavMesh.AllAreas))
         {
-            navMeshAgent = gameObject.AddComponent<NavMeshAgent>();
+            transform.position = hit.position;
+            StartCoroutine(AgentSetDistance()); // 여기서 AgentSetDistance가 Warp+enable을 수행
         }
-        // NavMeshAgent 활성화 및 이동 시작
-        if (navMeshAgent != null)
+        else
         {
-            navMeshAgent.enabled = true;
+            Debug.LogError($"{name} : NavMesh 위치 찾기 실패, 풀로 반납");
+            ObjectPoolManager.Instance.ReturnObject(gameObject, _prefabKey);
+        }
+    }
+
+    IEnumerator AgentSetDistance()
+    {
+        yield return null;
+        navMeshAgent.enabled = true; // 이제 활성화
+        yield return null;
+        if (navMeshAgent.Warp(transform.position))
+        {
             navMeshAgent.speed = moveSpeed;
-            currentHp = maxHp;
+            navMeshAgent.isStopped = false;
+
+            if (_playerTransform != null)
+            {
+                navMeshAgent.SetDestination(_playerTransform.position);
+                _lastUpdateTime = Time.time;
+            }
+        }
+        else
+        {
+            Debug.LogError("NavMeshAgent.Warp() 실패: 스폰 위치가 NavMesh와 너무 멉니다.", gameObject);
+            ObjectPoolManager.Instance.ReturnObject(gameObject, _prefabKey);
         }
     }
 
@@ -92,7 +129,7 @@ public class Enemy : Unit
         }
     }
     public override void TakeDamage(float damage)
-    {      
+    {
         currentHp -= damage;
 
         ShowDamageText(damage);
@@ -142,8 +179,8 @@ public class Enemy : Unit
 
     private void ShowDamageText(float damage)
     {
-    
-        if(dmgTextPrefab == null)
+
+        if (dmgTextPrefab == null)
         {
             Debug.Log("오브젝트를 가져올 수 없습니다.");
         }
@@ -153,7 +190,7 @@ public class Enemy : Unit
 
         DmgTxt dmgTextComponent = dmgTextPrefab.GetComponent<DmgTxt>();
 
-        if(dmgTextComponent != null)
+        if (dmgTextComponent != null)
         {
             dmgTextComponent.DisplayDamage(damage);
         }

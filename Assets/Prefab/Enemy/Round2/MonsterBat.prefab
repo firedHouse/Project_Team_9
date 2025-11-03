@@ -195,7 +195,8 @@ GameObject:
   - component: {fileID: 8784391977091931889}
   - component: {fileID: 6657908974104852460}
   - component: {fileID: 7199285465652700392}
-  m_Layer: 0
+  - component: {fileID: -2630403025948022833}
+  m_Layer: 6
   m_Name: MonsterBat
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -250,7 +251,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -276,3 +277,25 @@ MonoBehaviour:
   _prefabKey: EnemyPrefabName
   dmgTextPrefab: {fileID: 5649681167373304911, guid: 931fc76f72c2c2b4288da0a622b3c5ce, type: 3}
   _attackCooldown: 1
+--- !u!195 &-2630403025948022833
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8870999586513744958}
+  m_Enabled: 0
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
