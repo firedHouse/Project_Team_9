@@ -29,7 +29,6 @@ public class Player : Unit
     private void Start()
     {
         animator = GetComponent<Animator>();
-
     }
 
     private Vector3 GetNormalizedDirection()
