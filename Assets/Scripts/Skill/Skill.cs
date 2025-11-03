@@ -50,9 +50,10 @@ public class Skill : MonoBehaviour
 
         // _skillObject 생성 시 속성(property) 따라 다른 _skillObject 설정
         int propertyInt = PlayerPrefs.GetInt("Property");
-        //Debug.Log(propertyStr);
         _skillProperty = (Skills)propertyInt;
+        //Debug.Log(propertyStr);
 
+        // 속성에 따라 스킬 오브젝트 지정
         _skillObject = SkillEffects[(int)_skillProperty];
 
         // 코루틴으로 SkillAttack을 _skillCooldown마다 반복
@@ -67,21 +68,12 @@ public class Skill : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        //// 투사체 이동
-        //if (_attacker != null)
-        //{
-        //    _attacker?.transform.Translate(Vector3.forward * _skillAttackSpeed * Time.deltaTime);
-        //}
-    }
-
     // 속성 자동 공격
     IEnumerator RepeatSkillAttack(float cooldownTime)
     {
         if(_target == null)
         {
-            Debug.Log("타겟 없음");
+            Debug.Log("[Skill] 타겟 없음");
             _target = _enemyScanner.GetRandom(SkillRange);
             yield return new WaitForSeconds(cooldownTime);
         }
@@ -95,34 +87,45 @@ public class Skill : MonoBehaviour
             _target = _enemyScanner.GetRandom(SkillRange);
             if(_target == null)
             {
-                Debug.Log("타겟 없음");
+                Debug.Log("[Skill] 타겟 없음");
                 _target = _enemyScanner.GetRandom(SkillRange);
                 yield return new WaitForSeconds(cooldownTime);
                 continue;
             }
-            Debug.Log("타겟이 존재");
+            
+            Debug.Log("[Skill] 타겟이 존재");
             AttackerSpawn();
+
+            // 스킬 오브젝트 생성 확인
+            if (_attacker != null)
+            {
+                SkillSound();
+                SkillAttack();
+                DestroyAttacker();
+            }
+
             yield return new WaitForSeconds(cooldownTime);
         }
     }
 
-    // 스킬 위치 조정 및 생성 
+    // 공격 주체 위치 조정 및 생성 
     private void AttackerSpawn()
     {
         _targetPosition = _target.position;
-        Vector3 _posDiff = transform.position - _targetPosition;
-        // 투사체 프리팹 가져오기(오브젝트 풀)
-        Debug.Log("[Skill] 투사체 생성 시도");
-
         _attacker = Instantiate(_skillObject, _targetPosition, _target.transform.rotation);
-        // 스킬 오브젝트 생성 확인
-       if (_attacker != null)
-        {
-            SkillSound();
-            // 데미지 처리
-            Enemy enemyUnit = _target.gameObject.GetComponent<Enemy>();
-            enemyUnit?.TakeDamage(_skillDamage);
-        }
+    }
+
+    // 공격 주체가 공격하여 타겟에게 데미지
+    private void SkillAttack()
+    {
+        // 데미지 처리
+        Enemy enemyUnit = _target.gameObject.GetComponent<Enemy>();
+        enemyUnit?.TakeDamage(_skillDamage);
+    }
+
+    // 공격 주체 소멸
+    private void DestroyAttacker()
+    {
         Destroy(_attacker, 0.5f);
     }
 
