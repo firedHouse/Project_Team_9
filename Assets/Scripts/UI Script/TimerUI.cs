@@ -24,7 +24,7 @@ public class TimerUI : MonoBehaviour
             limittimer = 0;
         }
         int min = (int)(limittimer / 60);
-        float sec = limittimer % 60;
+        float sec = (int)(limittimer % 60);
         timerText.text = string.Format("{0:00}:{1:00}", min, sec);
     }
 

@@ -7,72 +7,36 @@ public class HpBarUI : MonoBehaviour
 {
     [SerializeField] private Slider hpBar;
     [SerializeField] private Text hpText;
-<<<<<<< Updated upstream
-    [SerializeField] private Player player;    
 
-    private void Start() // Ω√¿€ Ω√, Player √£æ∆º≠ ¿˚øÎ
-=======
     [SerializeField] private Player player;
+
         
     void Start()
->>>>>>> Stashed changes
     {
-        StartCoroutine(FindPlayer());
+        StartCoroutine(WaitForPlayer());
     }
 
-    private IEnumerator FindPlayer()
+    private IEnumerator WaitForPlayer()
     {
-        while (player == null) // ∞‘¿” Ω√¿€«“ ∂ß, Player ∏¶ ¿⁄µø¿∏∑Œ ª¿‘
+        while (Player.Instance == null)
         {
-<<<<<<< Updated upstream
-            var foundPlayer = FindObjectOfType<Player>();
-            if (foundPlayer != null)
-            {
-                player = foundPlayer.GetComponent<Player>();
-            }
-            else
-            {
-                Debug.LogError("¬¸¡∂µ» Player∞° ¡∏¿Á«œ¡ˆ æ Ω¿¥œ¥Ÿ.");
-            }
-=======
-            player = FindObjectOfType<Player>();
-            if (player != null)
-            {
-                yield break;
-            }
-            yield return new WaitForSeconds(0.2f);
->>>>>>> Stashed changes
+            yield return new WaitForSeconds(0.1f);
         }
+
+        player = Player.Instance;
 
     }
 
     void Update()
     {
-<<<<<<< Updated upstream
-        if(player == null)
-        {
-                       return;
-        }
-
-=======
-        if (player == null) // Player æ¯¿∏∏È ¿œ¥‹ ¥Î±‚
+        if (player == null) // Player ÏóÜÏúºÎ©¥ ÏùºÎã® ÎåÄÍ∏∞
         {
             return;
         }
->>>>>>> Stashed changes
+
         float maxHp = player.maxHp;
-        float curruntHp = player.currentHp;
+        float currHp = Mathf.Clamp(player.currentHp, 0, maxHp);
 
-        hpBar.value = curruntHp / maxHp;
-
-        if (curruntHp > maxHp)
-        {
-            curruntHp = maxHp;
-        }
-        if (curruntHp < 0)
-        {
-            curruntHp = 0;
-        }
-        hpText.text = curruntHp + " / " + maxHp;
     }
 }
+

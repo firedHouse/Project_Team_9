@@ -7,69 +7,50 @@ public class SkillUI : MonoBehaviour
     [SerializeField] private Text coolTimeText;
     [SerializeField] private Image coolTimeImage;
     [SerializeField] private KeyCode skillKey;
-    [SerializeField] private Player player;
+    
+    private Player player;
 
     private float _cooldownTime;
     private float _currentCoolTime;
     private bool _isCoolTime;
 
-    void Start()
+    private void Awake()
     {
-        StartCoroutine(FindPlayer());
 
-        coolTimeImage.fillAmount = 0f;
-        coolTimeText.text = "";
-    }
-    private void Start()
-    {
+
         if (player == null)
         {
-            var foundPlayer = FindObjectOfType<Player>();
-            if (foundPlayer != null)
-            {
-                player = foundPlayer.GetComponent<Player>();
-            }
-            else
-            {
-                Debug.LogError("¬¸¡∂µ» Player∞° ¡∏¿Á«œ¡ˆ æ Ω¿¥œ¥Ÿ.");
-            }
+            player = GetComponent<Player>();
         }
+        StartCoroutine(WaitForPlayer());
+
         coolTimeImage.fillAmount = 0f;
         coolTimeText.text = "";
-
-<<<<<<< Updated upstream
     }
-=======
-    private IEnumerator FindPlayer()
+
+    private IEnumerator WaitForPlayer()
     {
-        while (player == null) // ∞‘¿” Ω√¿€«“ ∂ß, Player ∏¶ ¿⁄µø¿∏∑Œ ª¿‘
+        while (Player.Instance == null)
         {
-            player = FindObjectOfType<Player>();
-            if (player != null)
-            {
-                yield break;
-            }
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
+
+        player = Player.Instance;
+
     }
 
->>>>>>> Stashed changes
     private void Update()
     {
-        if (player == null) // Player æ¯¿∏∏È ¿œ¥‹ ¥Î±‚
-        {
-            return;
-        }
-        // ≈◊Ω∫∆ÆøÎ: skillKey∏¶ ¥©∏£∏È ƒ≈∏¿” Ω√¿€
+        // ÌÖåÏä§Ìä∏Ïö©: skillKeyÎ•º ÎàÑÎ•¥Î©¥ Ïø®ÌÉÄÏûÑ ÏãúÏûë
         if (Input.GetKeyDown(skillKey) && !_isCoolTime)
         {
-            Debug.Log($"{skillKey}Ω∫≈≥ ªÁøÎ!");
+            Debug.Log($"{skillKey}Ïä§ÌÇ¨ ÏÇ¨Ïö©!");
             SetCoolTime();
             StartCoroutine(CoolTimeRoutine());
         }
     }
 
-    public void SetCoolTime() //ƒ≈∏¿”¿œ ∂ß Ω∫≈≥ πﬂµø X
+    public void SetCoolTime() //Ïø®ÌÉÄÏûÑÏùº Îïå Ïä§ÌÇ¨ Î∞úÎèô X
     {
         switch (skillKey)
         {
@@ -83,7 +64,7 @@ public class SkillUI : MonoBehaviour
                 _cooldownTime = player.ESkillCooltime;
                 break;
             default:
-                _cooldownTime = 1f; // ƒ≈∏¿” ±‚∫ª∞™
+                _cooldownTime = 1f; // Ïø®ÌÉÄÏûÑ Í∏∞Î≥∏Í∞í
                 break;
         }
     }
@@ -94,7 +75,7 @@ public class SkillUI : MonoBehaviour
         _currentCoolTime = _cooldownTime;
         coolTimeImage.fillAmount = 1f;
 
-        // ƒ≈∏¿”¿Ã ¡ŸæÓµÂ¥¬ µøæ» π›∫π
+        // Ïø®ÌÉÄÏûÑÏù¥ Ï§ÑÏñ¥ÎìúÎäî ÎèôÏïà Î∞òÎ≥µ
         while (_currentCoolTime > 0)
         {
             _currentCoolTime -= Time.deltaTime;
@@ -103,11 +84,11 @@ public class SkillUI : MonoBehaviour
             yield return null;
         }
 
-        // ƒ≈∏¿” ≥°
+        // Ïø®ÌÉÄÏûÑ ÎÅù
         coolTimeImage.fillAmount = 0f;
         coolTimeText.text = "";
         _isCoolTime = false;
 
-        yield break; // ƒ⁄∑Á∆æ ¡æ∑·
+        yield break; // ÏΩîÎ£®Ìã¥ Ï¢ÖÎ£å
     }
 }

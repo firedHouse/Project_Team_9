@@ -6,18 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class Player : Unit
 {
+    private static Player instance;
+    public static Player Instance => instance;
     [SerializeField] private Animator animator;
     private PlayerStats playerStats;
 
     private bool isDead = false;
     private float rotateInterpolate = 10;
 
-    //QWE Å° ¸ğ¼ÇÄğÅ¸ÀÓ
+    //QWE í‚¤ ëª¨ì…˜ì¿¨íƒ€ì„
     private bool attackTime;
     private bool wSkillTime;
     private bool eSkillTime;
 
-    //WE ½ºÅ³ ÇØ±İ ±âº»°ªÀº false
+    //WE ìŠ¤í‚¬ í•´ê¸ˆ ê¸°ë³¸ê°’ì€ false
     private bool wSkillUnlocked = false;
     private bool eSkillUnlocked = false;
     public bool WSkillUnlocked
@@ -31,21 +33,35 @@ public class Player : Unit
 
 
 
+    
 
     [SerializeField][Range(0, 10)] private float cooltime;
     [SerializeField][Range(0, 10)] private float wSkillCooltime;
     [SerializeField][Range(0, 10)] private float eSkillCooltime;
 
-    public float Cooltime => cooltime; // SkillUI¿¡¼­ ÄğÅ¸ÀÓ Á¢±ÙÀ» À§ÇÑ ÇÁ·ÎÆÛÆ¼ (ÀĞ±â¸¸ µÇ°Ô ÇÏ±â)
+    public float Cooltime => cooltime; // SkillUIì—ì„œ ì¿¨íƒ€ì„ ì ‘ê·¼ì„ ìœ„í•œ í”„ë¡œí¼í‹° (ì½ê¸°ë§Œ ë˜ê²Œ í•˜ê¸°)
     public float WSkillCooltime => wSkillCooltime;
     public float ESkillCooltime => eSkillCooltime;
 
 
     public bool IsDead => isDead;
 
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        gameObject.SetActive(true); // í˜¹ì‹œ ë¹„í™œì„±í™” ìƒíƒœë¡œ ë„˜ì–´ì™”ë‹¤ë©´ ê°•ì œ í™œì„±í™”
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
-        //¾Ö´Ï¸ŞÀÌ¼Ç°ú ÇÃ·¹ÀÌ¾î½ºÅİÁ¤º¸ °¡Á®¿À±â
+        //ì• ë‹ˆë©”ì´ì…˜ê³¼ í”Œë ˆì´ì–´ìŠ¤í…Ÿì •ë³´ ê°€ì ¸ì˜¤ê¸°
         animator = GetComponent<Animator>();
         playerStats = FindObjectOfType<PlayerStats>();
 
@@ -60,13 +76,13 @@ public class Player : Unit
         if(currentLevel >= 3 && wSkillUnlocked == false)
         {
             wSkillUnlocked = true;
-            Debug.Log("W ½ºÅ³ ÇØ±İ");
+            Debug.Log("W ìŠ¤í‚¬ í•´ê¸ˆ");
         }
 
         if (currentLevel >= 6 && eSkillUnlocked == false)
         {
             eSkillUnlocked = true;
-            Debug.Log("E ½ºÅ³ ÇØ±İ");
+            Debug.Log("E ìŠ¤í‚¬ í•´ê¸ˆ");
         }
     }
 
@@ -115,14 +131,14 @@ public class Player : Unit
 
         //if (Input.GetKey(KeyCode.R))
         //{
-        //    R½ºÅ³ 
+        //    RìŠ¤í‚¬ 
         //}
 
         
 
         //if (Input.GetKey(KeyCode.Space) != dash)
         //{
-        //    ¾ÆÁ÷ ±¸Çö¸øÇÔ
+        //    ì•„ì§ êµ¬í˜„ëª»í•¨
         //}
     }
 
@@ -130,7 +146,7 @@ public class Player : Unit
     {
         attackTime = true;
         animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(cooltime);  //±âº»°ø°İ ÄğÅ¸ÀÓ
+        yield return new WaitForSeconds(cooltime);  //ê¸°ë³¸ê³µê²© ì¿¨íƒ€ì„
         attackTime = false;
 
     }
@@ -138,7 +154,7 @@ public class Player : Unit
     {
         wSkillTime = true;
         animator.SetTrigger("Skill W");
-        yield return new WaitForSeconds(wSkillCooltime); //w½ºÅ³ ÄğÅ¸ÀÓ
+        yield return new WaitForSeconds(wSkillCooltime); //wìŠ¤í‚¬ ì¿¨íƒ€ì„
         wSkillTime = false;
     }
 
@@ -146,7 +162,7 @@ public class Player : Unit
     {
         eSkillTime = true;
         animator.SetTrigger("Skill E");
-        yield return new WaitForSeconds(eSkillCooltime); //e½ºÅ³ ÄğÅ¸ÀÓ
+        yield return new WaitForSeconds(eSkillCooltime); //eìŠ¤í‚¬ ì¿¨íƒ€ì„
         eSkillTime = false;
     }
     private void SetPosition()
@@ -173,7 +189,7 @@ public class Player : Unit
         }
 
         currentHp -= damage;
-        Debug.Log($"ÇÃ·¹ÀÌ¾î°¡ {damage} µ¥¹ÌÁö¸¦ ¹Ş¾Ò½À´Ï´Ù. ³²Àº Ã¼·Â: {currentHp}");
+        Debug.Log($"í”Œë ˆì´ì–´ê°€ {damage} ë°ë¯¸ì§€ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤. ë‚¨ì€ ì²´ë ¥: {currentHp}");
 
         if (currentHp <= 0)
         {
@@ -192,14 +208,14 @@ public class Player : Unit
 
     private IEnumerator GameOverSequence(float delay)
     {
-        Debug.Log("¾ÀÀüÈ¯µÊ");
+        Debug.Log("ì”¬ì „í™˜ë¨");
         enabled = false;
         yield return new WaitForSeconds(delay);
         if (GameManager.Instance != null)
         {
             GameManager.Instance.ChangeState(GameManager.GameState.Result);
         }
-        //Destroy(gameObject) <= °è¼Ó ¾À ÀüÈ¯ ÀÏ¾î³¯ ½Ã »ç¿ë
+        //Destroy(gameObject) <= ê³„ì† ì”¬ ì „í™˜ ì¼ì–´ë‚  ì‹œ ì‚¬ìš©
     }
 
     public void LevelUpStats(float levelUpMaxHp, float levelUpDamage)
@@ -207,7 +223,7 @@ public class Player : Unit
         maxHp += levelUpMaxHp;
         damage += levelUpDamage;
 
-        Debug.Log($"{maxHp}+{damage}Áõ°¡");
+        Debug.Log($"{maxHp}+{damage}ì¦ê°€");
 
     }
 
