@@ -8,7 +8,7 @@ public class SkillAttacker : MonoBehaviour
 {
     [SerializeField] private Skill _skill;
     [SerializeField] private float _skillDamage;
-
+    [SerializeField] GameObject _particleObject;
 
     private void Awake()
     {
@@ -27,19 +27,22 @@ public class SkillAttacker : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log($"[SkillAttacker] 투사체 충돌({other.tag})");
-        Debug.Log(other.tag);
         Debug.Log($"[SkillAttacker] 공격 대상 : {other.gameObject.name}");
         
         // Enemy 충돌시
         if (other.CompareTag("Enemy"))
         {
             Debug.Log($"[SkillAttacker] {_skillDamage} 데미지");
+            Debug.Log($"[SkillAttacker] {_particleObject} 이펙트 재생");
             // 충돌 Enemy가 takeDamage
             // todo : takeDamage 부분에서 딜레이 주는 식으로 해결해보기
             Enemy enemyUnit = other.gameObject.GetComponent<Enemy>();
             enemyUnit?.TakeDamage(_skillDamage);
-            
-            Destroy(gameObject);
+
+            // 공격 이펙트 재생
+            GameObject effect = Instantiate(_particleObject, transform.position, Quaternion.identity);
+            //Destroy(gameObject);
+            //Destroy(effect);
             Debug.Log($"[SkillAttacker] {other.gameObject.name}과 충돌로 투사체 소멸");
         }
         else if (other.CompareTag("UI"))

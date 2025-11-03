@@ -3974,10 +3974,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e30b19b7556fc4247a16d476a7665978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillProperty: 0
   _playerStats: {fileID: 1295838747}
-  _skillObject: {fileID: 532550302408515800, guid: aff6354cde83f9141bb6195da5d9a54c, type: 3}
-  _skillAttackSpeed: 0.5
+  SkillEffects:
+  - {fileID: 1612988413979013152, guid: 224b32ea38207cf489aaa62b96cd61cf, type: 3}
+  - {fileID: 4954537609819189427, guid: 2ebfa5ab41aa0bf478cf3116daffdd28, type: 3}
+  _skillProperty: 1
+  _skillAttackSpeed: 3
   _skillDamage: 10
   _skillRange: 3
   _skillCooldown: 5
@@ -6157,10 +6159,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pools:
-  - prefab: {fileID: 1301597510270012277, guid: 969fb92eb4a7ac6458bb778ca2dda6bd, type: 3}
-    initialSize: 5
-  - prefab: {fileID: 1301597510270012277, guid: 9c819ccfbcc73144295ff8f9f30e83b7, type: 3}
-    initialSize: 5
+  - prefab: {fileID: 1612988413979013152, guid: 224b32ea38207cf489aaa62b96cd61cf, type: 3}
+    initialSize: 20
+  - prefab: {fileID: 7572119749006075923, guid: 35d65339a92813a41be89e85a5726141, type: 3}
+    initialSize: 20
 --- !u!4 &1124535794
 Transform:
   m_ObjectHideFlags: 0
@@ -6697,7 +6699,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerMaxLevel: 9
   _playerMaxExp: 1000
-  _exp: 200
   _expIncreaseAmount: 700
 --- !u!4 &1295838748
 Transform:
@@ -9381,6 +9382,58 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 674609218}
   m_SourcePrefab: {fileID: 100100000, guid: 850ff74c8e2a169439c04eb79426b92a, type: 3}
+--- !u!1 &1909366102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1909366104}
+  - component: {fileID: 1909366103}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1909366103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909366102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d22738e0c37324a9e08611396d2dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultBgmClip: {fileID: 8300000, guid: 054710c284b6ad0438092f5534ddc6c7, type: 3}
+  _sfxClips:
+  - clipName: fireMagic
+    AudioClip: {fileID: 8300000, guid: 05e6b15766a401d4db8b978f53d66544, type: 3}
+  - clipName: iceSlash
+    AudioClip: {fileID: 8300000, guid: ef269b9e55fe45c4f838fc8d95c1491e, type: 3}
+  _bgmVolume: 0.5
+  _sfxVolume: 1
+--- !u!4 &1909366104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909366102}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -42.749054, y: 1.3824244, z: -21.138718}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1922253906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10570,3 +10623,4 @@ SceneRoots:
   - {fileID: 656563448}
   - {fileID: 1124535794}
   - {fileID: 1295838748}
+  - {fileID: 1909366104}
