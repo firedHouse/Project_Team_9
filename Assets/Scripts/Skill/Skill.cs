@@ -13,7 +13,7 @@ public class Skill : MonoBehaviour
 
     [Header("Skill Stats")]
     [SerializeField] private Skills _skillProperty;
-     private GameObject _skillObject;
+    private GameObject _skillObject;
     [SerializeField] private float _skillAttackSpeed = 0.5f;
     [SerializeField] private float _skillDamage = 10f;
     [SerializeField] private float _skillRange = 3f;
@@ -40,13 +40,14 @@ public class Skill : MonoBehaviour
 
     private void Awake()
     {
-        Init();
+        
     }
 
     private void Start()
     {
         _playerStats = FindObjectOfType<PlayerStats>();
         _enemyScanner = FindObjectOfType<EnemyScanner>();
+        Init();
 
         // _skillObject 생성 시 속성(property) 따라 다른 _skillObject 설정
         int propertyInt = PlayerPrefs.GetInt("Property");
@@ -60,7 +61,7 @@ public class Skill : MonoBehaviour
         Debug.Log("코루틴 실행");
         StartCoroutine("RepeatSkillAttack", _skillCooldown);
     }
-    
+
     private void Init()
     {
         // 옵저버 등록
@@ -71,7 +72,7 @@ public class Skill : MonoBehaviour
     // 속성 자동 공격
     IEnumerator RepeatSkillAttack(float cooldownTime)
     {
-        if(_target == null)
+        if (_target == null)
         {
             Debug.Log("[Skill] 타겟 없음");
             _target = _enemyScanner.GetRandom(SkillRange);
@@ -85,14 +86,14 @@ public class Skill : MonoBehaviour
             Debug.Log("=== 자동 공격 ===");
             // 공격 대상 스캔
             _target = _enemyScanner.GetRandom(SkillRange);
-            if(_target == null)
+            if (_target == null)
             {
                 Debug.Log("[Skill] 타겟 없음");
                 _target = _enemyScanner.GetRandom(SkillRange);
                 yield return new WaitForSeconds(cooldownTime);
                 continue;
             }
-            
+
             Debug.Log("[Skill] 타겟이 존재");
             AttackerSpawn();
 
@@ -145,7 +146,7 @@ public class Skill : MonoBehaviour
     // 속성 강화
     public void SkillUpgrade(int curLvl, int maxLvl)
     {
-        if(curLvl < maxLvl)
+        if (curLvl < maxLvl)
         {
             SkillDamageUpgrade();
             SkillRangeUpgrade();
