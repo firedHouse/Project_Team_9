@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class ArcherMagic : MonoBehaviour
+public class HealSkill : MonoBehaviour
 {
     
     [SerializeField] private GameObject _magic;

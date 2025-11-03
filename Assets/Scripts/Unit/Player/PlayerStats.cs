@@ -10,6 +10,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int _playerMaxLevel = 9;
     [SerializeField] private float _playerMaxExp = 1000;
     [SerializeField] private float _expIncreaseAmount = 700;
+    //float _exp = 500f;
     private int _playerCurrentLevel = 1;
     private float _playerCurrentExp = 0;
     // 레벨업시 증가할 스텟량
