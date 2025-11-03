@@ -1921,6 +1921,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5746578722344005519}
+  - component: {fileID: 7452565616849586273}
+  - component: {fileID: 5769788291365828919}
   - component: {fileID: 4437643849072740228}
   - component: {fileID: 2248835898292351403}
   - component: {fileID: 4266448594915514657}
@@ -1961,6 +1963,45 @@ Transform:
   - {fileID: 7701641809935364291}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7452565616849586273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560797111591344048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29175d011e6cc94428b737a16cebdaa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &5769788291365828919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560797111591344048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e30b19b7556fc4247a16d476a7665978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerStats: {fileID: 0}
+  SkillEffects:
+  - {fileID: 1612988413979013152, guid: 224b32ea38207cf489aaa62b96cd61cf, type: 3}
+  - {fileID: 4954537609819189427, guid: 2ebfa5ab41aa0bf478cf3116daffdd28, type: 3}
+  _skillProperty: 0
+  _skillAttackSpeed: 0.5
+  _skillDamage: 10
+  _skillRange: 3
+  _skillCooldown: 5
+  _enemyScanner: {fileID: 0}
+  _target: {fileID: 0}
+  _attacker: {fileID: 0}
 --- !u!95 &4437643849072740228
 Animator:
   serializedVersion: 5
