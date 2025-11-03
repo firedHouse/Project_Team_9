@@ -630,8 +630,8 @@ MonoBehaviour:
   currentHp: 5
   _rewardPrefab: {fileID: 889264829088194449, guid: b2a6b72124267f44bb3a98701160670a, type: 3}
   _prefabKey: EnemyPrefabName
+  dmgTextPrefab: {fileID: 5649681167373304911, guid: 931fc76f72c2c2b4288da0a622b3c5ce, type: 3}
   _attackCooldown: 1
-  _gainExp: 500
 --- !u!1 &4413795516374215684
 GameObject:
   m_ObjectHideFlags: 0
