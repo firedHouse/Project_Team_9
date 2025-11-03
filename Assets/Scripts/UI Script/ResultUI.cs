@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class ResultUI : MonoBehaviour
 {
-    [SerializeField] private Player player;
+    [SerializeField] private Text resultText;
     private bool _ResultUItrigger = false;
+    private Player player;
 
     private void OnEnable()
     {
@@ -16,10 +17,30 @@ public class ResultUI : MonoBehaviour
     {
         GameManager.Instance.OnStateChanged -= OnResultUIActive;
     }
+    void Start()
+    {
+        StartCoroutine(WaitForPlayer());
+        gameObject.SetActive(false);
+    }
+
+    private IEnumerator WaitForPlayer()
+    {
+        // Player.Instance가 생성될 때까지 대기
+        while (Player.Instance == null)
+        {
+            yield return null;
+        }
+
+        player = Player.Instance;
+    }
 
     void Update()
     {
-        if (!_ResultUItrigger && player != null && player.currentHp <= 0)
+        if (!_ResultUItrigger && player == null)
+        {
+            return;
+        }
+        if (player.currentHp <= 0)
         {
             _ResultUItrigger = true;
             GameManager.Instance.ChangeState(GameManager.GameState.Result);
@@ -27,16 +48,13 @@ public class ResultUI : MonoBehaviour
         }
     }
 
-    public void OnClinkReGame()
-    {
-        _ResultUItrigger = false;
-        GameManager.Instance.ChangeState(GameManager.GameState.Play);
-        gameObject.SetActive(false);
-    }
-
     public void OnClinkBackToLobby()
     {
         _ResultUItrigger = false;
+
+        // 플레이어 체력 초기화
+        if (player != null)
+            player.currentHp = player.maxHp;
         GameManager.Instance.ChangeState(GameManager.GameState.Lobby);
         gameObject.SetActive(false);
     }
