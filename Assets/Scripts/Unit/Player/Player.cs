@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Player : Unit
 {
+    private static Player instance;
+    public static Player Instance => instance;
+
     private bool isDead = false;
     private float rotateInterpolate = 10;
 
@@ -15,6 +18,7 @@ public class Player : Unit
 
     [SerializeField] private Animator animator;
 
+    
 
     [SerializeField][Range(0, 10)] private float cooltime;
     [SerializeField][Range(0, 10)] private float wSkillCooltime;
@@ -25,6 +29,19 @@ public class Player : Unit
     public float ESkillCooltime => eSkillCooltime;
 
     public bool IsDead => isDead;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        gameObject.SetActive(true); // 혹시 비활성화 상태로 넘어왔다면 강제 활성화
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {

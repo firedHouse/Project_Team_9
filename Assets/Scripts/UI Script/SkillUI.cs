@@ -7,7 +7,8 @@ public class SkillUI : MonoBehaviour
     [SerializeField] private Text coolTimeText;
     [SerializeField] private Image coolTimeImage;
     [SerializeField] private KeyCode skillKey;
-    [SerializeField] private Player player;
+    
+    private Player player;
 
     private float _cooldownTime;
     private float _currentCoolTime;
@@ -15,6 +16,7 @@ public class SkillUI : MonoBehaviour
 
     private void Awake()
     {
+<<<<<<< Updated upstream
         //예외처리. Player 컴포넌트가 할당되지 않았을 때 자동으로 할당
 
         if (player == null)
@@ -22,6 +24,22 @@ public class SkillUI : MonoBehaviour
 
         coolTimeImage.fillAmount = 0f;
         coolTimeText.text = "";
+=======
+        StartCoroutine(WaitForPlayer());
+
+        coolTimeImage.fillAmount = 0f;
+        coolTimeText.text = "";
+    }
+
+    private IEnumerator WaitForPlayer()
+    {
+        while (Player.Instance == null)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        player = Player.Instance;
+>>>>>>> Stashed changes
     }
 
     private void Update()

@@ -5,12 +5,26 @@ using UnityEngine;
 public class CopyPosition : MonoBehaviour
 {
     [SerializeField] private bool x, y, z;
-    [SerializeField] private Transform target;
+    private Transform target;
 
-    // Update is called once per frame
+    void Start()
+    {
+        StartCoroutine(FindTarget());
+    }
+
+    private IEnumerator FindTarget()
+    {
+        while (Player.Instance == null)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        target = Player.Instance.transform;
+    }
+
     void Update()
     {
-        if(!target)
+        if(target == null)
         {
             return;
         }

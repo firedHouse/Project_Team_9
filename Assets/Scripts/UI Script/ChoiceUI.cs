@@ -8,6 +8,8 @@ public class ChoiceUI : MonoBehaviour
 {
     public Text JobText;
     public Dropdown JobDropdown;
+    public Text ProperText;
+    public Dropdown ProperDropdown;
 
     // Update is called once per frame
     void Update()
@@ -23,6 +25,9 @@ public class ChoiceUI : MonoBehaviour
         //Dropdown 값이 바뀔 때마다 ChoiceJob 함수 호출
         JobDropdown.onValueChanged.AddListener(ChoiceJob);
         ChoiceJob(JobDropdown.value);
+        //Dropdown 값이 바뀔 때마다 ChoiceProper 함수 호출
+        ProperDropdown.onValueChanged.AddListener(ChoiceProper);
+        ChoiceProper(ProperDropdown.value);
     }
     // Choice UI 끄기
     public void OnClickChoiceExit()
@@ -57,4 +62,24 @@ public class ChoiceUI : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public void ChoiceProper(int index)
+    {
+        //Dropdown에서 선택된 값 가져오기
+        string selectedProper = ProperDropdown.options[index].text;
+        ProperText.text = selectedProper;
+        // 선택된 직업에 따라 PlayerPrefs에 저장
+        if (selectedProper == "Fire")
+        {
+            Debug.Log("Fire Choice");
+            PlayerPrefs.SetString("Property", "Fire");
+        }
+        else if (selectedProper == "Ice")
+        {
+            Debug.Log("ice Choice");
+            PlayerPrefs.SetString("Property", "Ice");
+        }
+        // 변경된 값 저장
+        PlayerPrefs.SetInt("Property", index);
+        PlayerPrefs.Save();
+    }
 }

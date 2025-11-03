@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ResultUI : MonoBehaviour
 {
     [SerializeField] private Player player;
+    private bool _ResultUItrigger = false;
 
     private void OnEnable()
     {
@@ -18,8 +19,9 @@ public class ResultUI : MonoBehaviour
 
     void Update()
     {
-        if(player.currentHp <= 0)
+        if (!_ResultUItrigger && player != null && player.currentHp <= 0)
         {
+            _ResultUItrigger = true;
             GameManager.Instance.ChangeState(GameManager.GameState.Result);
             gameObject.SetActive(true);
         }
@@ -27,27 +29,20 @@ public class ResultUI : MonoBehaviour
 
     public void OnClinkReGame()
     {
+        _ResultUItrigger = false;
         GameManager.Instance.ChangeState(GameManager.GameState.Play);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("HansolTestScene");
         gameObject.SetActive(false);
     }
 
     public void OnClinkBackToLobby()
     {
+        _ResultUItrigger = false;
         GameManager.Instance.ChangeState(GameManager.GameState.Lobby);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("TestLobbyScene");
         gameObject.SetActive(false);
     }
     
     private void OnResultUIActive(GameManager.GameState state)
     {
-        if (state == GameManager.GameState.Result)
-        {
-            gameObject.SetActive(true);
-        }
-        else
-        {
-            gameObject.SetActive(false);
-        }
+        gameObject.SetActive(state == GameManager.GameState.Result);
     }
 }
