@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12715edba88c8df46a55287caeaf3485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _arrowSpeed: 3
+  _arrowSpeed: 5
   _activeSkill: {fileID: 1865129948562384309, guid: 34f6718a777254840b8bc08b132ad735, type: 3}
 --- !u!1 &868497411812117537
 GameObject:
@@ -1653,7 +1653,7 @@ MonoBehaviour:
   moveSpeed: 7
   currentHp: 100
   animator: {fileID: 0}
-  cooltime: 1
+  cooltime: 0
   wSkillCooltime: 3
   eSkillCooltime: 5
 --- !u!65 &6557653983313150068

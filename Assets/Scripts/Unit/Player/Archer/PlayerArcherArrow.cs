@@ -14,15 +14,7 @@ public class PlayerArcherArrow : MonoBehaviour
     {
         GameObject arrow = Instantiate(_arrow, transform.position, transform.rotation);
         StartCoroutine(MoveAndDestroy(arrow));  //코루틴 시작
-        StartCoroutine(timer());
-    }
-
-    private IEnumerator timer()
-    {
-        isDelay = true;
         SoundManager.Instance.PlaySFX("arrowShot");
-        yield return new WaitForSeconds(1.0f);  //쿨타임
-        isDelay = false;
     }
 
     private IEnumerator MoveAndDestroy(GameObject arrow)
@@ -44,7 +36,7 @@ public class PlayerArcherArrow : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && isDelay == false)
+        if (Input.GetKeyDown(KeyCode.Q))
         {
            Spawn();           
         }

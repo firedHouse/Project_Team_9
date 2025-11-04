@@ -39,6 +39,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        DontDestroyOnLoad(this);
         ChangeState(GameState.Lobby);
         SoundManager.Instance.LobbyBGM();
     }

@@ -185,10 +185,6 @@ public class Player : Unit
 
     public override void TakeDamage(float damage)
     {
-        if (isDead)
-        {
-            return;
-        }
 
         currentHp -= damage;
         Debug.Log($"플레이어가 {damage} 데미지를 받았습니다. 남은 체력: {currentHp}");
@@ -203,21 +199,14 @@ public class Player : Unit
 
     protected override void Die()
     {
-        Debug.Log($"You died");
-
-        StartCoroutine(GameOverSequence(5f));
-    }
-
-    private IEnumerator GameOverSequence(float delay)
-    {
-        Debug.Log("씬전환됨");
+        isDead = true;
         enabled = false;
-        yield return new WaitForSeconds(delay);
         if (GameManager.Instance != null)
         {
+            Debug.Log("결과창 출력됨");
             GameManager.Instance.ChangeState(GameManager.GameState.Result);
+            Destroy(gameObject);
         }
-        //Destroy(gameObject) <= 계속 씬 전환 일어날 시 사용
     }
 
     public void LevelUpStats(float levelUpMaxHp, float levelUpDamage)
@@ -232,8 +221,7 @@ public class Player : Unit
     {
         if (heal.CompareTag("Heal") && currentHp < maxHp)
         {
-            Debug.Log("������ ����");
-            currentHp += healHp * Time.deltaTime;
+            currentHp += (int)healHp * Time.deltaTime;
         }
     }
 

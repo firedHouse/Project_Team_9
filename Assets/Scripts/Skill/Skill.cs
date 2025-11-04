@@ -16,7 +16,7 @@ public class Skill : MonoBehaviour
     [SerializeField] private float _skillAttackSpeed = 0.5f;
     [SerializeField] private float _skillDamage = 10f;
     [SerializeField] private float _skillRange = 3f;
-    [SerializeField] private float _skillCooldown = 5f;
+    [SerializeField] private float _skillCooldown = 3f;
 
     [Header("Skill Attacker")]
     [SerializeField] private EnemyScanner _enemyScanner;

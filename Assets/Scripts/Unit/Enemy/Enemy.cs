@@ -115,13 +115,13 @@ public class Enemy : Unit
     }
 
     //여현구: 어떤 컴포넌트를 플레이어 오브젝트에 담을 지에 따라 GetComponent가 달라짐 유닛으로 통일
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             if (Time.time >= _lastAttackTime + _attackCooldown)
             {
-                Unit playerUnit = collision.gameObject.GetComponent<Unit>();
+                Player playerUnit = other.gameObject.GetComponent<Player>();
                 playerUnit.TakeDamage(damage);
                 Debug.Log("플레이어와 충돌하여 데미지");
                 _lastAttackTime = Time.time;

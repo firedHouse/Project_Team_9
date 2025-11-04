@@ -17,10 +17,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             {
                 _instance = FindObjectOfType<T>();
 
-                if (_instance == null)
-                {
-                    Debug.LogError("인스턴스 없어요");
-                }
             }
 
             return _instance;
