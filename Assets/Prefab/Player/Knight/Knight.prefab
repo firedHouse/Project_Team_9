@@ -101,9 +101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 100
-  damage: 5
-  moveSpeed: 3
-  currentHp: 50
+  damage: 20
+  moveSpeed: 5
+  currentHp: 100
   animator: {fileID: 0}
   cooltime: 1.5
   wSkillCooltime: 3
