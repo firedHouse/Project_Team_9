@@ -1114,7 +1114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 50
-  damage: 5
+  damage: 3
   moveSpeed: 3
   currentHp: 50
   _rewardPrefab: {fileID: 889264829088194449, guid: b2a6b72124267f44bb3a98701160670a, type: 3}

@@ -81,5 +81,6 @@ public class PlayerStats : MonoBehaviour
         Player player = FindObjectOfType<Player>();
 
         player.LevelUpStats(_addHp, _addDamage);
+        player.currentHp = player.maxHp;
     }
 }

@@ -8,7 +8,7 @@ public class PlayerSpawn : MonoBehaviour
     public GameObject knightPrefab;
     public GameObject archerPrefab;
 
-    private void Start()
+    private void Awake()
     {
         SpawnPlayer();
     }

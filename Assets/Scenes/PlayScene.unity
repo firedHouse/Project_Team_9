@@ -210,15 +210,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pools:
   - prefab: {fileID: 4382703429959335967, guid: b61e557f63c9a3a4f9d9d0782bed2213, type: 3}
-    initialSize: 50
+    initialSize: 300
   - prefab: {fileID: 3846380656912974705, guid: 850ff74c8e2a169439c04eb79426b92a, type: 3}
-    initialSize: 50
+    initialSize: 300
   - prefab: {fileID: 9031917395455814418, guid: 890147743ac06ed46a7656780a2e66e5, type: 3}
-    initialSize: 50
+    initialSize: 300
   - prefab: {fileID: 8870999586513744958, guid: b9543f7af4e8b8549bf3ce3deb4aee44, type: 3}
-    initialSize: 50
+    initialSize: 300
   - prefab: {fileID: 739630171703425125, guid: 305488503d76edf499a3ae83684a3feb, type: 3}
-    initialSize: 50
+    initialSize: 300
   - prefab: {fileID: 889264829088194449, guid: b2a6b72124267f44bb3a98701160670a, type: 3}
     initialSize: 300
   - prefab: {fileID: 5028117299693518849, guid: 4589177018b1bd24bba506ce0d8f31ab, type: 3}

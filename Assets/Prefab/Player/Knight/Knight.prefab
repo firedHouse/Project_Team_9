@@ -100,10 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45b1a52c681ab74cb444b0b2b007760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
-  damage: 20
+  maxHp: 150
+  damage: 30
   moveSpeed: 5
-  currentHp: 100
+  currentHp: 150
   animator: {fileID: 0}
   cooltime: 1.5
   wSkillCooltime: 3
